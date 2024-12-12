@@ -36,3 +36,25 @@ _Equity=Market Value of Property−Outstanding Loan Balance_
 For example, if a home is valued at €300,000 and the remaining mortgage is €200,000, the owner's equity is €100,000.
 
 
+*TIP* Ultimately, to make your money grow much faster than inflation and taxes, you must take some risks. Any investment
+that has real growth potential also has shrinkage potential!
+
+
+### Running a small business
+
+Full time investment :)
+
+
+## Generating Income from lending investments
+
+Other type of investment: Lending your money. Example: By keeping money in the bank
+
+Bonds is a type of lending investment: When you purchase a bond that's been issued by the government or a company, you
+agree to lend your money for a predetermined period of time and receive a particular rate of interest. 
+A bond may pay you 4% of interest over the next 10 years, for example.
+
+*Important Note:* An investor's return from lending investments is typicall *limited* to the original investment + interest payments.
+If you lend your money to Argentina through one of its bonds that matures in, say, 8 year, and Argentina starts to be the 
+lighthouse of the free world and triples it's size, you won't share in its growth. Argentina's stockholders and ownership 
+investors reap the rewards of the country's success, but as a bondholder, you don't: You simply get interest and the face value
+of the bond back at maturity
