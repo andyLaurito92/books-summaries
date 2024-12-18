@@ -95,3 +95,36 @@ Money market mutual funds
  |-> Historically have produced higher yields than bank saving accounts
 
 Money market mutual funds 
+
+TIP: Move extra money into a higher yielding money market fund
+
+
+
+## Steering clear of futures and options
+
+Call options --> ? Need to look more on this later
+
+Futures --> Similar to options (also a gambling instrument). Again, didn't get the concept to well
+
+These are called "derivates", because their value is "derived" from the price of other securities
+
+Problems w/this:
+- A call option represents a short-term gamble on a comapny's stock price, NOT an investment in the company iteslf.
+
+
+
+## Precious metals
+
+Gold, silver have some intrinsic value and can't be debased the way paper currencies can (by printing more money)
+
+Gold & silver perform well during bouts of inflation, but in the long term, these are lousy investments.
+Why? Bc they don't pay any dividends, and their price increases may, at best, just keep up with (not keep ahead of)
+increases in the cost of living
+
+Although investing in precious metals is better than keeping cash in a piggy bank or stuffing it in a mattress, 
+the long-term investment returns aren't nearly as good as quality bonds, stocks and real estate
+
+A way to possibly earn better long-term returns is to invest in a mutual fund or ETF containings the stock of gold 
+and precious metal companies
+
+
