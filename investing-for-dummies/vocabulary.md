@@ -17,11 +17,17 @@ leery (adjective) -> cautious or wary due to realistic suspicions
 - A city leery of gang violence
 - A woman was leery of eating the hamburguer at the picnic because of E.coli
 
-sought -> past tense of seek
+sought (verb) -> past tense of seek
 
-palatable -> acceptable or satisfactory
+palatable (adjective) -> acceptable or satisfactory
 
-recession -> is business cycle contraction that occurs when there is 
+recession (noun) -> is business cycle contraction that occurs when there is 
 a period of broad decline in economic activity
 Recessions generally occur when there is a widespread drop in spending (adverse demand shock)
 
+unruly (adjective) -> disorderly and disruptive and not amenable to discipline or control
+- A group of unruly children
+
+garner (verb) -> gather or collect
+- The police struggled to garner sufficient evidence
+- Declining U.S. housing prices in the mid-to late 2000s garnered unprecedent attention

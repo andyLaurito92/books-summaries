@@ -26,7 +26,16 @@ that they overlooked, such as the risk of having inflation and taxes
 
 ## Market-value risk
 
+Although the stock market can help you build wealth, 
+it can also drop substantially in relatively short
+period of time
+
+Real estate exhibits similar unruly tendencies. Altough real state
+has been a terrific long-term investment, various real estate markets
+get clobbered from time to time
+
 Table 2-1: Largest U.S. Stock Market Declines
+
 
 | Period      | Size of Fall |
 |-------------|--------------|
@@ -42,3 +51,9 @@ Table 2-1: Largest U.S. Stock Market Declines
 | 2000 - 2002 | 39%          |
 | 2020        | 36%          |
 
+
+
+*Moral* See recession times as "sales" and don't pannick :)
+
+
+## Diversify for a smoother ride
