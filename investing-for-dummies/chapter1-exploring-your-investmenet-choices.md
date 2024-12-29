@@ -128,3 +128,7 @@ A way to possibly earn better long-term returns is to invest in a mutual fund or
 and precious metal companies
 
 
+
+## Bitcoin
+
+TODO: More research on this :)
