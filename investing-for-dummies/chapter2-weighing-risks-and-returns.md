@@ -21,4 +21,14 @@ such investors often end up with lousy long-term returns and expose themselves t
 that they overlooked, such as the risk of having inflation and taxes
 
 
+*Moral* You can't live without taking risks ;)
+
+
+## Market-value risk
+
+Table 2-1: Largest U.S. Stock Market Declines
+
+| Period | Size of Fall
+| 1929 - 1932 | 89%
+| 2007 - 2009 | 44%
 
