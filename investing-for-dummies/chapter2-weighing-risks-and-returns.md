@@ -28,7 +28,8 @@ that they overlooked, such as the risk of having inflation and taxes
 
 Table 2-1: Largest U.S. Stock Market Declines
 
-| Period | Size of Fall |
-| 1929 - 1932 | 89% |
-| 2007 - 2009 | 44% |
+| Period      | Size of Fall |
+|-------------|--------------|
+| 1929 - 1932 | 89%          |
+| 2007 - 2009 | 44%          |
 
