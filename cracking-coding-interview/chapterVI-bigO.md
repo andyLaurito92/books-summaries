@@ -44,3 +44,25 @@ Average case: What will be the average/most expected input of my algorithm and h
 
 
 *Note*: There's not particular relationship between worst/best/average case scenario and big o/big theta/big omega
+
+
+## Example of space complexity
+
+```
+def sum(n: int) -> int:
+	if n <= 0:
+		return 0
+	return n + sum(n - 1)
+```
+
+How much space does the above algorithm consume?
+
+Each call to sum it's pushed into the stack, so we have for n = 4
+
+sum(3)
+ -> sum(2)
+    -> sum(1)
+	  -> 0
+	  
+So for N = 4, we had to push 3 calls into the stack + the final result. We can therefore induced that the space we need
+is O(N) (Because we need N - 1 and -1 is constant, the factor that matters here is N)
