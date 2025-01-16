@@ -41,3 +41,6 @@ Best case: What's the best input that will make my algorithm perform in the fast
 Worst case: What's the input that will make my algorithm perform in the worst way
 
 Average case: What will be the average/most expected input of my algorithm and how will it perform in these situations?
+
+
+*Note*: There's not particular relationship between worst/best/average case scenario and big o/big theta/big omega
