@@ -57,12 +57,28 @@ def sum(n: int) -> int:
 
 How much space does the above algorithm consume?
 
-Each call to sum it's pushed into the stack, so we have for n = 4
+Each call to sum it's pushed into the stack, so we have for n = 3
 
 sum(3)
  -> sum(2)
     -> sum(1)
 	  -> 0
 	  
-So for N = 4, we had to push 3 calls into the stack + the final result. We can therefore induced that the space we need
-is O(N) (Because we need N - 1 and -1 is constant, the factor that matters here is N)
+So for N = 3, we had to push 3 calls into the stack + the final result. We can therefore induced that the space we need
+is O(N) (Because we need N + 1 calls and +1 is constant, the factor that matters here is N). 
+
+Note: The above algorithm also takes O(N) runtime! Remember that what it matters in runtime is the number of times we 
+execute the different operations in the algorithm. In the above algorithm, we execute N + 1 checks for `n <= 0` and n + 1
+sums, therefore the recursiveness doesn't add any value on decreasing the runtime and, on the contrary, augments the 
+number of space I need to perform the operation
+
+How can we do the above better? By iterating instead
+
+```
+def sum(n:int) -> int:
+	accum = 0
+	for i in range(n):
+		accum += i
+```
+
+The algorithm now takes O(N) in runtime (as before), but now it takes O(1) in space memory
