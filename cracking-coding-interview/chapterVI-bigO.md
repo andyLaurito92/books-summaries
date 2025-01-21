@@ -116,4 +116,38 @@ Meaning that after X insertions, it will take O(2X)=O(X) time. This is the amort
 
 ## Understanding log n runtimes
 
+How logarithm runtines work? Let's take binary search as an example:
+
+We have an array of N elements, we grab the middle elemnt, we do a comparisson and then we split 
+the array of N elements to N/2 -> In this step, the num of operations is constant O(1)
+Second step, same as above, and we divide the array again -> N/4
+Third step, N/8
+Fourth step, N/16
+and so on until we either find the value or we are out of array (meaning that the dividend is greater than N)
+
+How many times does the algorithm run? 
+
+1 -> N/1 = N/2^(step - 1) # divide by 2
+2 - > N/2 = N/2^(step - 1)# divide by 2
+3 - > N/4= N/2^(step - 1)# divide by 2
+4 -> N/8= N/2^(step - 1)# divide by 2
+
+k -> N/K = N/2^(step - 1) -> 2^k-1
+
+So basically we are looking for the first k that makes 2^k-1 >= N (because we know that we stop when we cannot
+divide the array any longer)
+
+*Note* Here k represents the number of iterations of the algorithm and is represented in relation with N, the size
+of the array
+
+So, to reply to the above question: What is the k that makes 2^k-1 >= N ==> log N = k, where N is a known value
+
+*Remember*
+2^4 = 16 => log 16 = 4
+2^8 = 32 => log 32 = 8
+
+a^k = N <=> log_a(N) = k
+
+Log is the inverse of the exponential function and expreses the exponent you need to get to that value :) (in base 2
+for our particular example because we live in a bit world)
 
