@@ -82,3 +82,17 @@ def sum(n:int) -> int:
 ```
 
 The algorithm now takes O(N) in runtime (as before), but now it takes O(1) in space memory
+
+
+*Reminder*: We always drop the non-dominant time, meaning:
+
+- O(N^2 + N) = O(N)
+- O(N^3 + log(N)) = N^3
+
+and so on. 
+
+What we cannot do is drop a variable from the expression, for example: If you have A, B and
+you're expressing the increase of complexity in runtime given these variables, then it means:
+- O(A + B) remains like it is
+- O(A^2 + A + log(B)) = O(A^2 + log(B)) bc what it matters is to reflect the increase given 
+these 2 inputs
