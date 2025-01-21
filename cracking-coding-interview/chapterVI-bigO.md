@@ -96,3 +96,24 @@ you're expressing the increase of complexity in runtime given these variables, t
 - O(A + B) remains like it is
 - O(A^2 + A + log(B)) = O(A^2 + log(B)) bc what it matters is to reflect the increase given 
 these 2 inputs
+
+
+## Amortized time
+
+The time you require for updating the underneath data structure for mantainance, such as a list in python 
+implemented over an array and the action of having to resize the list because it has already reached
+it's maximum. 
+
+Given this time, which is allocating memory + copying all elements from the previous list to the new one +
+adding the new element, we can estimate that every X time we will need to do O(N) for insertion.
+However, this time is amortized by the constant time it takes in all the remaining times
+
+If we assume that we always double the size of the array, then the num of operations we do in this worst case is
+1 + 2 + 4 + 8 + 16 ... + X (so power of 2)
+This can also be read as X + X/2 + X/4 ... + 1. What is the close sum of this series? 2X
+Meaning that after X insertions, it will take O(2X)=O(X) time. This is the amortized time for each O(1) insertion
+
+
+## Understanding log n runtimes
+
+
