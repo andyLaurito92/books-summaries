@@ -151,3 +151,7 @@ a^k = N <=> log_a(N) = k
 Log is the inverse of the exponential function and expreses the exponent you need to get to that value :) (in base 2
 for our particular example because we live in a bit world)
 
+
+*Take away* When you see a problem where in each iteration the number of elements in the
+problem space gets halved each time, that will likely be an algorithm that takes O(log N) 
+to run :)
