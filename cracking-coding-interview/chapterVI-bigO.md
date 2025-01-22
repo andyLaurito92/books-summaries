@@ -192,3 +192,46 @@ runtime complexity would increment to O(3^N)
 
 Answer -> Because the different bases are only different by a constant factor!! :D. This is the reason
 why we don't care about the base of the algorithm
+
+
+What is the complexity of this function?
+
+def print_unordered_pairs(array):
+	for i in range(len(array)):
+		for j in range(i + 1, len(array)):
+			print((array[i], array[j]))
+			
+
+When i = 0, j moves from 1 to N - 1 => N - 1 + 1 = N (number of times the print is executed)
+When i = 1, j moves from 2 to N - 1 => N -1 + 2 = N - 1
+When i = 2, j moves from 3 to N - 1 => N - 1 + 3 = N - 2
+..
+..
+So it seems that we are adding N + N - 1 + N - 2 + N - 3 ... N - (N - 1) = 1
+Therefore the sequence is sum(0, N-1) N - i = N*(N - 1) / 2 => (N^2 - N)/2 => O(N^2)
+
+Therefore, the complexity of the above is still O(N^2) even though our second loop is not fully
+iterating over the array
+
+
+Another way of thinking:
+
+What is the average time that the second loop will take?
+Well, the first loop we know that it will run O(N) times, what about the second one?
+
+If we take N = 10, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10
+We can say that in average it will run half the time => N/2 => We can say that it takes
+O(N/2) times (the inner loop)
+
+Becuase the outer loop takes O(N) => O(N*N/2) => O(N^2)
+
+
+Another example:
+
+def two_arrays(array1, array2):
+	for i in range(len(array1)):
+		for j in range(len(array2)):
+			print(array1[i], array2[j])
+			
+
+Complexity? If we say A=len(array1) and B=len(array2) => O(A*B)
