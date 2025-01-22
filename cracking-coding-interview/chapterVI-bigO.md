@@ -155,3 +155,40 @@ for our particular example because we live in a bit world)
 *Take away* When you see a problem where in each iteration the number of elements in the
 problem space gets halved each time, that will likely be an algorithm that takes O(log N) 
 to run :)
+
+
+## Recursive runtimes
+
+What is the runtime of this code?
+
+def f(n):
+	return 1 if n <= 1 else f(n-1) + f(n-1)
+	
+	
+Let's test with n=4
+n= 4 => f(3) + f(3) # We call 2 times f(3)
+n= 3 => f(2) + f(2) # We call 2 times f(2). Because we will call f(3) 2 times(in the above level), => 4 calls to f(2)
+n=2 => f(1) + f(1) # Again, 2 times f(1) which will get called 8 times (2 per each node in the above level) -> Exponential patter
+n=1 => 1 => Called 16 times
+
+====
+
+Remember that we are counting the number of times this algorithm executes according to the size of the input! This means, we need
+to sum the above: 2^0=1 + 2^1=2 + 2^2=4 + 2^3=8 + 2^4=16 -> This would be the exact number of times the algorithm will run. 
+The above sum, which can be depicted as sum(0, 4)2^i = 2^(4+1) - 1 => Our complexity is 2^(N+1) - 1. And as we saw above, 
+we don't care about the constants factor because what we care about is giving an estimate of how fast the growth of execution
+of this algorithm goes related to its input.
+
+We can deduce from the above that we are creating a tree and the number of times this algorithm will run the if condition will be
+2^4=16. So the branching here is giving us the base and the power is given by the length of the input.
+
+Meaning, f runtime is O(2^N)
+
+*Note*: if we add a new branch in f (where branch means add a new f(n-1), then we will be adding 1 to the base, i.e., the 
+runtime complexity would increment to O(3^N)
+
+
+*Note 2*: Why do we always say O(log N) and we don't really care about the base of the logarithm?
+
+Answer -> Because the different bases are only different by a constant factor!! :D. This is the reason
+why we don't care about the base of the algorithm
