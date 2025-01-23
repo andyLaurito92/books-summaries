@@ -3,6 +3,7 @@ Implementing/Playing around w/bt
 """
 
 from operator import add
+from typing import Optional
 
 class TreeNode:
     def __init__(self, left, right, value):
@@ -22,6 +23,13 @@ class TreeNode:
             self.right.inorder(func, merge)
         )
 
+    def insert(self, to_insert):
+        if to_insert < self.value:
+            self.left = self.left.insert(to_insert)
+        else:
+            self.right = self.right.insert(to_insert)
+        return self
+
     def preorder(self, func, merge):
         return merge(
             func(self.value),
@@ -31,9 +39,9 @@ class TreeNode:
 
     def postorder(self, func, merge):
         return merge(
+            self.left.postorder(func, merge),
             self.right.postorder(func, merge),
-            func(self.value),
-            self.left.postorder(func, merge)
+            func(self.value)
             )
 
     def __len__(self):
@@ -51,6 +59,15 @@ class Leaf(TreeNode):
 
     def postorder(self, func, merge):
         return self.preorder(func, merge)
+
+    def insert(self, to_insert):
+        if self.value is None:
+            self.value = to_insert
+            return self
+        elif to_insert < self.value:
+            return TreeNode(Leaf(to_insert), Leaf(), self.value)
+        else:
+            return TreeNode(Leaf(), Leaf(to_insert), self.value)
 
     def inorder(self, func, merge):
         return self.preorder(func, merge)
@@ -80,3 +97,12 @@ mytree.inorder(str, concatenate)
 mytree.preorder(str, concatenate)
 
 mytree.postorder(str, concatenate)
+
+
+bst = Leaf()
+bst = bst.insert(3)
+bst = bst.insert(4)
+bst = bst.insert(1)
+bst = bst.insert(10)
+bst = bst.insert(-3)
+bst.inorder(str, concatenate)
