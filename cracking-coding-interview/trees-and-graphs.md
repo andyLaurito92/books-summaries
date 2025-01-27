@@ -79,3 +79,32 @@ How do we traverse the graph? we have 3 ways
 *Note* If we do inorder traversal in a BST, then we are visiting the nodes in ascending order :)
 Why? Because by favoring resolving the left subtree at each node, we are always moving toward
 the smallest value available and returning the inorder successor
+
+
+### Pre-order traversal
+
+visit first the node, then the left branch and finally the right branch
+
+### Post-order traversal
+
+visit the node at last. We first visit the left branch and then the right branch
+
+This is equivalent to perform DFS on the left subtree, then perform DFS on the right
+subtree and finally visit the current node
+
+
+## Binary heaps (min-heaps and max heaps)
+
+A min-heap is a *complete binary tree*, where *each node* is *smaller than it's children*. The root therefore is the 
+minimum element in the tree
+
+
+2 key operations in min-heap: insert and extract_min
+
+### Insert
+
+When we insert, we always start by inserting the element at the bottom. We insert at the rightmost spot
+as to maintain the complete tree property
+
+Then, we "fix" the tree by swapping the new element with its parent, until we find an appropriate spot for the element
+We bubble up the min

@@ -2,9 +2,6 @@
 Implementing/Playing around w/bt
 """
 
-from operator import add
-from typing import Optional
-
 class TreeNode:
     def __init__(self, left, right, value):
         if not issubclass(type(left), TreeNode):
@@ -22,13 +19,6 @@ class TreeNode:
             func(self.value),
             self.right.inorder(func, merge)
         )
-
-    def insert(self, to_insert):
-        if to_insert < self.value:
-            self.left = self.left.insert(to_insert)
-        else:
-            self.right = self.right.insert(to_insert)
-        return self
 
     def preorder(self, func, merge):
         return merge(
@@ -60,21 +50,81 @@ class Leaf(TreeNode):
     def postorder(self, func, merge):
         return self.preorder(func, merge)
 
-    def insert(self, to_insert):
-        if self.value is None:
-            self.value = to_insert
-            return self
-        elif to_insert < self.value:
-            return TreeNode(Leaf(to_insert), Leaf(), self.value)
-        else:
-            return TreeNode(Leaf(), Leaf(to_insert), self.value)
-
+    
     def inorder(self, func, merge):
         return self.preorder(func, merge)
 
     def __len__(self):
         return 1 if self.value else 0
 
+
+class BinarySearchTreeNode(TreeNode):
+    def insert(self, to_insert):
+        if to_insert < self.value:
+            self.left = self.left.insert(to_insert)
+        else:
+            self.right = self.right.insert(to_insert)
+        return self
+
+
+class BinarySearchLeaf(Leaf):
+    def insert(self, to_insert):
+        if self.value is None:
+            self.value = to_insert
+            return self
+        elif to_insert < self.value:
+            return BinarySearchTreeNode(
+                BinarySearchLeaf(to_insert),
+                BinarySearchLeaf(),
+                self.value)
+        else:
+            return BinarySearchTreeNode(
+                BinarySearchLeaf(),
+                BinarySearchLeaf(to_insert),
+                self.value)
+
+
+# The easiest way to implement this min/max heap is by
+# using an array. If you want to implement it using a
+# type of linked list, you can try to keep the size of
+# the heap and traverse the tree by using the knowledge
+# of how many items u have. Because it is a complete tree
+# then we have a guarantee on where the last element should be
+class MinHeapTreeNode(TreeNode):
+    def insert(self, to_insert):
+        # If I'm a tree node of a min-heap, then
+        # 2 options: 1) right branch is empty, 2)
+        # both branches are already fulled! => new level
+        # Note: If left branch is None => right branch is None
+        # => I'm a leaf! It cannot happen otherwise, because then
+        # I wouldn't have a complete tree
+        if self.right is None:
+            self.right = MinHeapTreeNode(
+                MinHeapLeaf(),
+                MinHeapLeaf(),
+                to_insert)
+        else:
+            # both branches are complete!, try
+            # left branch
+            self.left.insert(to_insert)
+        
+    
+
+class MinHeapLeaf(Leaf):
+    def insert(self, to_insert):
+        if self.value is None:
+            self.value = to_insert
+        elif:
+            return MinHeapTreeNode(
+                MinHeapLeaf(to_insert),
+                MinHeapLeaf(),
+                self.value)
+        self.rebalance()
+
+    def rebalance(self):
+        # A leaf cannot break the min-heap invariant
+        return
+                
 
 mytree = (
     TreeNode(
@@ -99,7 +149,7 @@ mytree.preorder(str, concatenate)
 mytree.postorder(str, concatenate)
 
 
-bst = Leaf()
+bst = BinarySearchLeaf()
 bst = bst.insert(3)
 bst = bst.insert(4)
 bst = bst.insert(1)
