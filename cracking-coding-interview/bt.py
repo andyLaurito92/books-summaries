@@ -110,20 +110,20 @@ class MinHeapTreeNode(TreeNode):
         
     
 
-class MinHeapLeaf(Leaf):
-    def insert(self, to_insert):
-        if self.value is None:
-            self.value = to_insert
-        elif:
-            return MinHeapTreeNode(
-                MinHeapLeaf(to_insert),
-                MinHeapLeaf(),
-                self.value)
-        self.rebalance()
+# class MinHeapLeaf(Leaf):
+#     def insert(self, to_insert):
+#         if self.value is None:
+#             self.value = to_insert
+#         elif:
+#             return MinHeapTreeNode(
+#                 MinHeapLeaf(to_insert),
+#                 MinHeapLeaf(),
+#                 self.value)
+#         self.rebalance()
 
-    def rebalance(self):
-        # A leaf cannot break the min-heap invariant
-        return
+#     def rebalance(self):
+#         # A leaf cannot break the min-heap invariant
+#         return
                 
 
 mytree = (

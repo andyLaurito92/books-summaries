@@ -98,6 +98,9 @@ subtree and finally visit the current node
 A min-heap is a *complete binary tree*, where *each node* is *smaller than it's children*. The root therefore is the 
 minimum element in the tree
 
+*Note* Binary heaps can be easily implemented using a list/re-dimensional array. The complexity if u try to use 
+linkednodes instead is to keep track of the last rightmost empty element (so we remain it complete)
+
 
 2 key operations in min-heap: insert and extract_min
 
@@ -108,3 +111,44 @@ as to maintain the complete tree property
 
 Then, we "fix" the tree by swapping the new element with its parent, until we find an appropriate spot for the element
 We bubble up the min
+
+This operation takes O(log N) where N is the amount of elements in the heap
+
+## Extract minimum
+
+Finding the minimum is easy because it's the root. What we need to take into consideration is 
+re-balancing the heap so we mantain the heap property (all childrens are smaller than the root)
+
+How do we do this? We grab the right-most element (last element of the heap) and we bubble it down
+until we find it's position by swapping it with other nodes always fulfilling the heap invariant.
+
+Do we swap it w/left or right child? Depends on the value, important thing is to keep the invariant
+
+## Implementation (coming from Algorithms 4th edition)
+
+We implement it using an array. Why? Because complete trees allow us to use a compact array 
+representation that does not involve explicit links
+
+*Note* If you want to implement a binary heap using a linked representation, you need to keep
+track of the parent so you can travel up and down the tree.
+
+In a heap, the parent of the node in position k is in position [k/2] and, conversely, the two
+children of the node in position k are in position 2k and 2k + 1
+
+This means that for moving up (travelling to the parent), we do k/2 while for moving down we 
+do either 2*k or 2*k + 1
+
+
+*Representation* An array pq of length N + 1 where pq[0] is unused and the heap goes
+from pq[1] to pq[N]
+
+
+*2 types of operations*
+- Decrease priority: We decrease the priority which means that we need to swim up a node
+- Increase priority: We increate the priority which means that we need to swim down the node
+
+swim down = sink, swim up = swim = reheapify
+
+*Note* The above is inverted for max-heap
+
+
