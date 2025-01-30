@@ -1,5 +1,3 @@
-import math
-
 class MinHeap:
     def __init__(self):
         self.pq = [None]
@@ -24,18 +22,19 @@ class MinHeap:
     def _sink(self, k: int) -> None:
         while (2*k <= self.n):
             j = 2*k
-            if (j < self.n and self.pq[j] < self.pq[j+1]):
-               j += 1
+            if (j < self.n and self.pq[j] >= self.pq[j+1]):
+                j += 1
 
-            if not k < j:
-               break
+            if self.pq[k] < self.pq[j]:
+                break
 
             self.pq[k], self.pq[j] = self.pq[j], self.pq[k]
             k = j
               
     def delmax(self) -> int:
         max = self.pq[1]
-        self.pq[1] = self.pq[self.n - 1]
-        self.pq[self.n + 1] = None
+        self.pq[1] = self.pq[self.n]
+        del self.pq[self.n]
+        self.n -= 1
         self._sink(1)
         return max
