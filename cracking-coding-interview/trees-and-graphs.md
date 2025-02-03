@@ -124,6 +124,17 @@ until we find it's position by swapping it with other nodes always fulfilling th
 
 Do we swap it w/left or right child? Depends on the value, important thing is to keep the invariant
 
+## Building a heap from a list
+
+Note heapifying or building a heap from a list, assumming complete heap, takes O(N) and not O(N log N). See the following links for a better explanation:
+
+1. Explanation by Tim Peters [here](https://stackoverflow.com/questions/51735692/python-heapify-time-complexity)
+2. Heapify implementation in Python [here](https://github.com/python/cpython/blob/3.13/Lib/heapq.py#L260)
+
+
+*Important to remember:* Inserting n elements into a heap takes O(N * log N) while heapifying a list takes O(N) 
+
+
 ## Implementation (coming from Algorithms 4th edition)
 
 We implement it using an array. Why? Because complete trees allow us to use a compact array 
@@ -132,15 +143,15 @@ representation that does not involve explicit links
 *Note* If you want to implement a binary heap using a linked representation, you need to keep
 track of the parent so you can travel up and down the tree.
 
-In a heap, the parent of the node in position k is in position [k/2] and, conversely, the two
+In a heap, the parent of the node in position k is in position [k//2] and, conversely, the two
 children of the node in position k are in position 2k and 2k + 1
 
-This means that for moving up (travelling to the parent), we do k/2 while for moving down we 
+This means that for moving up (travelling to the parent), we do k//2 while for moving down we 
 do either 2*k or 2*k + 1
 
 
 *Representation* An array pq of length N + 1 where pq[0] is unused and the heap goes
-from pq[1] to pq[N]
+from pq[1] to pq[N] (We avoid using the first element so the operations for moving to the childrens is easier, otherwise, if you want to use pq[0] then to get to the childrens u need to do 2k + 1 & 2*k + 2, because it's 0 based-index)
 
 
 *2 types of operations*

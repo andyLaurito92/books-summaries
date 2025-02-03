@@ -38,3 +38,22 @@ class MinHeap:
         self.n -= 1
         self._sink(1)
         return max
+
+
+elements = [1, 3, -3, -10, 8, 22, 0, 12]
+
+myheap = MinHeap()
+for el in elements:
+    myheap.insert(el)
+    
+
+"""
+We can also use Python heapq implementation
+https://docs.python.org/3/library/heapq.html
+"""
+
+from heapq import heapify, heappush, heappop
+
+heapify(elements) # transforms the list into a heap in linear time
+
+heappush(
