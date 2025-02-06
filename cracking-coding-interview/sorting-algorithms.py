@@ -7,16 +7,18 @@ class SupportLestThan(Protocol):
 
 
 Comparable = TypeVar('Comparable', bound=SupportLestThan)
-SIZE_LISTS = {10, 15, 17}
+SIZE_LISTS = [3, 5, 10, 15, 17]
 
 
 def insertionsort(a: list[Comparable]):
     n = len(a)
     for i in range(1, n):
         j = i
-        while j > 0 and a[j] < a[j-1]:
-            a[j], a[j-1] = a[j-1], a[j]
+        to_insert = a[j]
+        while j > 0 and to_insert < a[j-1]:
+            a[j] = a[j-1]
             j -= 1
+        a[j] = to_insert
 
 
 def bubblesort(a: list[Comparable]):
@@ -42,6 +44,41 @@ def selectionsort(a: list[Comparable]):
         a[i], a[min_idx] = a[min_idx], a[i]
 
 
+def mergesort(a: list[Comparable]):
+    def merge(a, helper, low, med, high):
+        for i in range(low, high + 1):
+            helper[i] = a[i]
+
+        i = low
+        j = med + 1
+
+        for k in range(low, high+1):
+            if i > med:
+                a[k] = helper[j]
+                j += 1
+            elif j > high:
+                a[k] = helper[i]
+                i += 1
+            elif helper[j] < helper[i]:
+                a[k] = helper[j]
+                j += 1
+            else:
+                a[k] = helper[i]
+                i += 1
+               
+                      
+    def sort(a, helper, low, high):
+        if (high <= low):
+            return
+        mid = low + (high - low) // 2
+        sort(a, helper, low, mid)
+        sort(a, helper, mid+1, high)
+        merge(a, helper, low, mid, high)
+
+    helper = [x for x in a]
+    sort(a, helper, 0, len(a) - 1)
+
+
 def log(message):
     print(message)
 
@@ -61,3 +98,7 @@ def call_sorting_technique(algorithm):
 call_sorting_technique(bubblesort)
 call_sorting_technique(selectionsort)
 call_sorting_technique(insertionsort)
+call_sorting_technique(mergesort)
+
+a = [1, 2, 1]
+mergesort(a)
