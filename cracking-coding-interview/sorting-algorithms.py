@@ -44,6 +44,31 @@ def selectionsort(a: list[Comparable]):
         a[i], a[min_idx] = a[min_idx], a[i]
 
 
+def quicksort(a: list[Comparable]):
+    def recquicksort(a, low, high):
+        if low >= high:
+            return
+        pivot = a[low]
+        i = low + 1
+        j = high
+        while i < j:
+            if a[i] <= pivot:
+                i += 1
+            elif a[j] > pivot:
+                j -= 1
+            else:
+                a[i], a[j] = a[j], a[i]
+                j -= 1
+                i += 1
+        a[low], a[j-1] = a[j-1], a[low]
+
+        recquicksort(a, low, i - 1)
+        recquicksort(a, i + 1, high)
+
+    shuffle(a)
+    recquicksort(a, 0, len(a) - 1)
+       
+
 def mergesort(a: list[Comparable]):
     def merge(a, helper, low, med, high):
         for i in range(low, high + 1):
@@ -51,7 +76,6 @@ def mergesort(a: list[Comparable]):
 
         i = low
         j = med + 1
-
         for k in range(low, high+1):
             if i > med:
                 a[k] = helper[j]
@@ -65,8 +89,8 @@ def mergesort(a: list[Comparable]):
             else:
                 a[k] = helper[i]
                 i += 1
-               
-                      
+              
+                     
     def sort(a, helper, low, high):
         if (high <= low):
             return

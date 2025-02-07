@@ -39,3 +39,9 @@ Difference with selection sort:
 
 
 - Merge sort
+
+*Idea*: Halve the array, sort each half and then merge the sorted sub-arrays in linear time. Because they are sorted, you can just iterate over them w/two indexes and start adding to the final array the elements.
+
+Runtime: O(N log N)
+Space: O(N) -> we need a copy of the array to make mergesort to work
+
