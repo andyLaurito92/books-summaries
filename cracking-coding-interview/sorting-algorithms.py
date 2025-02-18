@@ -44,30 +44,83 @@ def selectionsort(a: list[Comparable]):
         a[i], a[min_idx] = a[min_idx], a[i]
 
 
+"""
+Note: This quicksort doesn't perform that well in the
+presence of duplicates. Why? Because when we have elements
+that equal the pivot element, it would be nice to already
+ordered those elements in the place they have to be. Which is
+this place? The same one than the pivot!
+
+In this implementation, duplicate elements are just moved to
+one part of the subarray (in this particular implementation, to
+the left part), and are NOT NECESSARILY IN ORDER.
+Ex: [5, 1, 1, 3, 5, 8, 5, 4, 3, 2, 1]
+
+Grab the above list as example: If we pick pivot 5, then we have after the
+first run:
+[1, 1, 3, 5, 1, 5, 4, 3, 2, 1, 5, 8]
+
+Remember that quicksort is an stable algorithm, so the relative order of the
+5th elements didn't change, however, they r still not in their final position.
+
+3-way quicksort handles this problem by having another idx for managing duplicates
+"""
+
+# [3, 2, 1, 3, 1], i = 0, j = 4, pivot = 3
+# [3, 2, 1, 3, 1], i = 1, j = 4, pivot = 3
+# [3, 2, 1, 3, 1], i = 2, j = 4, pivot = 3
+# [3, 2, 1, 3, 1], i = 3, j = 4, pivot = 3
+# [3, 2, 1, 3, 1], i = 4, j = 4, pivot = 3
+# [1, 2, 1, 3, 3], i = 5, j = 4, pivot = 3
+
+# [1, 2, 1, 3, 3], i = 0, j = 4, pivot = 1
 def quicksort(a: list[Comparable]):
     def recquicksort(a, low, high):
         if low >= high:
             return
         pivot = a[low]
-        i = low + 1
+        i = low
         j = high
-        while i < j:
-            if a[i] <= pivot:
+        while i <= j:
+            while i <= j and a[i] <= pivot:
                 i += 1
-            elif a[j] > pivot:
+            while i <= j and a[j] > pivot:
                 j -= 1
-            else:
-                a[i], a[j] = a[j], a[i]
-                j -= 1
-                i += 1
-        a[low], a[j-1] = a[j-1], a[low]
+            if i > j:
+                break
+            a[i], a[j] = a[j], a[i]
+        a[low], a[j] = a[j], a[low]
 
-        recquicksort(a, low, i - 1)
-        recquicksort(a, i + 1, high)
+        recquicksort(a, low, j - 1)
+        recquicksort(a, j + 1, high)
 
     shuffle(a)
     recquicksort(a, 0, len(a) - 1)
-       
+
+def threewayquicksort(a: list[Comparable]):
+    def recquicksort(a: list[Comparable], i: int, j: int) -> None:
+        if i >= j:
+            return
+        pivot = a[i]
+        lt = i
+        k = lt
+        gt = j
+        while k <= gt:
+            if a[k] > pivot:
+                a[gt], a[k] = a[k], a[gt]
+                gt -= 1
+            elif a[k] < pivot:
+                a[lt], a[k] = a[k], a[lt]
+                lt += 1
+                k += 1
+            else: # a[lt] == pivot
+                k += 1
+
+        recquicksort(a, i, lt - 1)
+        recquicksort(a, gt + 1, j) 
+
+    shuffle(a)
+    recquicksort(a, 0, len(a) - 1)
 
 def mergesort(a: list[Comparable]):
     def merge(a, helper, low, med, high):
@@ -123,6 +176,8 @@ call_sorting_technique(bubblesort)
 call_sorting_technique(selectionsort)
 call_sorting_technique(insertionsort)
 call_sorting_technique(mergesort)
+call_sorting_technique(quicksort)
+call_sorting_technique(threewayquicksort)
 
 a = [1, 2, 1]
 mergesort(a)

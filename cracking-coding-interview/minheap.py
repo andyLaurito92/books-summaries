@@ -54,6 +54,4 @@ https://docs.python.org/3/library/heapq.html
 
 from heapq import heapify, heappush, heappop
 
-heapify(elements) # transforms the list into a heap in linear time
-
-heappush(
+heapify(elements) # transforms the list into a heap in linear 
