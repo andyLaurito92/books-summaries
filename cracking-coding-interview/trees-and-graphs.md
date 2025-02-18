@@ -163,3 +163,29 @@ swim down = sink, swim up = swim = reheapify
 *Note* The above is inverted for max-heap
 
 
+
+## Tries (Prefix Trees)
+
+It comes up a lot in interview questions!
+
+A trie is a variant of an n-ary tree in which characters are stored at each node. Each path
+down the tree may represent a word
+
+The * nodes (sometimes called "null nodes") are often used to indicate complete words. For example,
+the fact there is a * node under MANY indicates that MANY is a complete word. The existance of the MA
+path indicates there are words that start with MA.
+
+Actual implementation of these * nodes might be a special type of child (such as TerminatingTrieNode, 
+which inherits from TrieNode). Or we could use just a boolean flag termiantes withing the "parent" node.
+
+A node in a trie could have anyware from 1 through ALPHATEB_SIZE + 1 children ( or 0, through ALPHABET_SIZE
+if a boolean flag is used instead of a * node)
+
+
+*Note*: While a hash table can quickly look up wether a string is a valid word, it cannot tell us if a string
+is a prefix of any valid words. A trie can do this very quickly.
+
+
+*Note 2*: How quickly? A trie can check if a string is a valid prefix in O(K), where K is the length of the string.
+Note that a hash table ALSO TAKES O(K) for accessing the value of a string s where len(s) = K. Why? Because you 
+need to read the whole string for getting it's hash! And this takes O(K) --> Do u really need to read the whole string?
