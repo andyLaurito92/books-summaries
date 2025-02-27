@@ -61,3 +61,19 @@ mylist.root = Node(3)
 
 
 
+## The runner technique / the second pointer techinque
+
+The runner technique means that you iterate through the linked list with two pointers simultaneously, with one
+ahead of the other. The "last" node might be ahead by a fixed amount, or it might be hoppoing multiple nodes
+for each one node that the "slow" node iterates through.
+
+For example, suppose that you had a linked list a1 -> a2 -> ... -> an -> b1 -> b2 -> ... -> bn, and you wanted 
+to rearrange it into a1 -> b1 -> a2 -> b2 -> ... -> an ->bn. You don't know the length of the linked list (but
+you do know that the length is an even number)
+
+
+## Recursive problems
+
+Remember that exploring recursiveness for linked list problem could be a good approach to take. 
+*Note* Usually these recursive algorithms will take O(N) space to run where N is the size of the list 
+(the stack trace needed for calling the recursion over the list in the worst case)
