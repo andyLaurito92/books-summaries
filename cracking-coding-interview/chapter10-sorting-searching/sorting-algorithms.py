@@ -156,6 +156,57 @@ def mergesort(a: list[Comparable]):
     sort(a, helper, 0, len(a) - 1)
 
 
+def bucketsort(a: list[Comparable]):
+    """
+    In order for bucket sort to work fine, we need to know in advance something about the
+    data of the list. By using this criteria, we can create a better way to proportionaly
+    distribute the data within different buckets
+    For this particular case, I'm creating elements in the array acording to it's size.
+    Given that I'm using choice from python, I can assume a uniform distribution between
+    range(len(a)), this means that I can use the modulus operand for distribute data
+    between the buckets uniformly
+    """
+    n = len(a)
+    buckets = [[] for _ in range(n)] # create 1 bucket per each modulus value
+
+    for x in a:
+        # x is a value between [0, n-1]
+        buckets[x].append(x)
+
+    
+    for bucket in buckets:
+        insertionsort(bucket)
+
+    i = 0
+    for bucket in buckets:
+        for x in bucket:
+            a[i] = x
+            i += 1
+
+
+"""
+From the above we can deduce something: Because how we are creating
+the arrays, we can actually use count sourting to sort these type of
+input in O(N)
+"""
+
+def countsort(a: list[Comparable]):
+    """
+    for x in a, x \belongs [0, len(a) - 1]
+    """
+    n = len(a)
+    count = [0] * n
+    for x in a:
+        count[x] += 1
+
+    j = 0
+    for i, k in enumerate(count):
+        while k > 0:
+            a[j] = i
+            j += 1
+            k -= 1
+    
+
 def log(message):
     print(message)
 
@@ -172,12 +223,15 @@ def call_sorting_technique(algorithm):
         log("\n")
 
 
+
 call_sorting_technique(bubblesort)
 call_sorting_technique(selectionsort)
 call_sorting_technique(insertionsort)
 call_sorting_technique(mergesort)
 call_sorting_technique(quicksort)
 call_sorting_technique(threewayquicksort)
+call_sorting_technique(bucketsort)
+call_sorting_technique(countsort)
 
 a = [1, 2, 1]
 mergesort(a)
