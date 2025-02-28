@@ -122,16 +122,6 @@ def rearrange(root: Node) -> Node:
         curr = curr.next
         middle = middle.next.next # we can safely do this because there are even numbers
 
-    # middle = a, curr = 1, prev_curr_next = 2, prev_middle_next = b
-    # 1 -> 2 -> 3 -> a -> b -> c
-    # curr.next = a, middle.next = 2  
-    # 1 -> a -> 2 -> 3 ; b -> c
-    # middle = b, curr = 2, prev_curr_next = 3, prev_middle_next = c
-    # curr.next = b, middle.next = 3
-    # 1 -> a -> 2 -> b -> 3 ; c
-    # middle = c, curr = 3, prev_curr_next = a, prev_middle_next = None
-    # curr.next = c, middle.next = a
-    # 1 -> a -> 2 -> b -> 3 -> c -> a
     original_middle = curr
 
     middle = curr 
@@ -158,3 +148,89 @@ assert Node.buildfrom([1, 'a', 2, 'b', 3, 'c']) == rearrange(Node.buildfrom([1, 
 
 
 assert Node.buildfrom(['a', 1, 'b', 2, 'c', 3, 'd', 4]) == rearrange(Node.buildfrom(['a', 'b', 'c', 'd', 1, 2, 3, 4]))
+
+
+def copylist(node: Node) -> Node:
+    if node is None:
+        return None
+
+    new_root = Node(node.value)
+
+    curr_new = new_root
+
+    curr_old = node
+    curr_old = curr_old.next
+
+    while curr_old is not None:
+        curr_new.next = Node(curr_old.value)
+
+        curr_old = curr_old.next
+        curr_new = curr_new.next
+
+    return new_root
+
+
+assert Node.buildfrom([0, 1, 2]) == copylist(Node.buildfrom([0, 1, 2]))
+
+
+"""
+Merge two sorted linked lists
+"""
+def merge_sorted(root1: Node, root2: Node) -> Node:
+    """
+    Merge 2 sorted lists in non-decreasing order
+
+    There are 2 approaches here: to either create a new singly linked list
+    with the new values or to modify one of these linked list. Because I
+    like referential transparency and I don't like modifying existing
+    objects, let's create a new list :)
+    Runtime: O(N + M)
+    Memory: O(N + M)
+    """
+
+    if root1 is None and root2 is None:
+        return None
+    elif root1 is None:
+        new_root = copylist(root2)
+        return new_root
+    elif root2 is None:
+        new_root = copylist(root1)
+        return new_root
+
+    curr1 = root1
+    curr2 = root2
+    
+    if curr1.value < curr2.value:
+        new_root = Node(curr1.value)
+        curr1 = curr1.next
+    else:
+        new_root = Node(curr2.value)
+        curr2 = curr2.next
+
+    curr_newlist = new_root
+    while curr1 is not None and curr2 is not None:
+        if curr1.value < curr2.value:
+            curr_newlist.next = Node(curr1.value)
+            curr1 = curr1.next
+        else:
+            curr_newlist.next = Node(curr2.value)
+            curr2 = curr2.next
+        curr_newlist = curr_newlist.next
+
+    if curr1 is None and curr2 is None:
+        return new_root
+    elif curr1 is None:
+        curr_newlist.next = copylist(curr2)
+    else:
+        curr_newlist.next = copylist(curr1)
+
+    return new_root
+
+
+
+assert Node.buildfrom([0, 3, 6, 9]) == merge_sorted(Node.buildfrom([0, 3, 6, 9]), None)
+
+
+l1 = Node.buildfrom([0, 2, 4, 6, 8])
+l2 = Node.buildfrom([-1, 1, 3, 5, 7])
+assert Node.buildfrom([-1, 0, 1, 2, 3, 4, 5, 6, 7, 8]) == merge_sorted(l1, l2)
