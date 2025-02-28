@@ -234,3 +234,62 @@ assert Node.buildfrom([0, 3, 6, 9]) == merge_sorted(Node.buildfrom([0, 3, 6, 9])
 l1 = Node.buildfrom([0, 2, 4, 6, 8])
 l2 = Node.buildfrom([-1, 1, 3, 5, 7])
 assert Node.buildfrom([-1, 0, 1, 2, 3, 4, 5, 6, 7, 8]) == merge_sorted(l1, l2)
+
+
+
+"""
+Given head, the head of a linked list, determine if the linked list has a cycle in it.
+
+There is a cycle in a linked list if there is some node in the list that can be reached again by continuously following the next pointer. Internally, pos is used to denote the index of the node that tail's next pointer is connected to. Note that pos is not passed as a parameter.
+
+Return true if there is a cycle in the linked list. Otherwise, return false.
+"""
+
+def hascycle(root: Node) -> bool:
+    """
+    Use the two pointer technique. If the list has no cycles, then nodes will never cross
+    If they do cross, then there's a cycle in it
+    """
+    if root is None:
+        return False
+
+    turtle = root
+    rabbit = root.next
+
+    while turtle is not None and rabbit is not None:
+        """
+        Super important! We need to use is NOT equal!
+        Why? Equal won't finish because it will always keep
+        iterating in the loop! And what we really want to ask
+        is if this node(rabbit) POINTS AT THE SAME OBJECT than turtle
+        And the above is what IS is for :)
+        """
+        if turtle is rabbit:
+            return True
+        turtle = turtle.next
+        rabbit = rabbit.next
+        if rabbit is not None:
+            rabbit = rabbit.next
+        else:
+            return False # If None, we reached the end of the list!
+
+    return False
+
+
+l1 = Node(3)
+l1.next = Node(2)
+l1.next.next = Node(0)
+l1.next.next.next = Node(-4)
+l1.next.next.next.next = l1.next # -4 points to 2
+
+assert False == hascycle(Node.buildfrom([0, 1, 2]))
+
+assert True == hascycle(l1)
+
+l2 = Node(1)
+l2.next = Node(2)
+l2.next.next = l2
+
+assert True == hascycle(l2)
+
+assert False == hascycle(Node(1))
