@@ -112,3 +112,39 @@ def fibonacci(i: int) -> int:
 		j += 1
 	return a + b
 ```
+
+
+The book doesn't go much further than this. MIT course to take a look at: https://www.youtube.com/watch?v=r4-cftqTcdI
+
+
+## Dynamic Programming from MIT course
+
+### Design Paradigm for Dynamic Programming (think of divide & conquer)
+
+Let's define the following algorithm design paradigm: SRTBOT
+
+- Subproblem: Definition of the subproblems --> This is the hardest part usually
+	- Ideally we want a polinomial number of it
+- Relate: Subproblem solution recursively
+- Topological order on subproblems to guarantee acyclig DAG -> vertices = subproblems; edges -> order in which we need to solve the subproblems. Usually just a for loop
+- Base: cases of relation
+- Original problem: solve via subproblems -> often is 1 of the subproblems
+- Time analysis
+
+### Tricks
+
+Subproblem design: If input is a sequence, then good subproblems are:
+- prefixes x[:i]
+- suffixes x[i:]
+- substrings x[i:j]
+
+
+#### Example: Mergesort
+
+- Subproblems: s(i, j) = sorted array on a[i:j]
+- relate: s(i,j) = merge(s(i, m), s(m, j)), m = i + [(j - 1) / 2]
+- Topo order: increasing j - i
+- base case: s(i, i) = []
+- original problem: s(0, n)
+- Time: T(n) = 2T(n/2) + O(N) = O(N lg N)
+
