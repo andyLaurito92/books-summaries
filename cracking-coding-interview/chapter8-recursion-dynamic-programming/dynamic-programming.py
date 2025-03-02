@@ -69,3 +69,7 @@ def bowling(a: list[int]) -> int:
 assert 110 == bowling([1, 1, 9, 9, 2, -5, -5])
 
 assert 23 == bowling([3, 3, -2, 0, -1, 7, 2])
+
+assert 0 == bowling([])
+
+assert 5 == bowling([1, 1, 1, 1, 1])
