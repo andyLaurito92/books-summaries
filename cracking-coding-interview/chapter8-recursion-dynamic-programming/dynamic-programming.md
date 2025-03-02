@@ -131,6 +131,13 @@ Let's define the following algorithm design paradigm: SRTBOT
 - Original problem: solve via subproblems -> often is 1 of the subproblems
 - Time analysis
 
+The big idea of dynamic programming is memoization: Re-use the results of the different
+subproblems to decrease the complexity of the solution!
+Usually: Mantain a mapping such as mapping[subproblem] = res of subproblem
+
+Then with the above, the subproblems either return a meoized solution or calculate it
+and store it into a "memory"
+
 ### Tricks
 
 Subproblem design: If input is a sequence, then good subproblems are:

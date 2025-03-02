@@ -36,8 +36,8 @@ Memory: O(N)
 Python nomenclature for slicing:
 
 a[start:stop]  # items start through stop-1
-a[start:]      # items start through the rest of the array
-a[:stop]       # items from the beginning through stop-1
+a[start:]      # items start through the rest of the array -> sufixes
+a[:stop]       # items from the beginning through stop-1 -> prefixes
 a[:]           # a copy of the whole array
 """
 
