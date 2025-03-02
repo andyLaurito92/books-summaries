@@ -138,6 +138,12 @@ Usually: Mantain a mapping such as mapping[subproblem] = res of subproblem
 Then with the above, the subproblems either return a meoized solution or calculate it
 and store it into a "memory"
 
+*Note* Regarding running time: The time it takes *WITH MEMOIZATION* is 
+
+*time <= sum subproblem_{i} relate of non-recursive work*
+
+Important note: If we don't use memoization the running time is exponential!
+
 ### Tricks
 
 Subproblem design: If input is a sequence, then good subproblems are:
