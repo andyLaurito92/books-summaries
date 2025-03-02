@@ -41,26 +41,31 @@ a[:stop]       # items from the beginning through stop-1
 a[:]           # a copy of the whole array
 """
 
-def bowling(a: list[int], memory: list[int] = [0]) -> int:
-    """
-    We start our memory with 0 because we use the lengths of the array as indexes.
-    This implies that when n = 1 then we want a[1] to be the subproblem of s(a[1]). For doing
-    this, we need to store in the memory s([]) which is always 0
-    """
-    n = len(a)
-    if len(memory) > n:
-        return memory[n]
-    
-    if n == 1:
-        memory.append(max(0, a[0]))
-        return memory[1]
+def bowling(a: list[int]) -> int:
+    def bowling_rec(a: list[int], memory: list[int] = [0]) -> int:
+        """
+        We start our memory with 0 because we use the lengths of the array as indexes.
+        This implies that when n = 1 then we want a[1] to be the subproblem of s(a[1]). For doing
+        this, we need to store in the memory s([]) which is always 0
+        """
+        n = len(a)
+        if len(memory) > n:
+            return memory[n]
 
-    val = max(
-         bowling(a[:n-1]),
-         a[n-1] + bowling(a[:n-1]),
-         a[n-2] * a[n-1] + bowling(a[:n-2])
-     )
-    memory.append(val)
-    return memory[n]
+        if n == 1:
+            memory.append(max(0, a[0]))
+            return memory[1]
+
+        val = max(
+             bowling_rec(a[:n-1]),
+             a[n-1] + bowling_rec(a[:n-1]),
+             a[n-2] * a[n-1] + bowling_rec(a[:n-2])
+         )
+        memory.append(val)
+        return memory[n]
+    return bowling_rec(a)
         
+
 assert 110 == bowling([1, 1, 9, 9, 2, -5, -5])
+
+assert 23 == bowling([3, 3, -2, 0, -1, 7, 2])
