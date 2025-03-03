@@ -69,6 +69,10 @@ def bowling(a: list[int]) -> int:
     return bowling_rec(a)
         
 
+"""
+Using bottom up dynamic programming technique to convert a recursive
+algorithm in an iterative one
+"""
 def bowling2(a: list[int]) -> int:
     n = len(a)
     if n == 0:
