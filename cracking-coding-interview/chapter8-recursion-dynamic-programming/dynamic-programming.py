@@ -98,3 +98,120 @@ assert 110 == bowling2([1, 1, 9, 9, 2, -5, -5])
 assert 23 == bowling2([3, 3, -2, 0, -1, 7, 2])
 assert 0 == bowling2([])
 assert 5 == bowling2([1, 1, 1, 1, 1])
+
+
+
+"""
+Longest common subsequence (LCS)
+Given 2 sequences a, b, find the longest common subsequence
+between them
+
+Note:
+- Substring is a sequence that has to be consecutive
+- Subsequence is a sequence that doesn't necessarily needs to be consecutive. This means, if we have a = MICHAELANGELO then MAELGO is a valid subsequence :). You can have blanks in between, you can skip items
+
+Example:
+Given a = HIEROGLYPHOLOGY and b = MICHAELANGELO the LCS=HELLO :) (There might be more than 1 longest common subsequence)
+"""
+
+"""
+Let's apply STRBOT
+
+Example: SOMEAJFHEQNOVX, SXOMEAJ
+		    	    ''
+		  S    	               '' 		S
+	        SX     S              X	''		X
+	     SXO    SX    SO S      XO X O   ''		O
+	  SXOM SXO SXM SX SOM SO XOM XO XM X OM O	M
+
+subproblem: What if we use prefixes for only one of the given strings?
+Then, we fix a and what we want to ask is: What is the lcs between a
+and b[:i] s(a, b[:i]) = max(len(s(a, b[:i-1]) + b[i]), b[i]) is a
+subsequence then s(a, b[:i-1] + b[i] else s(a, b[:i-1]) topological
+order: for i in range(1, len(b)) relation between subproblems: Given
+s(a, b[:i-1]) lcs, add b[i] and find out if it's still subsequence
+Base case: if len(a) == 0 or len(b) == 0 then return '' original
+problem: s(a, b[:n]) where len(b) = n time: depends on how much time
+it takes to validate that s(a, b[:i-1]) + b[i] is a subsequence. If we
+use a map we can do this in average constant time, worst case
+O(len(b)).  Then => O(len(b) * len(a))
+
+"""
+
+from collections import defaultdict
+
+def issubsequence(a:str, b:str) -> bool:
+    """
+    Determine if b is subsequence of a
+    """
+    if len(b) > len(a):
+        return False
+
+    mapping = defaultdict(list)
+    for k, letter in enumerate(a):
+        mapping[letter].append(k)
+
+    i_a = 0
+    for j, letter in enumerate(b):
+        idxes = mapping.get(letter, None)
+        if idxes is None:
+            return False
+        else:
+            k = 0
+            while k >= len(idxes) and i_a < idxes[k]:
+                k += 1
+            if k >= len(idxes) or i_a < idxes[k]:
+                return False
+            
+            i_a = idxes[k]
+            print(i_a, k, idxes[k])
+            mapping[letter] = idxes[k+1:]
+            if len(mapping[letter]) == 0:
+                del mapping[letter]
+    return True
+        
+
+def longestcommonsubsequence_backtracking(a: str, b:str) -> str:
+    all_possible = {''}
+    for i in range(len(b)):
+        for x in all_possible:
+            if issubsequence(a, x + b[i]):
+                all_possible.add(x + b[i])
+
+    sorted(all_possible, reverse=True)[0]
+
+def longestcommonsubsequence(a: str, b: str) -> str:
+
+    def issubsequence(a: str, subseq: dict[str, list[int]]) -> bool:
+
+        return True
+        
+    """ Return the longest common subsequence of the given strings """
+    if len(a) == 0 or len(b) == 0: return '' n = len(a) m = len(b) if
+    n < m:
+        a, b = b, a
+    
+    mapping = defaultdict(list)
+    for i, letter in enumerate(a):
+        mapping[letter].append(i)
+    
+    
+    memory = {''}
+    lcs = ''
+    for i in range(1, m):
+        val = memory[i-1] # lcs up to now
+        # we already know that memory[i-1] is subsequence. Therefore, 
+        # memory[i-1] + b[i] is subsequence iff exists k in mapping[b[i]] such that k >= i
+        if len([k for k in mapping[b[i]] if k >= i]) > 0:
+            val = memory[i-1] + b[i]
+        memory.append(val)
+
+    return memory[m-1]
+
+
+# IHLG
+assert "HELLO" == longestcommonsubsequence('HIEROGLYPHOLOGY', 'MICHAELANGELO')
+assert "I" == longestcommonsubsequence('SOMETHINGFUN', 'I')
+assert "MJ" == longestcommonsubsequence('SOMETHINGFUNJEJE', 'MJ')
+assert "MJ" == longestcommonsubsequence('SOMETHINGFUNJEJEX', 'SXOME')
+assert "ABBCDFK" == longestcommonsubsequence('HABBCDFKUNCJ', 'HJABBCDFK')

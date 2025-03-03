@@ -127,6 +127,7 @@ Let's define the following algorithm design paradigm: SRTBOT
 	- Ideally we want a polinomial number of it
 - Relate: Subproblem solution recursively
 - Topological order on subproblems to guarantee acyclig DAG -> vertices = subproblems; edges -> order in which we need to solve the subproblems. Usually just a for loop
+	- We usually point bigger subproblems to smaller subproblems <--> a -> b iff a needs b in order to be solved.
 - Base: cases of relation
 - Original problem: solve via subproblems -> often is 1 of the subproblems
 - Time analysis
@@ -140,9 +141,11 @@ and store it into a "memory"
 
 *Note* Regarding running time: The time it takes *WITH MEMOIZATION* is 
 
-*time <= sum subproblem_{i} non-recursive work (this is, the work it takes to resolve each relation)*
+*time <= sum subproblem_{i} * non-recursive work (this is, the work it takes to resolve each relation)*
 
-Why the above time? Because subproblems are memoised! So that should take O(1)
+Why the above time? Because subproblems are memoised! So that means that we should solve
+each subproblem only 1 time. Therefore, sum subproblem_{i} represents that, the number of
+subproblems we need to solve. Per each of these subproblems we have some non-recursive work to do (the work it takes the relation).
 
 Important note: If we don't use memoization the running time is exponential!
 
