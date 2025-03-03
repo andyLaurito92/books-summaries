@@ -140,9 +140,57 @@ and store it into a "memory"
 
 *Note* Regarding running time: The time it takes *WITH MEMOIZATION* is 
 
-*time <= sum subproblem_{i} relate of non-recursive work*
+*time <= sum subproblem_{i} non-recursive work (this is, the work it takes to resolve each relation)*
+
+Why the above time? Because subproblems are memoised! So that should take O(1)
 
 Important note: If we don't use memoization the running time is exponential!
+
+Once you've reduced your problem to the above algorithm design paradigm, you just need to
+apply this framework:
+
+```
+def f(subproblem):
+	if subproblem in memo:
+		return memo[subproblem]
+		
+	if subproblem is base:
+		base
+	else:
+		recursive via relation
+```
+
+#### Example 1: Bowling
+
+Bowling: We are playing a new type of bowling :) Each pin has a value in it, and our goal is to maximize
+our score. There are 3 possible actions per each pin:
+- Hit it -> This adds vi to your score, where vi represents the value of the ith pin
+- Don't hit it -> No addition to your current score
+- Hit in the middle of 2 pins -> This adds the product of vi vj where vi, vj represent the value of pins i and j respectively
+
+Given a list of integers which represent the values of each pin, our goal is to get the max score we can get from the given pins
+
+Note: There can be negative values
+
+Let's use our design paradigm for dynamic programming
+
+What are the subproblems we want to solve?
+
+Given the count from left to right, this is taking prefixes, what we can ask
+ourselves is, given the ith position, what's the max possible score I can get
+startint with pins i, i +1 ... n-1
+
+Subproblems: max score s(a[:i]) = max(s(a[:i-1]),
+		a[i] + s(a[:i-1]),
+		a[i-1] * a[i] + s(a[:i-2])
+		)
+How many subproblems do I have? O(N)! Because it's prefixes
+Relate (Can I write a recurrence relation?): s(i) = max(s(i-1), a[i] + s(i-1), a[i] * a[i-1] + s(i-2))
+Topological order: Increasing order (prefixes) for range(2, n)
+Base: n == 0 => res= 0 and n == 1 => [v1] = max(v1, 0)
+Original: s(a[0:])
+Time: O(N) * O(1) where O(1) is the non-recursive work I need to do for solving each subproblem
+Memory: O(N)
 
 ### Tricks
 
@@ -151,6 +199,16 @@ Subproblem design: If input is a sequence, then good subproblems are:
 - suffixes x[i:]
 - substrings x[i:j]
 
+### Bottom up DP
+For the bowling subproblem 
+
+```
+s(0) = 0  # base
+for i=range(2, n) # topological order
+	s(i) = max(s(i-1), a[i] + s(i-1), a[i-1] * a[i-2] + s(i-2)) # relate
+return s(n) # orginal problem
+
+```
 
 #### Example: Mergesort
 
