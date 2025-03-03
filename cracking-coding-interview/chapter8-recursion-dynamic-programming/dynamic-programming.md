@@ -195,9 +195,9 @@ Memory: O(N)
 ### Tricks
 
 Subproblem design: If input is a sequence, then good subproblems are:
-- prefixes x[:i]
-- suffixes x[i:]
-- substrings x[i:j]
+- prefixes x[:i] -> O(N) (there are a polinomial number of prefixes)
+- suffixes x[i:] -> O(N) (there are a polinomial number of suffixes)
+- substrings x[i:j] -> O(N^2) (for each i you have N N - 1 options => N * N - 1 = N^2 - N = N^2)
 
 ### Bottom up DP
 For the bowling subproblem 
