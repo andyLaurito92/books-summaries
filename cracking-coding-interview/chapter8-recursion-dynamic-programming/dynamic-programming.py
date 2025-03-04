@@ -181,24 +181,17 @@ def longestcommonsubsequence_backtracking(a: str, b:str) -> str:
         curr.add('')
         if issubsequence(a, b[i]):
             curr.add(b[i])
-        print(memory)
         for x in memory[i]:
             subs = x + b[i]
-            print(subs, issubsequence(a, subs))
             if issubsequence(a, subs):
                 curr.add(subs)
         memory.append(curr.union(memory[i]))
 
-    print(memory)
-    return sorted(memory[len(b)-1], key=len, reverse=True)[0]
+    return sorted(memory[len(b)], key=len, reverse=True)[0]
 
 
-lcs_functions = [longestcommonsubsequence_backtracking]
-
-for fn in lcs_functions:
-    print("Testing function ", fn.__name__)
-    assert "HELLO" == fn('HIEROGLYPHOLOGY', 'MICHAELANGELO')
-    assert "I" == fn('SOMETHINGFUN', 'I')
-    assert "MJ" == fn('SOMETHINGFUNJEJE', 'MJ')
-    assert "MJ" == fn('SOMETHINGFUNJEJEX', 'SXOME')
-    assert "ABBCDFK" == fn('HABBCDFKUNCJ', 'HJABBCDFK')
+assert "HEGLO" == longestcommonsubsequence_backtracking('HIEROGLYPHOLOGY', 'MICHAELANGELO')
+assert "I" == longestcommonsubsequence_backtracking('SOMETHINGFUN', 'I')
+assert "MJ" == longestcommonsubsequence_backtracking('SOMETHINGFUNJEJE', 'MJ')
+assert "SOME" == longestcommonsubsequence_backtracking('SOMETHINGFUNJEJEX', 'SXOME')
+assert "HABBCDFK" == longestcommonsubsequence_backtracking('HABBCDFKUNCJ', 'HJABBCDFK')
