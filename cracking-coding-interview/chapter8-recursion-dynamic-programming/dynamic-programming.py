@@ -229,7 +229,6 @@ def longestcommonsubsequence(a: str, b:str) -> int:
             else:
                 val = max(memory[i-1][j], memory[i][j-1])
             memory[i][j] = val
-    print(memory)
     return memory[n][m]
                 
 
