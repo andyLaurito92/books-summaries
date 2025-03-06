@@ -201,9 +201,9 @@ def longestcommonsubsequence_backtracking(a: str, b:str) -> str:
 
 
 """
-subproblem, s(a[i], b[j]) if a[i] == b[j]: 1 + s(a[i+1:], b[j+1:]) else max(s(a[i+1:], b[j:]), s(a[i:], b[j+1:])
+subproblem, s(i, j) = lcs(a[i], b[j]) # So subproblem is how you define your subproblems. This usually means using prefixes, sufixes, how you iterate over the inputs
 topological order: for i in range(len(a)) for j in range(len(b))
-relation: 
+relation:  s(a[i], b[j]) if a[i] == b[j]: 1 + s(a[i+1:], b[j+1:]) else max(s(a[i+1:], b[j:]), s(a[i:], b[j+1:])
 base case: if len(a) == 0 or len(b) == 0 return 0
 original problem: s(a[n], b[m]) where n = len(a) & m = len(b)
 time: sum subproblems * non-recursive work => O(N^2) is the num of subproblems * O(1) (taking
@@ -220,16 +220,35 @@ def longestcommonsubsequence(a: str, b:str) -> int:
     for i in range(n+1): # 0 = empty string, 1 = len(a) == 1. It's not the idxes
         memory.append([])
         for _ in range(m+1):
-            memory[i].append(0)
+            memory[i].append((0, (0, 0)))
 
+    
     for i in range(1, n+1):
         for j in range(1, m+1):
+            parent_pointer = (i-1, j-1)
             if a[i-1] == b[j-1]:
-                val = 1 + memory[i-1][j-1]
+                val = 1 + memory[i-1][j-1][0]
             else:
-                val = max(memory[i-1][j], memory[i][j-1])
-            memory[i][j] = val
-    return memory[n][m]
+                if memory[i-1][j] > memory[i][j-1]:
+                    val = memory[i-1][j][0]
+                    parent_pointer = (i-1, j)
+                else:
+                    val = memory[i][j-1][0]
+                    parent_pointer = (i, j-1)
+            memory[i][j] = (val, parent_pointer)
+
+    # find the lcs
+    lcs = []
+    i, j = (n, m)
+    while i != 0 and j != 0:
+        nextpair = memory[i][j][1]
+        if (i-1, j-1) == nextpair:
+            lcs.insert(0, a[i-1])
+        i, j = nextpair
+        
+
+    res = ''.join(lcs)
+    return res
                 
 
 
@@ -238,3 +257,10 @@ assert "I" == longestcommonsubsequence_backtracking('SOMETHINGFUN', 'I')
 assert "MJ" == longestcommonsubsequence_backtracking('SOMETHINGFUNJEJE', 'MJ')
 assert "SOME" == longestcommonsubsequence_backtracking('SOMETHINGFUNJEJEX', 'SXOME')
 assert "HABBCDFK" == longestcommonsubsequence_backtracking('HABBCDFKUNCJ', 'HJABBCDFK')
+
+
+assert "IELLO" == longestcommonsubsequence('HIEROGLYPHOLOGY', 'MICHAELANGELO')
+assert "I" == longestcommonsubsequence('SOMETHINGFUN', 'I')
+assert "MJ" == longestcommonsubsequence('SOMETHINGFUNJEJE', 'MJ')
+assert "SOME" == longestcommonsubsequence('SOMETHINGFUNJEJEX', 'SXOME')
+assert "HABBCDFK" == longestcommonsubsequence('HABBCDFKUNCJ', 'HJABBCDFK')
