@@ -119,10 +119,10 @@ Let's apply STRBOT
 
 Example: SOMEAJFHEQNOVX, SXOMEAJ
 		    	    ''
-		  S    	               '' 		S
-	        SX     S              X	''		X
-	     SXO    SX    SO S      XO X O   ''		O
-	  SXOM SXO SXM SX SOM SO XOM XO XM X OM O	M
+		  S    	               '' 			S
+	        SX     S              X	''			X
+	     SXO    SX    SO S      XO X O   ''			O
+	  SXOM SXO SXM SX SOM SO SM S XOM XO XM X OM O M ''	M
 
 subproblem: What if we use prefixes for only one of the given strings?
 Then, we fix a and what we want to ask is: What is the lcs between a
@@ -171,11 +171,20 @@ def issubsequence(a:str, b:str) -> bool:
     return True
         
 
+"""
+The trick here is to generate valid subsequences in an optimal way. For this, we use
+memoization to "not having to generate everything again from scratch"
+
+Subproblem would be: s(a, b[:i]) = 
+
+"""
+
 def longestcommonsubsequence_backtracking(a: str, b:str) -> str:
     if len(b) == 0:
         return ''
 
     memory = [{''}]
+    lcs = ''
     for i in range(len(b)):
         curr = set()
         curr.add('')
@@ -185,9 +194,44 @@ def longestcommonsubsequence_backtracking(a: str, b:str) -> str:
             subs = x + b[i]
             if issubsequence(a, subs):
                 curr.add(subs)
+                if len(subs) > len(lcs):
+                    lcs = subs
         memory.append(curr.union(memory[i]))
+    return lcs
 
-    return sorted(memory[len(b)], key=len, reverse=True)[0]
+
+"""
+subproblem, s(a[i], b[j]) if a[i] == b[j]: 1 + s(a[i+1:], b[j+1:]) else max(s(a[i+1:], b[j:]), s(a[i:], b[j+1:])
+topological order: for i in range(len(a)) for j in range(len(b))
+relation: 
+base case: if len(a) == 0 or len(b) == 0 return 0
+original problem: s(a[n], b[m]) where n = len(a) & m = len(b)
+time: sum subproblems * non-recursive work => O(N^2) is the num of subproblems * O(1) (taking
+max and if condition) => O(N^2)
+"""
+def longestcommonsubsequence(a: str, b:str) -> int:
+    if len(a) == 0 or len(b) == 0:
+        return 0
+
+    n = len(a)
+    m = len(b)
+    memory = []
+    # We fill up the memory with 0 values
+    for i in range(n+1): # 0 = empty string, 1 = len(a) == 1. It's not the idxes
+        memory.append([])
+        for _ in range(m+1):
+            memory[i].append(0)
+
+    for i in range(1, n+1):
+        for j in range(1, m+1):
+            if a[i-1] == b[j-1]:
+                val = 1 + memory[i-1][j-1]
+            else:
+                val = max(memory[i-1][j], memory[i][j-1])
+            memory[i][j] = val
+    print(memory)
+    return memory[n][m]
+                
 
 
 assert "HEGLO" == longestcommonsubsequence_backtracking('HIEROGLYPHOLOGY', 'MICHAELANGELO')
