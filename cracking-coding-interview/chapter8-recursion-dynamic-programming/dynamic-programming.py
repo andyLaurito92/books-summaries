@@ -264,3 +264,61 @@ assert "I" == longestcommonsubsequence('SOMETHINGFUN', 'I')
 assert "MJ" == longestcommonsubsequence('SOMETHINGFUNJEJE', 'MJ')
 assert "SOME" == longestcommonsubsequence('SOMETHINGFUNJEJEX', 'SXOME')
 assert "HABBCDFK" == longestcommonsubsequence('HABBCDFKUNCJ', 'HJABBCDFK')
+
+
+
+"""
+subproblem: substrings, a[i:j]
+topological order: for i in range(n) for j in range(i, n)
+relation: s(a, i, j) = if a[j] > s(a, i, j-1)[j-2] then a[j] + s(a, i, j+1) else max(s(a, i, j+1), s(a, i+1, j))
+base case: s(a, 0, 0) = ''
+original problem: s(a, n, n)
+time: if len(a) = N then O(N^2) * constant time (solve non-recursive problem) => O(N^2)
+"""
+
+"""
+CARBOHYDRATE
+			''
+		C		'' 			C
+	   CA	     A	     A 		''		A
+
+CARB
+C -> C
+CA -> C|A
+CAR -> AR
+CARB -> AR|AB
+"""
+
+def longestincreasingsubsequence(a: str) -> str:
+    """
+    Given a string a, return the longest increasing subsequence
+    """
+
+    n = len(a)
+    if n == 0:
+        return ''
+
+    lis = ''
+    memory = []
+    for i in range(n):
+        memory.apepnd([])
+        for _ in range(i, n):
+            memory[i].append('')
+    
+    lis = []
+    # CARB
+    # lis=[],i = 0, j = 1, memory=[['', '', '', ''], ['', '', ''], ['', ''], ['']]
+    # len_subs = 0, subs = '', if C > ''
+    for i in range(n):
+        for j in range(i, n):
+            len_subs = len(memory[i][j-1])
+            subs = memory[i][j-1]
+            if a[j] > subs[len_subs-1]:
+                val = subs.append(a[j])
+            else:
+                val = subs
+            memory[i][j] = val
+            if len(lis) < len(val):
+                lis = val
+
+    return ''.join(lis)
