@@ -277,7 +277,7 @@ time: if len(a) = N then O(N^2) * constant time (solve non-recursive problem) =>
 """
 
 """
-CARBOHYDRATE
+CARBOHYDRATE --> ABORT
 			''
 		C		'' 			C
 	   CA	     A	     A 		''		A
@@ -293,32 +293,77 @@ def longestincreasingsubsequence(a: str) -> str:
     """
     Given a string a, return the longest increasing subsequence
     """
+    def lis(a, i, j):
+        n = len(a)
+        if n == 0:
+            return ''
 
+        lis = ''
+        memory = []
+        for i in range(n):
+            memory.apepnd([])
+            for _ in range(i, n):
+                memory[i].append('')
+
+        lis = ''
+        # CARB
+        # lis=[],i = 0, j = 1, memory=[['', '', '', ''], ['', '', ''], ['', ''], ['']]
+        # len_subs = 0, subs = '', if C > ''
+        for i in range(n):
+            for j in range(i, n):
+                len_subs = len(memory[i][j-1])
+                subs = memory[i][j-1]
+                if a[j] > subs[len_subs-1]:
+                    memory[i][j].append(subs+a[j])
+                else:
+                    memory[i][j].append(max(subs, 3))
+                memory[i][j] = val
+                if len(lis) < len(val):
+                    lis = val
+
+    return ''.join(lis)
+
+
+
+"""
+subproblem: lis(a) = lis(a[:i])
+topological order: for i in range(n) where n = len(a)
+
+relation:  Question to answer: Is a[i] THE LAST character of lis?
+lis(a[:i]) = max(a[i] + lis(a[:i-1]) if lis(a[:i-1])[-1] < a[i], lis(a[:i-1])
+base case: if a is '': return ''
+original problem: lis(a[n])
+time: ?
+"""
+# CARBOHYDRATE
+
+# i = 1, memory[0] = {''}, memory[1] = {C], lis = C
+# i = 2, C < A X, val = A, new_set = {A}, memory[2] = {A, C}, lis=C
+# i = 3, A < R, new_set = {AR}, lis=AR, C < R Y, new_set={AR,CR}, lis=AR, memory[3]={A, C, AR, CR}
+def lis(a: list[str]) -> str:
     n = len(a)
     if n == 0:
         return ''
 
-    lis = ''
     memory = []
-    for i in range(n):
-        memory.apepnd([])
-        for _ in range(i, n):
-            memory[i].append('')
-    
-    lis = []
-    # CARB
-    # lis=[],i = 0, j = 1, memory=[['', '', '', ''], ['', '', ''], ['', ''], ['']]
-    # len_subs = 0, subs = '', if C > ''
-    for i in range(n):
-        for j in range(i, n):
-            len_subs = len(memory[i][j-1])
-            subs = memory[i][j-1]
-            if a[j] > subs[len_subs-1]:
-                val = subs.append(a[j])
+    for _ in range(n+1):
+        memory.append(set())
+    memory[0].add('')
+        
+    lis = ''
+    for i in range(1, n):
+        new_set = set()
+        for lis_i in memory[i-1]:
+            val = ''
+            if len(lis_i) == 0 or lis_i[-1] < a[i-1]:
+                val = lis_i + a[i-1] # super inefficient, to fix!
             else:
-                val = subs
-            memory[i][j] = val
-            if len(lis) < len(val):
+                val = a[i-1]
+            new_set.add(val)
+            if len(val) > len(lis):
                 lis = val
+        memory[i] = memory[i-1].union(new_set)
+    return lis
 
-    return ''.join(lis)
+
+assert lis('CARBOHYDRATE') == 'ABORT'

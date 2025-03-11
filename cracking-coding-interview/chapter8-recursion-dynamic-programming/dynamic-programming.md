@@ -222,3 +222,34 @@ return s(n) # orginal problem
 - original problem: s(0, n)
 - Time: T(n) = 2T(n/2) + O(N) = O(N lg N)
 
+
+#### Example: Longest increasing subsequence
+
+Given a string a, we want to find the longest increasing subsequence. This is, given 
+CARBOHYDRATE -> ABORT (All leters are in increasing order and in their original order)
+
+
+subproblem: lis(a) = lis(a[:i])
+topological order: for i in range(n) where n = len(a)
+
+relation:  Question to answer: Is a[i] in lis?
+
+lis(a[:i]) = max(l(i+1), 1+l(i+1)) # Either a[i] belongs to the lis or it doesn't
+
+There's a problem with the above definition: We are not enforcing a[i] to be less than 
+it's next element. We could perfectly add the "if a[i] < a[i+1]", but this is WRONG! Why?
+Because it's not always true that a[i+1] belongs to the longest increasing subsequence. The
+only thing that we know is that a[i] might or might not belong to the longest increasing 
+subsequence, and we know that it might exist j, where i < j <= len(a) - 1 where 
+a[i] < a[j] (this is, j is the next character of the longest increasing subsequence). Our
+problem right now is that we don't know where this j is and when it will occur!
+
+So, how do we solve the above?
+
+We change the subproblem definition! Instead of asking lis(a) = lis(a[:i]), we define
+lis(a) = lis(a[:i]) where lis(a[:i]) ends with a[i] (is a[i] in lis(a)?). In other words:
+Give me the longest increasing subsequence that ends up with a[i]
+
+base case:
+original problem:
+time: 
