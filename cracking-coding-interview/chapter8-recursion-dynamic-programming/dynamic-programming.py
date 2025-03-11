@@ -372,9 +372,16 @@ def lis(a: list[str]) -> str:
 
 
 # CARBOHYDRATE
-# C, i=1, lis = [], lis_i = [], lis_i = ['C'], lis = ['C']
-# A, i=2, j = 0 C, lis_i=[], lis_i=['C'] 
-# A, i=2, j = 1 A, lis_i=['C'], 
+# i = 1, j = 0 => C=a[0] < a[1]=A X and 1 + 1 > 2: 
+# i = 2, j = 0 => C=a[0] < a[2]=R Y and 1 + 1 > 2 Y => memory[2] = memory[1] + 1 = 2, prev[2] = 0
+# i = 2, j = 1 => A=a[1] < a[2]=R Y and 1 + 1 > memory[i] = 2 X
+# i = 3, j = 0 => C=a[0] < a[3]=B X
+# i = 3, j = 1 => A=a[1] < a[3]=B Y and memory[1] + 1 > memory[3] => 2 > 1 Y => memory[3] = 1 + 1 = 2 and prev[3] = 1
+# i = 3, j = 2 => R=a[2] < a[3]=B X
+# i = 4, j = 0 => C=a[0] < a[4]=O Y and 1=memory[0] + 1 > memory[4]=1 Y => memory[4]=memory[0]+1=2 and prev[4] = 0
+# i = 4, j = 1 => A=a[1] < a[4]=O Y and memory[1] + 1 > memory[4]=2 X
+# i = 4, j = 2 => R=a[2] < a[4]=0 X
+# i = 4, j = 3 => B=a[3] < a[4]=O Y and 2=memory[3] + 1 > memory[4]=2 Y => memory[4]=memory[3]+1=3 and prev[4] = 3
 def lis2(a: list[str]) -> str:
     n = len(a)
     if n == 0:
