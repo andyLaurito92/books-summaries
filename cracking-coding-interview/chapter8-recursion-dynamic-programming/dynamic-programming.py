@@ -326,20 +326,25 @@ def longestincreasingsubsequence(a: str) -> str:
 
 
 """
-subproblem: lis(a) = lis(a[:i])
+subproblem: lis(a) = lis(a[:i]) where lis(a[:i]) is the longest increasing subsequence that ends with a[i]
 topological order: for i in range(n) where n = len(a)
-
 relation:  Question to answer: Is a[i] THE LAST character of lis?
-lis(a[:i]) = max(a[i] + lis(a[:i-1]) if lis(a[:i-1])[-1] < a[i], lis(a[:i-1])
+lis(a[:i]) = max{ lis(j) | where 0 <= j < i & a[j] < a[i] } mathematical notation for saying: for j in range(0, i)
 base case: if a is '': return ''
-original problem: lis(a[n])
-time: ?
+original problem: max(lis(a[i]), 0 <= i <= n)
+time: O(N) * work in relation
+work in relation = What's the number of choices I have per each i? 
 """
 # CARBOHYDRATE
 
 # i = 1, memory[0] = {''}, memory[1] = {C], lis = C
 # i = 2, C < A X, val = A, new_set = {A}, memory[2] = {A, C}, lis=C
 # i = 3, A < R, new_set = {AR}, lis=AR, C < R Y, new_set={AR,CR}, lis=AR, memory[3]={A, C, AR, CR}
+
+"""
+This has O(2^N * N) complexity because we are generating all valid subsequences
+It also concatenates strings which is O(N^2) where n = length of the string
+"""
 def lis(a: list[str]) -> str:
     n = len(a)
     if n == 0:
@@ -351,7 +356,7 @@ def lis(a: list[str]) -> str:
     memory[0].add('')
         
     lis = ''
-    for i in range(1, n):
+    for i in range(1, n+1):
         new_set = set()
         for lis_i in memory[i-1]:
             val = ''
@@ -366,4 +371,37 @@ def lis(a: list[str]) -> str:
     return lis
 
 
+# CARBOHYDRATE
+# C, i=1, lis = [], lis_i = [], lis_i = ['C'], lis = ['C']
+# A, i=2, j = 0 C, lis_i=[], lis_i=['C'] 
+# A, i=2, j = 1 A, lis_i=['C'], 
+def lis2(a: list[str]) -> str:
+    n = len(a)
+    if n == 0:
+        return ''
+
+    memory = [1] * n
+    prev = [-1] * n
+
+    for i in range(1, n):
+        for j in range(i):
+            if a[j] < a[i] and memory[j] + 1 > memory[i]:
+                memory[i] = memory[j] + 1
+                prev[i] = j
+
+    max_length = max(memory)
+    idx = memory.index(max_length)
+
+    res = []
+    while idx != -1:
+        res.insert(0, a[idx])
+        idx = prev[idx]
+
+    return ''.join(res)
+                
+                
 assert lis('CARBOHYDRATE') == 'ABORT'
+assert lis('EMPATHY') == 'EMPTY'
+
+assert lis2('CARBOHYDRATE') == 'ABORT'
+assert lis2('EMPATHY') == 'EMPTY'
