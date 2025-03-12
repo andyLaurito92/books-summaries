@@ -253,3 +253,25 @@ Give me the longest increasing subsequence that ends up with a[i]
 base case:
 original problem:
 time: 
+
+
+### Alternating coin game
+
+Given values of coins in sequence of values v0...vn-1, given 2 players, each player in each turn can either pick the first value or the last one. Once they pick a value, this is removed from the sequence, and then the next player repeats the process.
+The goal of the game is to sum the highest score u can get
+
+Example:
+
+s = 5 10 100 25
+
+Player 1: Can either choose 5 or 25. *Note* If player 1 chooses 25, because it's greater, then 
+player 2 can choose 100! And with this they will win the game. Therefore, the smartest decision
+for player 1 is to choose 5, so player 2 has to either choose 10 or 25 and finally player 1 
+can choose 100 and win the game
+
+subproblem: acg(s) = acg(s[i:j]) substrings
+relation: acg(s[i:j]) = max(s[i]+acg(s[i+1:j]), s[j]+acg(s[i:j-1])
+topological order: while i < j
+base: n == 0 then 0 n == 1 then a[0]
+original problem: acg(s[0:n-1])
+runtime: O(N^2) (num of subproblems) * get the maximum = O(N^2)

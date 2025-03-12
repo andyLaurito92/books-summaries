@@ -343,7 +343,7 @@ work in relation = What's the number of choices I have per each i?
 
 """
 This has O(2^N * N) complexity because we are generating all valid subsequences
-It also concatenates strings which is O(N^2) where n = length of the string
+It also concatenates strings which is O(N) where n = length of the string
 """
 def lis(a: list[str]) -> str:
     n = len(a)
@@ -361,7 +361,7 @@ def lis(a: list[str]) -> str:
         for lis_i in memory[i-1]:
             val = ''
             if len(lis_i) == 0 or lis_i[-1] < a[i-1]:
-                val = lis_i + a[i-1] # super inefficient, to fix!
+               val = lis_i + a[i-1] # super inefficient, to fix!
             else:
                 val = a[i-1]
             new_set.add(val)
@@ -412,3 +412,76 @@ assert lis('EMPATHY') == 'EMPTY'
 
 assert lis2('CARBOHYDRATE') == 'ABORT'
 assert lis2('EMPATHY') == 'EMPTY'
+
+
+
+# score_play1 = 0, score_play2 = 0, i = 0, s = 5, 10, 100, 25
+# score_play1 = 5, score_play2 = 0, i = 1, s = 10, 100, 25
+# score_play1 = 5, score_play2 = 
+
+from operator import itemgetter
+
+def acg(s: list[int]) -> int:
+    def acg_bactracking(s: list[int], score_play1: int,
+                    score_play2: int, player1_turn: bool) -> (int, int):
+        n = len(s)
+        if n == 0:
+            return 0
+        if n == 1:
+            if player1_turn:
+                return (score_play1 + s[0], score_play2)
+            else:
+                return (score_play1, score_play2 + s[0])
+
+        if player1_turn:
+            return max(acg_bactracking(s[1:n], score_play1 + s[0], score_play2, False),
+                acg_bactracking(s[0:n-1], score_play1 + s[n-1], score_play2, False))
+        else:
+            return max(acg_bactracking(s[1:n], score_play1, score_play2 + s[0], True),
+                       acg_bactracking(s[0:n-1], score_play1, score_play2 + s[n-1], True),
+                       key=itemgetter(1))
+
+    return acg_bactracking(s, 0, 0, True)[0]
+
+
+# 5 10 100 25
+def acg_memory(s: list[int]) -> int:
+    def acg_bactracking(s: list[int], score_play1: int, score_play2: int, 
+                        player1_turn: bool, i: int, j: int,
+                        memory:list[list[int]]) -> (int, int):
+        if i == j:
+            if player1_turn:
+                memory[i][j] = (score_play1 + s[i], score_play2)
+            else:
+                memory[i][j] = (score_play1, score_play2 + s[i])
+            return memory[i][j]
+
+        if memory[i][j] != -1:
+            return memory[i][j]
+
+        if player1_turn:
+            val = max(
+                acg_bactracking(s, score_play1 + s[i], score_play2, False, i+1, j, memory),
+                acg_bactracking(s, score_play1 + s[j], score_play2, False, i, j-1, memory)
+            )
+        else:
+            val = max(
+                acg_bactracking(s, score_play1, score_play2 + s[i], True, i+1, j, memory),
+                acg_bactracking(s, score_play1, score_play2 + s[j], True, i, j-1, memory),
+                key=itemgetter(1))
+        memory[i][j] = val
+        return memory[i][j]
+
+    memory = []
+    n = len(s)
+    for i in range(n):
+        memory.append([])
+        for j in range(n):
+            memory[i].append(-1)
+
+    return acg_bactracking(s, 0, 0, True, 0, n-1, memory)[0]
+
+
+assert acg([5, 10, 100, 25]) == 105
+
+assert acg_memory([5, 10, 100, 25]) == 105
