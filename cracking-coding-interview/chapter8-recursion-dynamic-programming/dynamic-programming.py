@@ -473,15 +473,77 @@ def acg_memory(s: list[int]) -> int:
         return memory[i][j]
 
     memory = []
+    parent_pointer = []
     n = len(s)
+    for i in range(n):
+        memory.append([])
+        parent_pointer.append([])
+        for j in range(n):
+            memory[i].append(-1)
+            parent_pointer[i].append(-1)
+
+    return acg_bactracking(s, 0, 0, True, 0, n-1, memory)[0]
+
+
+
+
+from functools import lru_cache
+
+def acg_memory2(s: list[int]) -> int:
+    @lru_cache(maxsize=None)
+    def solve(i:int, j:int, player1_turn: bool) -> int:
+        if i > j:
+            return 0
+        if i == j:
+            if player1_turn:
+                return s[i]
+            else:
+                return 0
+        if player1_turn:
+            return max(s[i] + solve(i+1, j, False), s[j] + solve(i, j-1, False))
+        else:
+            return min(solve(i+1, j, True), solve(i, j-1, True))
+
+    n = len(s)
+    if n == 0:
+        return 0
+    elif n == 1:
+        return s[0]
+
+    return solve(0, n-1, True)
+        
+
+def acg_dp_bottomup(s: list[str]) -> int:
+    n = len(s)
+
+    if n == 0:
+        return 0
+    elif n == 1:
+        return s[0]
+    
+    memory = []
     for i in range(n):
         memory.append([])
         for j in range(n):
             memory[i].append(-1)
+            if i == j:
+                memory[i][j] = s[i]
 
-    return acg_bactracking(s, 0, 0, True, 0, n-1, memory)[0]
+
+    for i in range(n):
+        for j in reversed(range(i + 1, n)):
+            if player1_turn:
+                if memory[i][j] == -1:
+                    memory[i][j] = (player1_score, player2_score)
+                current = memory[i][j]
+                highest_score1 = current[0]
+                if highest_score1 < s[i]
+
+            memory[i][j] = (player1_score, player2_score)
 
 
 assert acg([5, 10, 100, 25]) == 105
 
 assert acg_memory([5, 10, 100, 25]) == 105
+
+assert acg_memory2([5, 10, 100, 25]) == 105
