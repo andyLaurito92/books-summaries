@@ -515,35 +515,46 @@ def acg_memory2(s: list[int]) -> int:
 
 def acg_dp_bottomup(s: list[str]) -> int:
     n = len(s)
-
     if n == 0:
         return 0
     elif n == 1:
         return s[0]
     
-    memory = []
+    memory = [[(0, 0) for _ in range(n)] for i in range(n)]
     for i in range(n):
-        memory.append([])
-        for j in range(n):
-            memory[i].append(-1)
-            if i == j:
-                memory[i][j] = s[i]
+        memory[i][i] = (s[i], 0)
 
+    for length in range(2, n+1):
+        for i in range(n - length + 1):
+            j = i + length - 1
+            # Player 1's turn: choose the option that maximizes their score
+            option1_player1 = s[i] + memory[i + 1][j][1]
+            option2_player1 = s[j] + memory[i][j - 1][1]  
 
-    for i in range(n):
-        for j in reversed(range(i + 1, n)):
-            if player1_turn:
-                if memory[i][j] == -1:
-                    memory[i][j] = (player1_score, player2_score)
-                current = memory[i][j]
-                highest_score1 = current[0]
-                if highest_score1 < s[i]
+            # Now the remaning array is either s[i+1:j+1] or s[i:j]. Take note on the
+            # following: IT'S PLAYER 2 TURNS. What does it mean? It means that
+            # Player 2 HAS BECOME the new PLAYER 1, in the sense, that IT'S THE ONE THAT
+            # MOVES NEXT.
+            # Then it means that now player2 "STARTS" playing as FIRST PLAYER in the
+            # subarray s[i+1:j+1] or in the subarray s[i:j]. What is the best score
+            # player 2 can get in this array starting as the first player? That's already
+            # pre-computed in in memory[i+1][j][0] or memory[i][j-1][0] !!!
+            option1_player2 = memory[i + 1][j][0]
+            option2_player2 = memory[i][j - 1][0]
 
-            memory[i][j] = (player1_score, player2_score)
+            # Player 1 chooses the option that maximizes their score
+            if option1_player1 > option2_player1:
+                memory[i][j] = (option1_player1, option1_player2)
+            else:
+                memory[i][j] = (option2_player1, option2_player2)
 
+    return memory[0][n-1][0]
+                    
 
 assert acg([5, 10, 100, 25]) == 105
 
 assert acg_memory([5, 10, 100, 25]) == 105
 
 assert acg_memory2([5, 10, 100, 25]) == 105
+
+assert acg_dp_bottomup([5, 10, 100, 25]) == 105
