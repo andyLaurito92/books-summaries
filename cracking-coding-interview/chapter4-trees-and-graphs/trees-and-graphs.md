@@ -254,11 +254,16 @@ why this is the depth first search algorithm
 
 ```
 def dfs(root):
-	visited = [root]
+	visited = []
+	to_visit = [root]
 	curr = visisted.pop()
+	visited.append(curr)
 	while curr is not None:
-		visited.insert(0, curr.children) # put childrens first
-		curr = visited.remove()
+		for each node in curr.children:
+			if node not in visited:
+				to_visit.insert(0, node)
+		visited.append(curr)
+		curr = to_visit.remove()
 
 ```
 
@@ -271,10 +276,13 @@ of the same level before moving to the next level
 
 ```
 def bfs(root):
-	visited = [root]
+	visited = []
+	to_visit = [root]
 	curr = visisted.pop()
+	visited.append(curr)
 	while curr is not None:
-		visited.extend(curr.children) # put childrens last
-		curr = visited.remove()
+		to_visit.extend([node for node in curr.children if node not in visited]) # put childrens last
+		visited.append(curr)
+		curr = to_visit.remove()
 
 ```
