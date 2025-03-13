@@ -275,3 +275,11 @@ topological order: while i < j
 base: n == 0 then 0 n == 1 then a[0]
 original problem: acg(s[0:n-1])
 runtime: O(N^2) (num of subproblems) * get the maximum = O(N^2)
+
+
+
+*Personal note so far:* Building a recursive function and using memoization for 
+solving dp doesn't seem to be that hard. The problem raises when u try 
+to create a bottom up solution for the algorithm. Usually the problem comes 
+on how to iterate on the data structure according to the problem you want
+to solve.
