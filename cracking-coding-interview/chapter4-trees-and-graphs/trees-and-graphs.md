@@ -189,3 +189,92 @@ is a prefix of any valid words. A trie can do this very quickly.
 *Note 2*: How quickly? A trie can check if a string is a valid prefix in O(K), where K is the length of the string.
 Note that a hash table ALSO TAKES O(K) for accessing the value of a string s where len(s) = K. Why? Because you 
 need to read the whole string for getting it's hash! And this takes O(K) --> Do u really need to read the whole string?
+
+TODO -> IMPLEMENT A TRY
+
+
+## Graphs
+
+A tree is a type of graph without cycles.
+
+Graph is a collection of nodes and edges. Graphs can be directed or undirected. 
+Directed => edge goes 1 way
+Undirected => edge goes 2 ways
+
+- The graph might consist of multiple isolated subgraphs. If there's a path between 
+every pair of vertices then you are in a connected component
+- The graph can also have cycles. Acyclic graph then means no cycles
+
+
+## Representing a graph
+
+### Adjacency List
+
+Most common way. Every vertex stores a list of adjacent vertices. 
+In an undirected graph, (a, b) edge will be stored twice (once in a and another 
+time in b)
+
+```
+class Graph:
+	nodes: list[list[int]] # if we represent a vertex as an integer
+```
+
+We can also define Node class
+
+```
+class Graph:
+	nodes: list[Node]
+	
+class Node:
+	name: str | int
+	children: list[Node]
+```
+
+### Adjacency Matrix
+
+NxN matrix m (N = number of nodes), where m[i][j] == True <--> there is an edge from i to j. If we are in
+an undirected graph, then it means that if m[i][j] == True <---> m[j][i] == True (the matrix will be symmetric)
+
+
+*Note* If you care more on given an edge, it's neighbours, then an adjacency list structure may be more convenient.
+On the contrary, if you care more about edges, then prefer the adjacency matrix
+
+
+## Graph search
+
+
+### DFS - Depth first search
+
+If we "insert" elements at the beginning of the list, then we are 
+using the list as a stack. This means that we are pushing childrens
+on top of the stack. Because of this, every time we pick the next 
+first element, we will be picking always a new children of different
+level than the previous one (because we always push on top). This is
+why this is the depth first search algorithm
+
+```
+def dfs(root):
+	visited = [root]
+	curr = visisted.pop()
+	while curr is not None:
+		visited.insert(0, curr.children) # put childrens first
+		curr = visited.remove()
+
+```
+
+
+### BFS - Breadth first search
+
+If we append childrens into the visited list, then we are using 
+the visited as a queue. By doing this, we first visit all childrens 
+of the same level before moving to the next level
+
+```
+def bfs(root):
+	visited = [root]
+	curr = visisted.pop()
+	while curr is not None:
+		visited.extend(curr.children) # put childrens last
+		curr = visited.remove()
+
+```

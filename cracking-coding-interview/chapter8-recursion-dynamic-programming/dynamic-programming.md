@@ -283,3 +283,12 @@ solving dp doesn't seem to be that hard. The problem raises when u try
 to create a bottom up solution for the algorithm. Usually the problem comes 
 on how to iterate on the data structure according to the problem you want
 to solve.
+
+
+### A bit of history
+
+Dynamic programming was discovered by Bellman, the same guy as in Bellman & Ford algorithm for shortest path in 
+a graph. 
+The main idea of the programming technique is: Programming in that moment was also related to optimization, and
+dynamic meant "We dynamically will get the best optimal answer". This goes against the "Statically get the best
+solution from the "top""
