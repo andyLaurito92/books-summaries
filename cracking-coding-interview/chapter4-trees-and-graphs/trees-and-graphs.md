@@ -267,6 +267,25 @@ def dfs(root):
 
 ```
 
+Given that we are using a stack, we could just use the memory stack of
+calls of functions and do the dfs method recursive:
+
+```
+def dfs(root: Node, visit: Callable[[Node], int]):
+	if root is None:
+		return None
+		
+	curr = root
+	while curr is not None:
+		visit(curr)
+		for child in curr.children:
+			if child.visited == False:
+				child.visited = True
+				visit(child)
+				dfs(child, visit)
+		curr = next_not_visited_node # Visit the next connected component
+```
+
 
 ### BFS - Breadth first search
 
@@ -286,3 +305,9 @@ def bfs(root):
 		curr = to_visit.remove()
 
 ```
+
+
+### Considerations
+
+- If we want to find the shortest path, bfs it's better. DFS will find a path, but not necessarily the 
+shortest path
