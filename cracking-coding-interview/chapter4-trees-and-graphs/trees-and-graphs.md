@@ -311,3 +311,21 @@ def bfs(root):
 
 - If we want to find the shortest path, bfs it's better. DFS will find a path, but not necessarily the 
 shortest path
+
+
+### Reviewing graph theory
+
+*Directed graph:* 
+Bound: |E| <= 2(|v| 2) = O(|v|^2) (combinatory number)
+The 2 comes from the fact that we care about ordering! It's not the
+same counting from v to w than w to v
+
+*Undirected:* Bound: |E| <= (|v| 2) = O(|v|^2)
+
+Why the above? Because it helps us to understand
+
+1) Reasoning about the complexity of the algorithm we are working at
+2) If we know more about the graph, then we can actually know if it's
+better to work on edges or on vertices (Example: Think of a sparse 
+graph, where sparse graph means a graph where the number of edges is
+way smaller than the number of vertices)
