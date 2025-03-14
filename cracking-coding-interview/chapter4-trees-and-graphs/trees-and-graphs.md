@@ -329,3 +329,43 @@ Why the above? Because it helps us to understand
 better to work on edges or on vertices (Example: Think of a sparse 
 graph, where sparse graph means a graph where the number of edges is
 way smaller than the number of vertices)
+
+
+*Concepts:*
+- out degree -> number of edges that go out of the vertex (|Aj-(v)|)
+- in degree -> number of edges that come in the vertex (|Aj+(v)|)
+- adjacency list out (Aj-(v)) -> { w belong V / (v, w) belong E }
+- adjacency list in (Aj+(v)) -> { w belong V / (w, v) belong E }
+- Sum(u belong V) deg+(u) = The sum of all out degrees of all my vertices = 
+{
+- 2|E| if undirected graph
+- |E| if directed graph
+}
+- Level set = Lk = {v belong V / d(s, v) = k} # this is, all vertices that are at their shortest distance k of v
+
+Why do we care about the above concepts? Because in our graph algorithms we usually
+iterate over: 1) the out degree of a vertex, or 2) The edges that go into a vertex, 
+and so on
+
+
+## Graph representation
+
+One that I didn't mention above is the edge list. Not so useful, but okay, it exists
+
+
+## Model graph problems regarding paths
+
+1. Single pair reachability, (G, s, t): Is there a path between s and t?
+2. Shortest path, (G, s, t): What is the shortest path between s and t?
+3. Single source shorest path, (G, s): Give me all the shortest path between s and all v belong V
+
+
+*Notes* 
+1. Shortest path is a tree, cycles don't make sense :)
+2. We need O(V) space to store the shortest path tree. This is, per each node, store
+the previous edge that belongs to the shortest path
+3. Shortest path property is greedy. This means, in every step taking the smallest 
+edge is the best global option
+
+Another note: if 1 edge is added to the graph, then ALL the shortest paths need to be
+recalculated :)
