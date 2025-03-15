@@ -369,3 +369,8 @@ edge is the best global option
 
 Another note: if 1 edge is added to the graph, then ALL the shortest paths need to be
 recalculated :)
+
+
+### Shortest Path problem from edg
+
+Use BFS. We can construct the algorithm recursively by considering levels. So per each level_i, we build level_i+1 inductively using the previous level. Per building the path from whatever node w to v, we recursively use our path structure that will contain per each vertex, the node that it got us to the vertex
