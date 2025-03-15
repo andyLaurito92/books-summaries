@@ -38,19 +38,17 @@ class Graph:
         """
         Get the shortest path between v and all other nodes
         """
-        path = {}
-        to_visit = [(v, 1)]
+        path = {v: ('-', 0)}
+        to_visit = [(v, 0)]
         visited = set()
-        visited.add(v)
         while len(to_visit) != 0:
             curr, curr_level = to_visit.pop()
+            visited.add(curr)
             for vertex in self.nodes[curr]:
-                for neighbor in self.nodes[vertex]:
-                    if neighbor not in visited:
-                        to_visit.append((neighbor, curr_level + 1))
                 if vertex not in visited:
-                    visited.add(vertex)
-                    path[vertex] = (curr_level, curr)
+                    to_visit.append((vertex, curr_level + 1))
+                if path.get(vertex, None) is None:
+                    path[vertex] = (curr, curr_level + 1)
 
         for vertex in self.nodes:
             if vertex not in visited and vertex != v:
@@ -92,3 +90,5 @@ g2.addVertices([v1, v2, v3, v4, v5, v6])
 g2.addEdges(edges)
 
 g2.shortest_path_tree(v1)
+g2.shortest_path_tree(v2)
+g2.shortest_path_tree(v6)
