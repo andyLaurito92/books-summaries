@@ -374,3 +374,71 @@ recalculated :)
 ### Shortest Path problem from edg
 
 Use BFS. We can construct the algorithm recursively by considering levels. So per each level_i, we build level_i+1 inductively using the previous level. Per building the path from whatever node w to v, we recursively use our path structure that will contain per each vertex, the node that it got us to the vertex
+
+*Note* BFS runs in O(|V| + |E|)
+
+
+### Single source reachability problem
+
+Problem statement: What are all the nodes of the graph I can reach from starting on this node?
+
+
+Use DFS :)
+
+```
+def dfs(v):
+	visited = {}
+	for w in v.neighbors():
+		if w not in visited:
+			visited.add(w)
+			dfs(w)
+```
+
+Runtime: O(|E|) -> I never reach a vertex that is not reachable
+
+
+## Full DFS
+
+It's just applying dfs over all vertices. Useful for finding connected components
+
+```
+def fulldfs(g: Graph):
+	visited = {}
+	for v in g.nodes():
+		if v not in visited:
+			visited.add(v)
+			dfs(v)
+```
+
+The above algorithm takes O(|V| + |E|) because each edg is touch no more than one time
+and then no vertex is visited more than 1 time because we ask `v not in visited`
+
+
+## Definitions
+
+(Airflow as application) *Directed Acyclic graph (DAG):*
+
+Example of a DAG: A tree!
+
+Important application: Assigning tasks and ordering them corresponding with its dependency
+
+
+*Topological Order:* Ordering f over vertices where f(u) < f(v) for all (u, v) in E 
+(If I have an edg between u and v, then f(u) < f(v) )
+
+*Finishing order:* Order in which a full DFS finishes visiting each vertex
+
+
+If we have a reverse finishing order, then we have a topological order on our graph
+
+G DAG => reverse of finishing order is a topological order
+
+
+### Problem Cycle detection
+
+Given a directed graph, Does it exist a cycle in it?
+
+We can just apply dfs on the DAG and see if we get a topological order. If we don't have it, then
+it's not a DAG
+
+*Another property:* G contains cycle => Full DFS traverse edge v -> ancestor of v
