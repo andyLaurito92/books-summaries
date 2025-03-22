@@ -1,3 +1,3 @@
-Code for this book can be found [here](https://github.com/roktas/apue2e)
-
-Most of the examples are in C
+- Code for this book can be found [here](https://github.com/roktas/apue2e)
+- Most of the examples are in C
+- Have a copy of Unix programmer's manual while reading this book
