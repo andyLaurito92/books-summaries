@@ -442,3 +442,33 @@ We can just apply dfs on the DAG and see if we get a topological order. If we do
 it's not a DAG
 
 *Another property:* G contains cycle => Full DFS traverse edge v -> ancestor of v
+
+
+## Topological order in a DAG
+
+(Section coming from coursera algorithms part2)
+
+*Goal*: Given a set of tasks to be completed with precedence constraints, in which order
+should we schedule the tasks?
+
+*Model:* vertex = task; edge = precedence constraint
+
+What do we want? A "feasible schedule", which is, a linear order of the nodes that respect the precedences
+"Draw" the graph such that all edges point upwards
+
+*Note:* A topological sort only works in a DAG, Directed *Acyclic* graph
+If u have a cycle, then the problem is not solvable
+
+*Note 2:* Topological sort = topological order, i.e.: Draw the graph such that all edges point upwards
+
+*Solution:* Use DFS
+
+So first thing to check in topological sort:
+if cycle in DAG:
+	return "No topological order"
+
+Applications: 
+1. Scheduling!
+2. Ordering a course curricula
+3. Cycle detection in inheritance
+4. Microsoft Excel! 
