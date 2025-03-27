@@ -205,6 +205,17 @@ Undirected => edge goes 2 ways
 every pair of vertices then you are in a connected component
 - The graph can also have cycles. Acyclic graph then means no cycles
 
+## Summary on graph problems:
+
+- Single source shortest paths: O(|V| + |E|) bfs (I need to iterate over all nodes, 
+even those that I cannot reach in order to set a value for the path)
+*Note* In this problem, distance = #(edges) => edge = 1 
+- Single source reachability: O(|E|), dfs
+- Connected components: O(|V| + |E|), dfs
+- Topological sort (only valid for a DAG): O(|V| + |E|), dfs + push elements in a stack
+
+*Note* Linear time in graphs is O(|V| + |E|)
+
 
 ## Representing a graph
 
@@ -472,3 +483,58 @@ Applications:
 2. Ordering a course curricula
 3. Cycle detection in inheritance
 4. Microsoft Excel! 
+
+
+## Weighted directed graphs
+
+Now edges have weight!, G, w: E -> Z (integers)
+
+Given e = (u, v), w(e) = w(u, v)
+
+### How do we represent weights in a graph?
+
+1. Add the weight in the adjacency list -> Means, instead of just the edge, we store the pair (v,weight)
+2. Separate set data structure mapping edges to weights
+
+
+*Important* We can query weight in O(1)
+
+So given weights, we can now define:
+1. Weighted Paths -> Just the sum of weight of edges in the path
+2. Shortest (weighted) path -> Min weight path
+
+*Note* If we have negative edges, then things get funnier :D
+Why? Because if you have a cycle that sums a negative value, then 
+you don't have a minimum path bc u can always iterate over and 
+over again that cycle to get a smaller value
+
+Example:
+
+a -(-1)-> b -(-1)--> a
+
+
+*Moral* Take care of negative-weight cycles!
+
+
+### Calculating shortest path in asymptotically bounded weighted graph
+
+We already know that we can apply BFS to solve the shortest path problem in 
+an directed graph without weights.
+
+If we have a directed graph with weights, and the sum of all weights < K where K is constant, 
+we could reduce the problem of finding the weighted shortest path to BFS by observing the following:
+
+If we have a weight such as this: a --(4)-> b (meaning, w(a, b) = 4), we could re-consider our graph
+to be -> a -1-> a1 -1-> a2 -1-> a3 --1> b 
+
+What did we do? We created 4 edges of weight 1 for that edge of weight 4! In this way, we can always
+reduce our G=(V, E) to a G'=(W, E') where #(V) < #(W) + some constant factor (because weights are bounded)
+
+
+## Sumary
+
+| Graph   | Weights      | Name           | Running Time      |
+| General | Unweighted   | BFS            | O(V + E)          |
+| DAG     | ANY          | DAG Relaxation | O(V + E)          |
+| General | Any          | Bellman-Ford   | O(V* E)           |
+| General | Non-negative | Dijkstra       | O(V * log(V + E)) |
