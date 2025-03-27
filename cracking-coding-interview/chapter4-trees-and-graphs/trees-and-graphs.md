@@ -538,3 +538,27 @@ reduce our G=(V, E) to a G'=(W, E') where #(V) < #(W) + some constant factor (be
 | DAG     | ANY          | DAG Relaxation | O(V + E)          |
 | General | Any          | Bellman-Ford   | O(V* E)           |
 | General | Non-negative | Dijkstra       | O(V * log(V + E)) |
+
+
+
+## Shortest-path trees 
+For weighted, only need parent-pointers for v with finite shortest path distance
+
+Given an array of distances, this is, distance[v] contains the distance from s to v.
+This algorithm can be used for creating the parentpointer structure from the distances array
+
+```
+parentpointer = [None] * length(g.nodes)
+distance # structure that contains the lengths of the paths between s and all vertices in the graph
+
+for v in g.nodes:
+	if distance[v] != -1: # Distance is not infinity
+		for w in g.adjacency(v):
+			if parenpointer[w] is None and distance[w] == distance[v] + w(v, w):
+				# it exist a shortest path that uses (u, v)! There might be more than
+				# 1 shortest path, but surely this is a shortest path
+				parentpointer[w] = v 
+```
+
+The above algorithm is O(|V| + |E|) which is linear time (for graphs). Meaning that from now onwards, 
+we don't really care about calculating parentpointer given that we can get them from the shortest distance
