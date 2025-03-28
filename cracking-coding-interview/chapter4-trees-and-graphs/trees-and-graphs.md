@@ -562,3 +562,32 @@ for v in g.nodes:
 
 The above algorithm is O(|V| + |E|) which is linear time (for graphs). Meaning that from now onwards, 
 we don't really care about calculating parentpointer given that we can get them from the shortest distance
+
+
+## DAG relaxation
+
+Mantain distances(s, v) = -1
+Calculate triangle inequality over vertices
+
+*Triangle inequality*
+
+It always needs to happen that distance(s, v) <= distance(s, u) + w(u, v), if (u, v) belongs to edges. 
+So it means that if we have distance(s, v) > distance(s, u) + w(u, v) then it means that we have a shortest path
+from s to v passing through u
+
+"Relax" means lowering d(s,v) by using u
+
+Algorithm:
+
+```
+distance = [infinity] * leng(V)
+for s in V:
+	distance[s] = 0
+	
+for v in g.topologicalsort(): # Why has to be in topological sorting order?
+	for w in g.adjacents(v):
+		if distance[v] > distance[w] + w(v, w):
+			distance[v] = distance[w] + w(v, w) # relax edge
+	
+
+```
