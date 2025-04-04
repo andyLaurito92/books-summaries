@@ -204,6 +204,7 @@ Undirected => edge goes 2 ways
 - The graph might consist of multiple isolated subgraphs. If there's a path between 
 every pair of vertices then you are in a connected component
 - The graph can also have cycles. Acyclic graph then means no cycles
+- The distance between vertices v and w in a graph (distance(v,w)) it's defined as the *shortest distance* between u and v
 
 ## Summary on graph problems:
 
