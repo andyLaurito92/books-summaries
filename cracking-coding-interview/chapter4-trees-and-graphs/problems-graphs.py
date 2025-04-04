@@ -23,19 +23,18 @@ Between all these max distances, which would be the minimum of all of them? The 
 We know how to calculate distances by using dfs
 """
 
-Node = int
-
-
-from collections import defaultdict, deque
+from collections import deque # noqa 
 from operator import itemgetter
 
 
+Node = int
 """
 1. There are no repeated edges between 2 nodes in a graph because there's no difference.
 This makes sense to represent when we have weight edges :)
 
 2. Because of the above, we count distance as number of edges between graph v and w
 """
+
 class DGraph: # Directed graph
     @classmethod
     def createFrom(clss, vertices: list[tuple[Node, Node]]) -> 'Graph':
@@ -51,7 +50,6 @@ class DGraph: # Directed graph
 
     def addEdge(self, v: Node, w: Node) -> None:
         self.adjacencymap[v].add(w)
-
 
     def bfs(self, v: Node, f: callable) -> None:
         tovisit = deque()
@@ -113,7 +111,7 @@ class DGraph: # Directed graph
         The radius is the min(eccentric(v)) for all v in g.vertices
         """
         return min(filter(lambda x: x != 0, [self.eccentric(v)[1] for v in range(self.numvertices)]))
-                 
+
 
 g = DGraph.createFrom(
     [
