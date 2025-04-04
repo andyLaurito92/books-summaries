@@ -25,7 +25,9 @@ We know how to calculate distances by using dfs
 
 Node = int
 
+
 from collections import defaultdict, deque
+from operator import itemgetter
 
 
 """
@@ -45,6 +47,7 @@ class DGraph: # Directed graph
 
     def __init__(self, numvertices: int):
         self.adjacencymap = [set() for _ in range(numvertices)]
+        self.numvertices = numvertices
 
     def addEdge(self, v: Node, w: Node) -> None:
         self.adjacencymap[v].add(w)
@@ -76,8 +79,20 @@ class DGraph: # Directed graph
 
         return distances
 
+    def distancesmatrix(self) -> None:
+        """
+        Returns a matrix containing the distance between
+        one vertex against all others
+        """
+        n = len(self.adjacencymap)
+        distance_matrix = [[-1] * n for _ in range(n)]
 
-    def eccentric(self, v: Node) -> Node:
+        for v in range(n):
+            distance_matrix[v] = self.distancesFrom(v)
+
+        return distance_matrix
+
+    def eccentric(self, v: Node) -> (Node, int):
         """
         Returns the eccentric node, this is, the node
         whose distance is the max between all nodes
@@ -91,7 +106,13 @@ class DGraph: # Directed graph
                 eccentric = node
                 max_distance = distance
 
-        return eccentric
+        return eccentric, max_distance
+
+    def radius(self) -> Node:
+        """
+        The radius is the min(eccentric(v)) for all v in g.vertices
+        """
+        return min(filter(lambda x: x != 0, [self.eccentric(v)[1] for v in range(self.numvertices)]))
                  
 
 g = DGraph.createFrom(
@@ -109,3 +130,11 @@ g = DGraph.createFrom(
 
 print(g.distancesFrom(1))
 print(g.eccentric(1))
+
+
+g2 = DGraph.createFrom([(0, 1), (1, 2), (2, 0)])
+print(g2.distancesFrom(0))
+
+print(g.distancesmatrix())
+
+print(g.radius())
