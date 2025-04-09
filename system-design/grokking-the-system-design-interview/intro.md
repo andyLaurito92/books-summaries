@@ -130,3 +130,16 @@ we try to store all the data of a user on the same db? Pros? Cons?
 of these?
 - How much and at which layer should we introduce cache to speed things up?
 - What components need better load balancing? Load balancing at which level?
+
+
+## Identifying and resolving bottlenecks
+
+Try to identify and discuss the bottlenecks of the system:
+
+- Is there any single point of failure? How do we mitigate it?
+- Do we have enough replicas of the data so that if we lose a few 
+servers we can still serve our users?
+- Do we have enough copies of different services running such that 
+a few failures will not cause total system shutdown?
+- How are we monitoring th eperformance of our service? Do we get alerts
+whenever critical components fail or their performance degrade?
