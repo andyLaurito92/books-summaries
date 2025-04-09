@@ -541,6 +541,10 @@ reduce our G=(V, E) to a G'=(W, E') where #(V) < #(W) + some constant factor (be
 | General | Non-negative | Dijkstra       | O(V * log(V + E)) |
 
 
+## Property Graph connected
+
+If a graph is connected => every vertex is adjacent to at least 1 edge. But an edge is
+adjacent to 2 vertices by definition => 2|V| <= |E| => |V| <= |E|/2
 
 ## Shortest-path trees 
 For weighted, only need parent-pointers for v with finite shortest path distance

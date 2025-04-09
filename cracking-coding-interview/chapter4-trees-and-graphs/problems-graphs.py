@@ -17,6 +17,7 @@ Between all these max distances, which would be the minimum of all of them? The 
 
 1. Give an algorithm to compute the radius of a graph
 2. Give an algorithm for approximating the radius of a graph really quick :)
+Calculate R* such that radius(G) <= R* <= 2*radius(G)
 """
 
 """
@@ -92,9 +93,8 @@ class DGraph: # Directed graph
 
     def eccentric(self, v: Node) -> (Node, int):
         """
-        Returns the eccentric node, this is, the node
-        whose distance is the max between all nodes
-        in the graph
+        Returns the eccentric node and its distance, this is, the node
+        whose distance is the max between all nodes in the graph
         """
         distances = self.distancesFrom(v)
         max_distance = distances[0]
@@ -106,11 +106,15 @@ class DGraph: # Directed graph
 
         return eccentric, max_distance
 
-    def radius(self) -> Node:
+    def radius(self) -> int:
         """
         The radius is the min(eccentric(v)) for all v in g.vertices
         """
         return min(filter(lambda x: x != 0, [self.eccentric(v)[1] for v in range(self.numvertices)]))
+
+    def radiusaprox(self) -> Node:
+        return 0
+        
 
 
 g = DGraph.createFrom(
