@@ -111,4 +111,32 @@ our algorithm not to work in every situation!
 
 ### Knuth-Morris-Pratt substring search
 
+*Intuition:* The brute-force algorithm is not considering the chatacters read!
+If you have `ABAAABAAAAA` and you are trying to match `BAAAA`, the brute-force
+algorithm tries to match the pattern, but when it doesn't find it, it backups 
+to the first character after B (in the above example), which is A, and keeps 
+repeating this until next B. This doesn't make sense since we know that the 
+pattern doesn't start with that character :)
 
+KMP algorithm simple keeps iterating and doesn't backup i in the above case
+
+*Take away* It always avoid backup
+
+
+#### DFA: Deterministic finite state automaton
+
+Idea: Build an automata to match the pattern --> Right, but then it's a regex :)
+
+What is an automata for matching a pattern?
+- Finite number of states including start and halt
+- Exactly one transition for each char in alphabet
+- Accept if sequence of transitions lead to halt state
+
+
+*How do we represent the automaton?*
+
+By using a matrix. We have columns representing the state of the automaton and 
+each row represents what state to take given the current character. 
+
+How many rows do we have? 1 per character in the alphabet
+How many columns do we have? 1 per character in the pattern + 1 (the initial state)
