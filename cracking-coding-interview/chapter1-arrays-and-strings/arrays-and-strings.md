@@ -31,31 +31,25 @@ price = str.substr(from + 3, to)
 ### First solution: Brute-force
 
 ```
-def findpattern(haystack: str, needle: str) -> int:
-	""" Finds needle in haystack. If found, returns idx where idx
+def findpattern(text: str, pattern: str) -> int:
+    """ Finds pattern in text. If found, returns idx where idx
 	represents the idx in which the first occurrence starts. If not found, 
 	returns -1
 	"""
-	n = len(haystack)
-	m = len(needle)
+    n = len(text)
+    m = len(pattern)
+    for i in range(n):
+        for j in range(m):
+            if haystack[i + j] != needle[j]:
+                break
+            if j == m - 1:
+                return i
+    return -1
 
-	j = 0
-	i = 0
-	while i < n:
-		while i < n and haystack[i] != needle[j]:
-			i += 1
-			
-		if i == n:
-			return -1
-			
-		start = i
-		while haystack[i] == needle[j] and i < n and j < m:
-			i += 1
-			j += 1
-		
-		if j == m:
-			return start
-
-	return -1
-		
 ```
+
+The above works, but:
+- It's runtime is O(N*M), and when both N and M are big, it's quite 
+inefficient
+- It doesn't take much into account regarding the input
+- It will get super slow if the text and pattern are repetitive, give "AAAAAAAAAAAAAAB" as text and "AAAAAB" as pattern

@@ -13,3 +13,18 @@ def findpattern(haystack: str, needle: str) -> int:
             if j == m - 1:
                 return i
     return -1
+
+
+
+"""
+In Python, the algorithm used is a mix between Boyer-moore and
+Horspool algorithm. Read more about this here:
+
+https://stackoverflow.com/questions/36868479/python-str-index-time-complexity
+
+http://www.laurentluce.com/posts/python-string-objects-implementation/
+
+https://softwareengineering.stackexchange.com/questions/183725/which-string-search-algorithm-is-actually-the-fastest
+"""
+
+
