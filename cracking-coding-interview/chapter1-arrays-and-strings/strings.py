@@ -93,6 +93,11 @@ def knutmorrispratt(text:str, pattern: str) -> int:
     # to first
     automaton[letter_to_idx[pattern[0]]][m] = 1
 
+    # If we are consuming the first character and
+    # we see the first chacater again, then we need
+    # to keep in the current state 1!
+    automaton[letter_to_idx[pattern[0]]][1] = 1
+
     state = 0
     for i, letter in enumerate(text):
         state = automaton[letter_to_idx[letter]][state]
@@ -108,3 +113,4 @@ for fn in pattern_finding_functions:
     print("Testing ", fn)
     assert 9 == fn("thisisthehaystackajasfdjk", "haystack"), message
     assert -1 == fn("thisisthehaystackajasfdjk", "nope"), message
+    assert 7 == fn("aabaaacbaaaaaaa", "baaaa")
