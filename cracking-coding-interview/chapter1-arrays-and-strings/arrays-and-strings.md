@@ -140,3 +140,13 @@ each row represents what state to take given the current character.
 
 How many rows do we have? 1 per character in the alphabet
 How many columns do we have? 1 per character in the pattern + 1 (the initial state)
+
+
+What does a state mean in the automaton? It's the number of characters in pattern
+that have been matched! So it's also giving us suffixes
+
+
+*Differences between brute-force algorithm and Knut-Morris-Pratt algorithm*
+
+- We don't backup
+- We need to build the automaton before we start consuming the text
