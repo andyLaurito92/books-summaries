@@ -28,3 +28,39 @@ https://softwareengineering.stackexchange.com/questions/183725/which-string-sear
 """
 
 
+# ABACABAA
+# BAA
+
+# i = 1, j = 0
+# 
+def findpattern2(text: str, pattern: str) -> int:
+    """ Still brute force, but changing something: Now i points to
+    the end of the sequence of already-matched chars in text and
+    j stores # of already-matched chars (end of sequence in pattern)
+    """
+    n = len(text)
+    m = len(pattern)
+
+    j = 0
+    i = 0
+    while i < n and j < m:
+        if text[i] == pattern[j]:
+            j += 1
+        else:
+            i -= j
+            j = 0
+        i += 1
+
+    if j == m:
+        return i - m
+    else:
+        return -1
+
+
+pattern_finding_functions = [findpattern, findpattern2]
+
+for fn in pattern_finding_functions:
+    message = f"Failed w/function {fn}"
+    print("Testing ", fn)
+    assert 9 == fn("thisisthehaystackajasfdjk", "haystack"), message
+    assert -1 == fn("thisisthehaystackajasfdjk", "nope"), message
