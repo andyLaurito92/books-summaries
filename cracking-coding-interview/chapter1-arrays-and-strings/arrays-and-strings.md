@@ -150,3 +150,6 @@ that have been matched! So it's also giving us suffixes
 
 - We don't backup
 - We need to build the automaton before we start consuming the text
+
+Because we don't backup, we could actually use the above algorithm to match 
+strings in a stream of characters!

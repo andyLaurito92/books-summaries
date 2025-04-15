@@ -77,7 +77,6 @@ def knutmorrispratt(text:str, pattern: str) -> int:
     m = len(pattern)
     alphabet = set(text) | set(pattern) #ascii_lowercase
     letter_to_idx = {letter: i for i, letter in enumerate(alphabet)}
-
     def buildautomaton(pattern: str) -> list[list[int]]:
         k = len(alphabet)
         automaton = []
@@ -101,11 +100,46 @@ def knutmorrispratt(text:str, pattern: str) -> int:
 
     automaton = buildautomaton(pattern)
     state = 0
+    # O(N)
     for i, letter in enumerate(text):
         state = automaton[letter_to_idx[letter]][state]
         if state == m:
             return i - (m - 1)
     return -1
+
+
+def matching_from_input(pattern: str) -> None:
+    def buildautomaton(pattern: str) -> list[list[int]]:
+        m = len(pattern)
+        k = len(ascii_lowercase)
+        automaton = []
+        letter_to_idx = {letter: idx for idx, letter in enumerate(ascii_lowercase)}
+        for i in range(k):
+            automaton.append([0 for j in range(m+1)])
+
+        for i, letter in enumerate(pattern):
+            automaton[letter_to_idx[letter]][i] = i+1
+
+        # To start matching again from the last state
+        # Either use lambda transition and without consuming
+        # go back to state 0 or add transition from last state
+        # to first
+        automaton[letter_to_idx[pattern[0]]][m] = 1
+
+        # If we are consuming the first character and
+        # we see the first chacater again, then we need
+        # to keep in the current state 1!
+        automaton[letter_to_idx[pattern[0]]][1] = 1
+        return automaton
+
+    automaton = buildautomaton(pattern)
+
+    state = 0
+    while True:
+        state = automaton[input()][state]
+        if state == m:
+            print("Pattern found!")
+
 
 
 pattern_finding_functions = [findpattern, findpattern2, knutmorrispratt]
