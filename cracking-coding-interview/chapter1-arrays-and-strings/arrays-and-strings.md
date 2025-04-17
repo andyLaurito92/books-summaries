@@ -122,6 +122,11 @@ KMP algorithm simple keeps iterating and doesn't backup i in the above case
 
 *Take away* It always avoid backup
 
+*Note:* In the coursera course by sedgewick, the next algorithm is presented
+as the Knuth-Morris-Pratt algorithm, however in Cormen and other places (such 
+as wikipedia), the next algorithm is just presented as "String matching with
+finite automata" and the Knut-Morris-Algorithm is another one.
+
 
 #### DFA: Deterministic finite state automaton
 
@@ -188,5 +193,13 @@ that is behind 1 state, and when a mismatch occur, then just consume the char c 
 This can be done in O(1) and will tell you in which state we should be
 
 Yes, but this has to be done for each element of the alphabet, which makes the above 
-O(len(alphabet)). If the alphabet is capped, which usually is, then we are good because
+O(len(pattern) * len(alphabet)). If the alphabet is capped, which usually is, then we are good because
 we can take it as a constant time
+
+
+*Reminder about suffixes*
+
+A string s is a suffix of a string t if there exists a string p such that t = ps. 
+A proper suffix of a string is not equal to the string itself. 
+
+A more restricted interpretation is that it is also not empty. A suffix can be seen as a special case of a substring. 

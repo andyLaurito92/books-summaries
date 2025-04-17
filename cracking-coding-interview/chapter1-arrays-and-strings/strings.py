@@ -59,6 +59,7 @@ def findpattern2(text: str, pattern: str) -> int:
 
 from string import ascii_lowercase
 
+
 def buildautomaton(pattern: str, alphabet: str) -> list[list[int]]:
     k = len(alphabet)
     m = len(pattern)
@@ -78,19 +79,26 @@ def buildautomaton(pattern: str, alphabet: str) -> list[list[int]]:
     # to keep in the current state 1!
     automaton[letter_to_idx[pattern[0]]][1] = 1
 
+    # Simulate what happens when we find char
+    # c != pattern[i] in the ith position after
+    # matching suffix pattern[1..i-1]
+    # For this, we simulate state X
+    statex = 0
     for i, letter in enumerate(pattern):
-        automaton[letter_to_idx[letter]][i] = i+1
-
         if i == 0:
+            automaton[letter_to_idx[letter]][i] = i+1
             continue
 
         # IMPORTANT STEP: NON MATCHING CHARACTERS
-        # Simulate what happens when we find char
-        # c != pattern[i] in the ith position after
-        # matching prefix pattern[0..i]
         for c in alphabet:
-            if c != pattern[i]:
-                automaton[letter_to_idx[c]][i] = automaton[letter_to_idx[c]][i-1]
+            automaton[letter_to_idx[c]][i] = automaton[letter_to_idx[c]][statex]
+
+        automaton[letter_to_idx[letter]][i] = i+1
+
+        # Move state X to state that would become of matching
+        # the previous character (Remember that we are matching
+        # suffix pattern[1..i]), this is, pattern shifted 1
+        statex = automaton[letter_to_idx[pattern[i]]][statex]
     return automaton
 
 
