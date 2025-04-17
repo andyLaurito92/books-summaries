@@ -151,5 +151,42 @@ that have been matched! So it's also giving us suffixes
 - We don't backup
 - We need to build the automaton before we start consuming the text
 
-Because we don't backup, we could actually use the above algorithm to match 
-strings in a stream of characters!
+Because we don't backup, we can use the above algorithm to match 
+strings in a stream of characters! See pattern_matcher_fron_input.py script
+for a demo
+
+
+#### How to build the automaton?
+
+- For the matching part, easy: Just create 1 state per character and make
+the transitions move to the next state when the char is matched, this is:
+```
+automaton = [ [0] * (len(pattern) + 1) for _ in range(len(alphabet))]
+for i, char in enumerate(pattern):
+	automaton[letter][i] = i + 1
+	
+When we have a state that equals len(pattern) we have found our pattern!
+
+TIP: If the text to search is previously known, we can reduce the alphabet
+to alphabet = set(text) | set(pattern)
+```
+
+- For the mismatch part is trickier, because it depends on the state 
+we are what we need to do next. The trick here is to understand the prefixes
+we have already consumed and to move to the state that matches the prefixed 
+consumed
+
+If we find a mismatch, this is, c != pattern[j] for some j, then if we remember, 
+j represented the number of characters matched for the pattern. Given this, we DO know
+that the previous 1..j-1 characters matched the pattern[0..j-1]. What we could do
+then is simulate pattern[0..j-1] on the DFA and take transition c, where c is the 
+character that is a mismatch
+
+The running time of this *seems to require j steps* if we simulate the pattern[0..j-1].
+*Can we do better?* YES -> Keep track of the previous state, this is, keep a state X
+that is behind 1 state, and when a mismatch occur, then just consume the char c from X. 
+This can be done in O(1) and will tell you in which state we should be
+
+Yes, but this has to be done for each element of the alphabet, which makes the above 
+O(len(alphabet)). If the alphabet is capped, which usually is, then we are good because
+we can take it as a constant time

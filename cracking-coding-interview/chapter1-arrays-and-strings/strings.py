@@ -59,6 +59,41 @@ def findpattern2(text: str, pattern: str) -> int:
 
 from string import ascii_lowercase
 
+def buildautomaton(pattern: str, alphabet: str) -> list[list[int]]:
+    k = len(alphabet)
+    m = len(pattern)
+    letter_to_idx = {letter: i for i, letter in enumerate(alphabet)}
+    automaton = []
+    for i in range(k):
+        automaton.append([0 for j in range(m+1)])
+
+    # To start matching again from the last state
+    # Either use lambda transition and without consuming
+    # go back to state 0 or add transition from last state
+    # to first
+    automaton[letter_to_idx[pattern[0]]][m] = 1
+
+    # If we are consuming the first character and
+    # we see the first chacater again, then we need
+    # to keep in the current state 1!
+    automaton[letter_to_idx[pattern[0]]][1] = 1
+
+    for i, letter in enumerate(pattern):
+        automaton[letter_to_idx[letter]][i] = i+1
+
+        if i == 0:
+            continue
+
+        # IMPORTANT STEP: NON MATCHING CHARACTERS
+        # Simulate what happens when we find char
+        # c != pattern[i] in the ith position after
+        # matching prefix pattern[0..i]
+        for c in alphabet:
+            if c != pattern[i]:
+                automaton[letter_to_idx[c]][i] = automaton[letter_to_idx[c]][i-1]
+    return automaton
+
+
 def knutmorrispratt(text:str, pattern: str) -> int:
     """
     We build an automaton to match the pattern in the text
@@ -75,30 +110,9 @@ def knutmorrispratt(text:str, pattern: str) -> int:
         return findpattern2(text, pattern)
 
     m = len(pattern)
-    alphabet = set(text) | set(pattern) #ascii_lowercase
+    alphabet = set(text) | set(pattern)
     letter_to_idx = {letter: i for i, letter in enumerate(alphabet)}
-    def buildautomaton(pattern: str) -> list[list[int]]:
-        k = len(alphabet)
-        automaton = []
-        for i in range(k):
-            automaton.append([0 for j in range(m+1)])
-
-        for i, letter in enumerate(pattern):
-            automaton[letter_to_idx[letter]][i] = i+1
-
-        # To start matching again from the last state
-        # Either use lambda transition and without consuming
-        # go back to state 0 or add transition from last state
-        # to first
-        automaton[letter_to_idx[pattern[0]]][m] = 1
-
-        # If we are consuming the first character and
-        # we see the first chacater again, then we need
-        # to keep in the current state 1!
-        automaton[letter_to_idx[pattern[0]]][1] = 1
-        return automaton
-
-    automaton = buildautomaton(pattern)
+    automaton = buildautomaton(pattern, alphabet)
     state = 0
     # O(N)
     for i, letter in enumerate(text):
@@ -109,37 +123,13 @@ def knutmorrispratt(text:str, pattern: str) -> int:
 
 
 def matching_from_input(pattern: str) -> None:
-    def buildautomaton(pattern: str) -> list[list[int]]:
-        m = len(pattern)
-        k = len(ascii_lowercase)
-        automaton = []
-        letter_to_idx = {letter: idx for idx, letter in enumerate(ascii_lowercase)}
-        for i in range(k):
-            automaton.append([0 for j in range(m+1)])
-
-        for i, letter in enumerate(pattern):
-            automaton[letter_to_idx[letter]][i] = i+1
-
-        # To start matching again from the last state
-        # Either use lambda transition and without consuming
-        # go back to state 0 or add transition from last state
-        # to first
-        automaton[letter_to_idx[pattern[0]]][m] = 1
-
-        # If we are consuming the first character and
-        # we see the first chacater again, then we need
-        # to keep in the current state 1!
-        automaton[letter_to_idx[pattern[0]]][1] = 1
-        return automaton
-
-    automaton = buildautomaton(pattern)
-
+    m = len(pattern)
+    automaton = buildautomaton(pattern, ascii_lowercase)
     state = 0
     while True:
         state = automaton[input()][state]
         if state == m:
             print("Pattern found!")
-
 
 
 pattern_finding_functions = [findpattern, findpattern2, knutmorrispratt]
@@ -150,3 +140,4 @@ for fn in pattern_finding_functions:
     assert 9 == fn("thisisthehaystackajasfdjk", "haystack"), message
     assert -1 == fn("thisisthehaystackajasfdjk", "nope"), message
     assert 7 == fn("aabaaacbaaaaaaa", "baaaa")
+    assert 8 == fn("aaaaabaaaabbaaaaa", "aabbaa")
