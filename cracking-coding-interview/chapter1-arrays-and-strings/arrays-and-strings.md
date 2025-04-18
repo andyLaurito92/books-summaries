@@ -2,6 +2,24 @@
 
 This info is coming from the algorithms-part2 coursera course (Robert Sedgewick)
 
+This section is divided into 2 subparts:
+1. *Tries implementation:* Instead of using normal dictionaries, which we already know
+that when using hash functions are O(k) for a k constant, we will try to use a trie because
+of the following: In order to find a value given a key string, we need to read the entire
+string! Therefore, finding a value in a dictionary where the keys are string is O(len(str))
+
+The question is: Can we do better? Yes, with tries
+
+2. Substring search, this is, given a pattern M and a text S, we want to find how many 
+times the pattern N repeats in S. Usually, len(M) <<< len(S). Algorithms we will study 
+in this section:
+- Knuth-Morris-Pratt
+- Deterministic finite automaton
+- Bayer-moore
+- Rabin-Karp
+
+## Tries
+
 ## Substring search
 
 Goal: Find pattern of length M in a text of length N. Typically N >> M
@@ -203,3 +221,13 @@ A string s is a suffix of a string t if there exists a string p such that t = ps
 A proper suffix of a string is not equal to the string itself. 
 
 A more restricted interpretation is that it is also not empty. A suffix can be seen as a special case of a substring. 
+
+
+### Knuth-Morris-Pratt substring search (according to Cormen)
+
+TODO
+
+
+### Boyer-Moore algorithm
+
+Invented by Robert Boyer and J.Strother Moore
