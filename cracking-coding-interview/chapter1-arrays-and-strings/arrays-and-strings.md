@@ -3,12 +3,31 @@
 This info is coming from the algorithms-part2 coursera course (Robert Sedgewick)
 
 This section is divided into 2 subparts:
-1. *Tries implementation:* Instead of using normal dictionaries, which we already know
-that when using hash functions are O(k) for a k constant, we will try to use a trie because
-of the following: In order to find a value given a key string, we need to read the entire
-string! Therefore, finding a value in a dictionary where the keys are string is O(len(str))
+1. *Tries implementation:* 
 
-The question is: Can we do better? Yes, with tries
+Why do we need to use tries? 
+
+A first tought could be the following: Reading a string for getting it's hash takes len(str). Given that I want to perform this operation many times, then this is too expensive.
+
+To the above thinking, in CPython reallity is much brighter :). Because strings are immutable,
+CPython cache the hash value of the string!. This means that dict["hola"] is O(1) amortized. Therefore, saying that we will study tries to get *an exact match* faster than a hashing function doesn't really make sense.
+
+Then why?
+
+The key is in the word *exact*. Yes, if we want an exact match, hasing is better. However, if 
+what we want to match are *prefixes*, then tries perform way better! A dictionary 
+implemented using hashing + open addressing cannot handle prefixes. You need the entire
+string to find the value associated to it
+
+In which cases could we need the above?
+
+- *Autocomplete*: Start typing and get all strings that contain the prefix
+- *Prefix search*: Get all gene names that start with prefix
+- *Whatever problem related to prefixes*
+- *Range queries*: All words between 'cat' and 'caz' (defined by lexicographical order)
+- *Finding if a string can be broken into words from a dictionary*
+- *Matching words in a large text stream*
+
 
 2. Substring search, this is, given a pattern M and a text S, we want to find how many 
 times the pattern N repeats in S. Usually, len(M) <<< len(S). Algorithms we will study 
@@ -19,6 +38,9 @@ in this section:
 - Rabin-Karp
 
 ## Tries
+
+Read the intro above to understand why we need to use them (most of the times the
+use case involves prefix search)
 
 ## Substring search
 
