@@ -39,8 +39,117 @@ in this section:
 
 ## Tries
 
-Read the intro above to understand why we need to use them (most of the times the
-use case involves prefix search)
+*Read the intro above to understand why we need to use them (most of the times the
+use case involves prefix search)*
+
+Etimology: Middle letters of re*trie*val :O 
+
+Given R radix (= number of characters)
+
+- Tree structure of nodes where we store characters
+- Each node has R childrens, one for each possible character
+- store values in nodes corresponding to least characters in keys
+
+Given the following dictionary:
+
+```
+mytrie = {"cat": 4, "cart": 3, "car": 2, "dog": 1, "dot": 0}
+```
+
+The following is the representation of the internal trie structure
+
+```
+(root)
+ ├── c
+ │   └── a
+ │       ├── t  [✓ 4]
+ │       └── r
+ │           └── t  [✓ 3]
+ │           [✓ 2]
+ └── d
+     ├── o
+         ├── g  [✓ 1]
+         └── t  [✓ 0]
+
+```
+
+And a naive implementation can be the following:
+
+```
+trie = {} # null node represented as empty dict
+for key, value in [("cat", 4), ("car", 3), ("cart", 2), ("dog", 1), ("dot", 0)]:
+    node = trie
+    for char in key:
+        node = node.setdefault(char, {})
+    node["*"] = value  # "*" marks the end of a word
+```
+
+### Search in a trie
+
+Follow links corresponding to each character in the key
+- *Search hit*: We consume all characters and found in the last node a value. If null then this is a search miss
+- *Search miss*: Either we couldn't consume all characters or we got into the last character
+and value was null
+
+### Insertion into a trie
+
+Follow links corresponding to each characer in the key:
+- Encounter a null link: create new node
+- Encounter the last character of the key: set value in that node
+
+### Implementation
+
+One approach is the one presented above, done by chatgpt :D. The other one (proposed in the course) is to
+create a TrieNode and define next as a list of nodes. Now the "cool" things of this is that we don't
+need to *explicitly* store the characters!
+
+```
+from typing import Any, Optional
+
+class TrieNode:
+	def __init__(self, alphabet: str):
+		self.len_alphabet = len(alphabet)
+		self.alphabet = alphabet
+		self.letter_to_idx = {letter:i for i, letter in enumerate(alphabet)}
+		self.value = None
+		self.next = [None] * self.len_alphabet
+		
+	def insert(self, key: str, value: Any) -> None:
+		curr = self
+		for c in key:
+			i = self.letter_to_idx[c]
+			if curr.next[i] is None:
+				node = TrieNode(self.alphabet)
+				self.next[i] = node
+			curr = curr.next[i]
+		curr.value = value
+	
+	def search(self, key: str) -> Optional[int]:
+		curr = self
+		for c in key:
+			i = self.letter_to_idx[c]
+			curr = curr.next[i]
+			if curr is None:
+				return None
+		return curr.value
+		
+	def startsWith(self, prefix: str) -> set[str]:
+		"""
+		Return all keys stored in the dictionary that 
+		starts with prefix
+		"""
+		res = set()
+		curr = self
+		prefix = []
+		for c in prefix:
+			i = self.letter_to_idx[c]
+			if curr.next[i] is None:
+				return res
+			prefix.append(c)
+			res.add(''.join(prefix))
+		return res
+			
+```
 
 ## Substring search
 
