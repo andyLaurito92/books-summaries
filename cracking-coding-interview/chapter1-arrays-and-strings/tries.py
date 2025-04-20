@@ -33,6 +33,20 @@ class TrieNode:
             curr = curr.next[i]
         curr.value = value
 
+    """
+    def insert(self, key: str, value: Any) -> TrieNode:
+    	return self.insert_recursive(self, key, value, 0)
+
+    def insert_recursive(self, node: 'TrieNode', key: str, value: Any, d:int) -> TrieNode:
+    	if node is None:
+    		node = TrieNode(self.alphabet)
+    	if d == len(key):
+    		node.value = value
+    		return node
+    	node.next[char_to_idx(key[d])] = self.insert_recursive(node.next[char_to_idx[key[d]]], key, value, d+1)
+    	return self
+    """
+
     def search(self, key: str) -> Optional[int]:
         curr = self
         for c in key:
@@ -40,6 +54,19 @@ class TrieNode:
             curr = curr.next[i]
             if curr is None:
                 return None
+        return curr.value
+
+    def contains(self, key: str) -> bool:
+        return self.get(key) is not None
+
+
+    def get(self, key: str, default: Any = None) -> Any:
+        curr = self
+        for c in key:
+            curr = curr.next[self.letter_to_idx[c]]
+            if curr is None:
+                return default if default else None
+
         return curr.value
 
     def startsWith(self, prefix: str) -> set[str]:
@@ -76,8 +103,13 @@ trie.insert("hole", 8)
 trie.insert("holland", 6)
 trie.insert("hohoho", 10)
 
-trie.search("hola")
+print(trie.search("hola"))
 
-trie.search("hehehe")
+print(trie.search("hehehe"))
 
-trie.startsWith("ho")
+print(trie.startsWith("ho"))
+
+print(trie.get("holland"))
+print(trie.get("never", "mydefault"))
+print(trie.get("nope"))
+trie.contains("hole")

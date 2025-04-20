@@ -84,6 +84,8 @@ for key, value in [("cat", 4), ("car", 3), ("cart", 2), ("dog", 1), ("dot", 0)]:
     node["*"] = value  # "*" marks the end of a word
 ```
 
+For a more robust implementation, see implementation section implementation
+
 ### Search in a trie
 
 Follow links corresponding to each character in the key
@@ -150,6 +152,9 @@ class TrieNode:
 		return res
 			
 ```
+
+In the above representation, a character is just represented by a non-none entry in the
+node.next list.
 
 ## Substring search
 
