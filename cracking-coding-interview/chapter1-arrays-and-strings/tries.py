@@ -41,36 +41,38 @@ class TrieNode:
             if curr is None:
                 return None
         return curr.value
-		
+
     def startsWith(self, prefix: str) -> set[str]:
+        """ Return all keys stored in the dictionary that
+        starts with prefix
         """
-	Return all keys stored in the dictionary that 
-	starts with prefix
-	"""
         res = set()
         curr = self
-        chars = []
-        # find the prefix
+        # First: find the prefix
         for c in prefix:
             i = self.letter_to_idx[c]
             if curr.next[i] is None:
                 return res
-            chars.append(c)
             curr = curr.next[i]
 
-        # If we are here, is because we have keys stored with
-        # this prefix
-        # TODO
-        # radix = self.len_alphabet
-        # tosee = {}
-        # for i in range(radix):
-        #     if curr.next[i] is not None:
-                
-        # return res
+        # Second: If we are here, is because we have keys stored with
+        # this prefix! Start collecting keys
+        radix = self.len_alphabet
+        tosee = set()
+        tosee.add((curr, prefix))
+        while len(tosee) != 0:
+            curr, currprefix = tosee.pop()
+            for i in range(radix):
+                if curr.next[i] is not None:
+                    tosee.add((curr.next[i], currprefix + self.alphabet[i]))
+                if curr.value is not None:
+                    res.add(currprefix)
+        return res
 
 
 trie = TrieNode(ascii_lowercase)
 trie.insert("hola", 3)
+trie.insert("hole", 8)
 trie.insert("holland", 6)
 trie.insert("hohoho", 10)
 
