@@ -37,7 +37,7 @@ in this section:
 - Bayer-moore
 - Rabin-Karp
 
-## Tries
+## R-way Tries
 
 *Read the intro above to understand why we need to use them (most of the times the
 use case involves prefix search)*
@@ -155,6 +155,57 @@ class TrieNode:
 
 In the above representation, a character is just represented by a non-none entry in the
 node.next list.
+
+### Summary
+
+- Good data structure when the alphabet is small. Think that nowadays, Unicode version 16 has 155063 characters :)
+- They can be super memory inefficient when you have many elements in the data structure becase
+you have to create a list of size R where most of the elements are None. This will cause out of 
+memory for large datasets
+- *IMPORTANT NOTE* When having a miss search, tries work much faster than symbol tables that use
+hashing! Why? because they don't have to read the *WHOLE STRING* to find out that the string
+is not there
+
+How to overcome the above issue? Keep reading :)
+
+## Ternary search Tries (another trie implementation)
+
+*Idea* Instead of storing as children a list of size radix, store 3 characters: left, middle, right. 
+For inserting into the trie, we follow these rules:
+- If we reach an empty node, define the node and put as middle node the current char
+- If current character match the character in the middle, follow that link and cosume current char 
+- If there's non-matching character:
+	- If the current character is less than the link in the middle, follow the left link
+	- If the current character is greater than the link in the middle, follow the right link
+
+In this implementation, we store both the character and the value in the node. 
+
+*Questions:* 
+- How do we define the middle character to define lower and higher characters? That depends on the first insertion we do. This is gonna be the keychar
+- What happens when we have unbalanced tries?
+
+*Summary*
+
+TST are as fast as hashing but much more space performant
+
+## Trie running time and space table comparisson
+| implementation           | search hit   | search mis | insert   | space (reference) |
+| red-black BST            | L + c lg^2 N | c lg ^ N   | c lg ^N  | 4 N               |
+| hashing (linear-probing) | L            | L          | L        | 4N to 16 N        |
+| R-way Trie               | L            | log_r N    | L        | (R+1)* N          |
+| Ternary search trie      | L + ln N     | ln N       | L + ln N | 4N                |
+|                          |              |            |          |                   |
+
+
+## An hybrid: Using both R-way Tries and Ternary search tries both together
+
+*Idea* 
+- Do R^2 way branching at root
+- Each of R^2 root nodes points to a TST
+
+### Character-based operations supported by tries
+
+- Prefix search
 
 ## Substring search
 

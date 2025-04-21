@@ -164,3 +164,134 @@ trie.delete("hole")
 trie.contains("hole")
 
 trie.get("hola")
+
+
+"""
+Implementation 3: TernaryTrie
+"""
+
+
+class TernaryTrieNode:
+    def __init__(self, alphabet: str) -> None:
+        self.alphabet = alphabet
+
+        self.charkey = None
+        self.value = None
+        # next nodes
+        self.left = None
+        self.right = None
+        self.middle = None
+
+    def insert(self, key: str, val: Any) -> None:
+        def defineNode(keychar: str) -> 'TernaryTrieNode':
+            res = TernaryTrieNode(self.alphabet)
+            res.charkey = keychar
+            return res
+            
+        curr = self
+        j = 0
+        while j < len(key):
+            c = key[j]
+            if curr.charkey is None:  # Empty trieNode case
+                curr.charkey = c
+                j += 1
+            elif curr.charkey == c:
+                if curr.middle is None:
+                    curr.middle = defineNode(c)
+                curr = curr.middle
+                j += 1
+            elif curr.charkey > c:
+                if curr.left is None:
+                    curr.left = defineNode(c)
+                curr = curr.left
+            else:
+                if curr.right is None:
+                    curr.right = defineNode(c)
+                curr = curr.right
+        curr.value = val
+
+    def get(self, key: str, default: Any = None) -> Any:
+        curr = self
+        j = 0
+        while j < len(key):
+            c = key[j]
+            if curr is None:
+                return default if default else None
+            elif curr.charkey == c:
+                curr = curr.middle
+                j += 1
+            elif curr.charkey > c:
+                curr = curr.left
+            else:
+                curr = curr.right
+        return default if curr.value is None else curr.value
+
+    def startsWith(self, prefix: str) -> set[str]:
+        """
+        Returns a set of all keys that start with
+        prefix. If there are no keys that fulfill
+        such condition, returns an empty set
+        """
+        res = set()
+        j = 0
+        curr = self
+        while j < len(prefix):
+            c = prefix[j]
+            if curr is None:
+                return res
+            elif curr.charkey == c:
+                curr = curr.middle
+                j += 1
+            elif curr.charkey < c:
+                curr = curr.right
+            else:
+                curr = curr.left
+
+        tosee = set()
+        tosee.add((curr, prefix))
+        # TODO: Fix this
+        while len(tosee) > 0:
+            curr, currprefix = tosee.pop()
+            nodes = (curr.left, curr.middle, curr.right)
+            for node in nodes:
+                if node is not None:
+                    tosee.add((node, currprefix + node.charkey))
+            if curr.value is not None:
+                res.add(currprefix)
+        return res
+            
+
+    def contains(self, key: str) -> bool:
+        return self.get(key) is not None
+
+    def __str__(self) -> str:
+        return f"TernaryTrieNode({self.alphabet},{self.charkey},{self.value})"
+
+
+trie = TernaryTrieNode(ascii_lowercase)
+trie.insert("hola", 3)
+trie.insert("hole", 8)
+trie.insert("holland", 6)
+trie.insert("hohoho", 10)
+
+print(trie.startsWith("ho"))
+
+print(trie.get("holland"))
+print(trie.get("never", "mydefault"))
+print(trie.get("nope"))
+print(trie.contains("hole"))
+print(trie.get("hole"))
+
+trie.insert("andres", 10)
+print(trie.get("andres"))
+
+try:
+    trie.delete("hoho")
+except ValueError as e:
+    print(e)
+
+trie.delete("hole")
+trie.contains("hole")
+
+trie.get("hola")
+
