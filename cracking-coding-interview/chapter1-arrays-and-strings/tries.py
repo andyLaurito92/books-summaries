@@ -230,6 +230,15 @@ class TernaryTrieNode:
                 curr = curr.right
         return default if curr.value is None else curr.value
 
+    def orderedKeys(self) -> list[str]:
+        """
+        Return all keys in sorted ascending order
+        """
+        # This is just doing inorder traversal
+        # TODO
+        return []
+        
+
     def startsWith(self, prefix: str) -> set[str]:
         """
         Returns a set of all keys that start with

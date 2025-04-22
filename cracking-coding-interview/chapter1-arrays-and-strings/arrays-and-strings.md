@@ -205,7 +205,23 @@ TST are as fast as hashing but much more space performant
 
 ### Character-based operations supported by tries
 
-- Prefix search
+- Prefix search: This is used in autocomplete apps, search bars, text editors, IDEs, shells, u name it! 
+- Ordered keys: 
+- longest prefix: Find longest key in symbol that is a prefix of query string. This is used for sending packets toward destination IP addresess. Router chooses IP address in routing table that is longest prefix match!
+The longest the IP, the more specific it is for sending the packet
+
+## TODO: Patricia Trie (radix trie)
+
+Look more about this. Instead of having one-way branching (this is, one branch per chatacter), have nodes
+that represent sequence of characters.
+
+I didn't find anything about patricia tries in either algorithms by sedgewick or in cormen
+
+## TODO: Suffix tries
+
+Look more about this. Used in computational biology. Could be useful for the concatenated word problem
+
+Advanced data structures by peter brass has some info on this
 
 ## Substring search
 
