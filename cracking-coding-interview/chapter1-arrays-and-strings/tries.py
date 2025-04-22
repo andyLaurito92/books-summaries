@@ -194,32 +194,36 @@ class TernaryTrieNode:
             c = key[j]
             if curr.charkey is None:  # Empty trieNode case
                 curr.charkey = c
-                j += 1
-            elif curr.charkey == c:
-                if curr.middle is None:
-                    curr.middle = defineNode(c)
-                curr = curr.middle
-                j += 1
-            elif curr.charkey > c:
+            if c < curr.charkey:
                 if curr.left is None:
                     curr.left = defineNode(c)
                 curr = curr.left
-            else:
+            elif c > curr.charkey:
                 if curr.right is None:
                     curr.right = defineNode(c)
                 curr = curr.right
+            else:
+                j += 1
+                if j == len(key):
+                    break
+                if curr.middle is None:
+                    curr.middle = defineNode(key[j])
+                curr = curr.middle
         curr.value = val
 
     def get(self, key: str, default: Any = None) -> Any:
         curr = self
         j = 0
+        # hole, j = 0, len(key) = 4, 3
         while j < len(key):
             c = key[j]
             if curr is None:
                 return default if default else None
             elif curr.charkey == c:
-                curr = curr.middle
                 j += 1
+                if j == len(key):
+                    break
+                curr = curr.middle
             elif curr.charkey > c:
                 curr = curr.left
             else:
@@ -240,24 +244,28 @@ class TernaryTrieNode:
             if curr is None:
                 return res
             elif curr.charkey == c:
-                curr = curr.middle
                 j += 1
+                if j == len(prefix):
+                    break
+                curr = curr.middle
             elif curr.charkey < c:
                 curr = curr.right
             else:
                 curr = curr.left
 
         tosee = set()
-        tosee.add((curr, prefix))
+        tosee.add((curr, prefix[0:len(prefix)-1]))
         # TODO: Fix this
         while len(tosee) > 0:
             curr, currprefix = tosee.pop()
-            nodes = (curr.left, curr.middle, curr.right)
-            for node in nodes:
-                if node is not None:
-                    tosee.add((node, currprefix + node.charkey))
+            if curr.left is not None:
+                tosee.add((curr.left, currprefix))
+            if curr.right is not None:
+                tosee.add((curr.right, currprefix))
+            if curr.middle is not None:
+                tosee.add((curr.middle, currprefix + curr.charkey))
             if curr.value is not None:
-                res.add(currprefix)
+                res.add(currprefix+curr.charkey)
         return res
             
 
@@ -291,7 +299,7 @@ except ValueError as e:
     print(e)
 
 trie.delete("hole")
-trie.contains("hole")
+print(trie.contains("hole"))
 
-trie.get("hola")
+print(trie.get("hola"))
 
