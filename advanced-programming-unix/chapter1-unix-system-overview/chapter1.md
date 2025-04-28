@@ -130,3 +130,65 @@ You can list all files in a directory by using *ls*.
 
 *Note* An example of a C implementation of ls can be seen in myls.c script. 
 To compile it, you can use cc, which is the c/c++ compiler
+
+*Note* When we login, our home directory is obtained from our entry in the pwd file -> *TODO: Confirm this*
+
+### Input/Output
+
+#### File Descriptors
+
+Small non-negative integer that the kernel uses to identify the files accessed by a process.
+Whenever it opens an existing file or creates a new file, the kernel returns a file
+descriptor that we use  when we want to read or write the file.
+
+### stdin, stdout, stderr
+
+By convention, all shells open 3 descriptors:
+- standard input 
+- standard output
+- standard error
+
+By default, all three are connected to the terminal
+
+To redirect use >, for example: `ls > file.list` #redirect stdout to file
+
+### unbuffered io
+
+see open, read, write, lseek and close
+
+When we use `head < myfile.txt`, we are redirecting standard input from myfile.txt instead of 
+normal standard input
+
+### Program vs Processes
+
+#### Program
+
+Executable file residing on disk in a directory. 
+
+A program is read into memory and is executed by the kernel 
+as a result of noe of the seven exec functions
+
+#### Process
+
+An executing instance of a program
+
+*Example:* See process_ex.c under code folder
+
+When you run 
+
+```
+cc process_ex.c
+./a.out
+```
+The above:
+- Looks for process_ex.c (file) in disk
+- Loads program into memory
+- Executes the code (run instructions)
+
+There are 2 ways of creating a process:
+1. fork
+2. exec: This function has 7 variants :)
+
+And one for waiting for its termination:
+
+1. waitpid
