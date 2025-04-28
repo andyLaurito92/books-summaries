@@ -192,3 +192,17 @@ There are 2 ways of creating a process:
 And one for waiting for its termination:
 
 1. waitpid
+
+Remember that forks is called once (in the parent) and
+returned twice: 1 in the child (w/pid = 0) and 1 in the parent (w/pid = child pi > 0)
+
+#### Threads
+
+Set of machine instructions executing at a time. 
+
+Threads within a process sahre the same address space, file descriptors, stacks, and
+process-related attributes. Each thread executes on its own stack, although any 
+thread can access the stacks of other threads in the same process. 
+
+This is why we need to synchronize threads, because they can access the same memory
+space than other threads :)
