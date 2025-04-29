@@ -1,6 +1,12 @@
 #include "apue.h"
 #include <sys/wait.h>
 
+/**
+ * In order to compile this file do:
+ * cc myshell.c apue.c -o myshell
+ * You need to link both .c
+ */
+
 int main(void) {
   char buf[MAXLINE];
   pid_t pid;
