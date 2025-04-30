@@ -434,3 +434,36 @@ TODO
 ### Boyer-Moore algorithm
 
 Invented by Robert Boyer and J.Strother Moore
+
+Useful when back up in the original text is not a problem. The idea is to 
+scan the pattern from right to left when trying to match it against the text.
+When we found a mismatch, we slide the text len(pattern) to the right.
+
+Example:
+If we have a pattern like: `BAABBAA`, we start from right to left:
+- A matches? Yes? next character left
+- A matches? Yes? next character left
+- B matches? No? Jump len(pattern) and start again.
+
+Text = BAABBCBAABBAAD
+
+*Question:* Couldn't it happen that you jumped to much?
+
+The answer is yes, and this is why we need an array of restart positions!
+Another way is to decide what to do next on the basis of the character 
+that caused the mismatch in the *text* as well as the pattern.
+
+*Idea*: For each preprocessing step we need to decide, for each possible character
+that could occurd in the text, what we would do if that character were to cause 
+the mismatch. The idea here is to check whether the character (X) belongs to the pattern
+or not. If (X) it does belong to the pattern, then we could slide the pattern to match 
+the right most character that matches X. We then start matching 
+
+*Starting point:* To implement the mismatched charcater heuristic, we use an array
+right that gives, for each character in the alphabet, the index of its rightmost 
+occurrence in the pattern (or -1 if the character is not in the pattern)
+
+*Runtime complexity:* On typical inputs, substring search uses ~ N/M character comparissons
+to search for a pattern of length M in a text of length M
+
+

@@ -140,7 +140,43 @@ def matching_from_input(pattern: str) -> None:
             print("Pattern found!")
 
 
-pattern_finding_functions = [findpattern, findpattern2, knutmorrispratt]
+def bayermoore(text: str, pattern: str) -> int:
+    """
+    Implements bayer-moore algorithm to find pattern
+    in text. Returns first occurrence of pattern or -1
+    if no ouccrrence exists.
+    NOTE: Assumes ASCII characters
+    """
+    def charidx(charstr: str) -> int:
+        """
+        Return the idx of the char
+        """
+        return ord(charstr) - ord('a')
+
+    right = [-1] * len(ascii_lowercase)
+    m = len(pattern)
+    n = len(text)
+    for j in range(m):
+        # Set char to rightmost appearance in pattern
+        right[charidx(pattern[j])] = j
+
+    i = 0
+    skip = 0
+    while i < n - m:
+        skip = 0
+        for j in reversed(range(m)):
+            if pattern[j] != text[i+j]:
+                skip = j - right[charidx(text[i+j])]
+                if skip < 1:
+                    skip = 1
+                break
+        if skip == 0:
+            return i
+        i += skip
+    return -1
+
+
+pattern_finding_functions = [findpattern, findpattern2, knutmorrispratt, bayermoore]
 
 for fn in pattern_finding_functions:
     message = f"Failed w/function {fn}"
@@ -149,3 +185,5 @@ for fn in pattern_finding_functions:
     assert -1 == fn("thisisthehaystackajasfdjk", "nope"), message
     assert 7 == fn("aabaaacbaaaaaaa", "baaaa")
     assert 8 == fn("aaaaabaaaabbaaaaa", "aabbaa")
+
+
