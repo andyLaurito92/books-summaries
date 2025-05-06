@@ -228,4 +228,7 @@ for fn in pattern_finding_functions:
 
 
 rk = RabinKarpSearch("haystack")
-rk.search("thisisthehaystackajasfdjk")
+assert 9 == rk.search("thisisthehaystackajasfdjk")
+
+rk1 = RabinKarpSearch("baaaa")
+assert 7 == rk1.search("aabaaacbaaaaaaa")
