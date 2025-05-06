@@ -467,3 +467,66 @@ occurrence in the pattern (or -1 if the character is not in the pattern)
 to search for a pattern of length M in a text of length M
 
 
+
+### Rabin-Karp
+
+*Basic idea:* Use modular hashing -> Take a big prime, compute the reminder
+- compute a hash of pattern characters 0 to m-1
+- for each i, compute a hash of text characters i to m + i -1
+- if pattern hash = text substring hash, check for a match
+
+
+Without thinking the above a bit, having to calculate the new hash per each text[i...i+m]
+can be supper inefficient. How can we do this better?
+
+#### How to compute the hash function?
+
+Using the notation t_i, for txt[i], we wish to compute:
+
+```
+x_i = t[i]*R^(M-1) + t[i+1]*R^(M-2) + ... + t[i+m]*R^0 (mod Q)
+```
+
+M-digit, base-R integer, modulo Q
+
+*Hornern's method:* Linear-time method to evaluate degree M polynomial
+
+Assuming decimal number, R = 10, then:
+
+```
+def hash(key: str, m: int):
+	long h = 0
+	for j in range(m):
+		h = (R * h + key[j]) % Q
+	return h
+```
+
+
+*Note* Given that we are talking about hashing comparisson, we later need to check
+(if we want to be exact), whether we had a hash colission or if we really find 
+the substring we were looking for. 
+
+The version of the algorithm that doesn't check for a real match but assummes 
+equality by comparing hashes is called "the montecarlo version".
+
+*In theroy*, if Q is sufficiently large random prime (about M * N^2), then 
+the probability of a false colission is about 1/N.
+
+*In practice*, take a large prime that doesn't cause overflow :)
+
+Running time: O(N + M)
+
+
+#### Why do we care about this algorithm?
+
+- There are simple algorithms, such as the automaton state algorithm, that works perfect
+in linear time. Then why shall we care about this one?
+
+*Because*
+
+1. Extends to 2d patterns. 
+2. Extends to finding multiple patterns!
+
+For the second case, you just need to:
+- Compute the hashes for those patterns
+- Look for any of those using a symbol table

@@ -175,6 +175,45 @@ def bayermoore(text: str, pattern: str) -> int:
         i += skip
     return -1
 
+import math
+
+class RabinKarpSearch:
+    # R = 256 because ASCII characters
+    def __init__(self, pattern: str,
+                 R:int = 256, Q:int = 997):
+        self.R = R
+        self.Q = Q  # Big prime
+        self.pattern = pattern
+        self.RM = 1
+        self.patthash = self.hash(pattern)
+        # precompute R^M-1 (MOD Q)
+        for j in range(len(pattern) - 1):
+            self.RM = (self.R * self.RM) % self.Q
+
+    def hash(self, pattern: str) -> int:
+        h = 0
+        for j in range(len(pattern)):
+            h = (self.R * h + ord(pattern[j])) % self.Q
+        return h
+
+    def search(self, text:str) -> int:
+        """
+        Find first occurrence of pattern in txt
+        """
+        n = len(text)
+        m = len(self.pattern)
+        txthash = self.hash(text[:len(self.pattern)])
+        if self.patthash == txthash:
+            return 0 # Montecarlo implementation; Don't care about hash colission
+
+        for i in range(m, n):
+            txthash = (txthash + self.Q - self.RM*ord(text[i-m]) % self.Q) % self.Q
+            txthash = (txthash * self.R + ord(text[i])) % self.Q
+            if self.patthash == txthash:
+                return i - m + 1
+        return -1
+
+
 
 pattern_finding_functions = [findpattern, findpattern2, knutmorrispratt, bayermoore]
 
@@ -187,3 +226,6 @@ for fn in pattern_finding_functions:
     assert 8 == fn("aaaaabaaaabbaaaaa", "aabbaa")
 
 
+
+rk = RabinKarpSearch("haystack")
+rk.search("thisisthehaystackajasfdjk")
