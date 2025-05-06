@@ -524,9 +524,14 @@ in linear time. Then why shall we care about this one?
 
 *Because*
 
-1. Extends to 2d patterns. 
-2. Extends to finding multiple patterns!
+1. Easy to extends to 2d patterns. 
+2. Easy to extends to finding multiple patterns!
 
 For the second case, you just need to:
 - Compute the hashes for those patterns
 - Look for any of those using a symbol table
+
+Disadvantages
+- For substring search, is a bit slower, bc of the arithmetic operation 
+- If you want the las vegas search, you need to backup
+
