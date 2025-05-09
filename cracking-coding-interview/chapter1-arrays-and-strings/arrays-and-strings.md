@@ -535,3 +535,53 @@ Disadvantages
 - For substring search, is a bit slower, bc of the arithmetic operation 
 - If you want the las vegas search, you need to backup
 
+
+### Sliding window 
+
+#### Intro
+
+This section doesn't come from neither cracking the coding interview nor any algorithm books but
+comes from having to deal with longest repeating character replacement problem (see programming-exercises
+repo to see the description of this problem).
+
+After the above, I realised that there are several algorithmic tecniques not covered in the mentioned books.
+A good resource for studying these content then is https://www.designgurus.io/course/grokking-the-coding-interview
+
+Unfourtunately the above course is paid. Because of that, it's sometimes better to just see topics and look for 
+them in chatgpt/internet. 
+
+Some free material about this topic:
+1. https://www.hellointerview.com/learn/code/sliding-window 
+2. https://www.geeksforgeeks.org/window-sliding-technique/
+
+
+#### Now yes, sliding window
+
+Template
+
+```
+def variable_length_sliding_window(nums):
+  state = # choose appropriate data structure
+  start = 0
+  max_ = 0
+
+  for end in range(len(nums)):
+    # extend window
+    # add nums[end] to state in O(1) in time
+
+    while state is not valid:
+      # repeatedly contract window until it is valid again
+      # remove nums[start] from state in O(1) in time
+      start += 1
+
+    # INVARIANT: state of current window is valid here.
+    max_ = max(max_, end - start + 1)
+
+  return max_
+```
+
+*When to use it?*
+
+
+When you have a question that involve searching for a substring (continuos subsequence) in 
+an array or a string.
