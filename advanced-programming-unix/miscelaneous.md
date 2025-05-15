@@ -40,6 +40,15 @@ Note: The call graph will show stacktrace of user space code, not kernel space.
 When tracing is enabled, dig makes iterative queries to resolve the name being looked up. 
 It will follow referrals from the root servers, showing the answer from each server that was used to resolve the lookup.
 
+- *vm_stat* virtual memory statistics 
+
+Ex of usage: `vm_stat | awk -F':' '{if (NR != 1) print $1,($2*16)/(1024*1024),"GB"}'`
+Gives you a nice view of how many pages measured in GB are free
+
+- *uptime* tells you what is the current uptime of the current machine
+
+- *df* Free disk space, usage: `df -h`
+
 ## TIPS
 
 1. If u run `!NUMBER`, this will run command NUMBER from your history
