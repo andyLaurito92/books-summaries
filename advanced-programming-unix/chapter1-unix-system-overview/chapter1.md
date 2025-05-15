@@ -200,7 +200,7 @@ returned twice: 1 in the child (w/pid = 0) and 1 in the parent (w/pid = child pi
 
 Set of machine instructions executing at a time. 
 
-Threads within a process sahre the same address space, file descriptors, stacks, and
+Threads within a process share the same address space, file descriptors, stacks, and
 process-related attributes. Each thread executes on its own stack, although any 
 thread can access the stacks of other threads in the same process. 
 
