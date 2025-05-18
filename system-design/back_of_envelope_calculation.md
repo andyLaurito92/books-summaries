@@ -5,6 +5,7 @@ This concept means doing math: The main idea is just to do a quick estimate over
 - CPU usage
 - Requests per second
 - TCP connections
+- QPS (queries per second)
 
 so we can track how many resources will we need for our system. This is the step where we do
 some math to calculate concrete numbers on what will we need for our syste.
