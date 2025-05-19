@@ -28,3 +28,8 @@ for supporting the new ATLAS network.
 | Read 1MB from sequentially from disk             | 2.000.000 (2 milliseconds)       | 0,002          |
 | Send packets SF -> NYC                           | 71.000.000 (71 milliseconds)     | 0,71           |
 
+
+
+*How many RPS can handle an EC2 medium instance?*
+
+

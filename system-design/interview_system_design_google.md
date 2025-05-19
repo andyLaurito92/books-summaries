@@ -97,6 +97,14 @@ SLO -> Service level objective
 - Availability
 - Plan in case of failure
 
+### Metrics
+
+Raw, unprocessed data points collected from your systems. Examples:
+- Total number of requests
+- Number of failed requests
+- CPU and memory usage
+- Response Time
+
 ### Service Level Indicators (SLI)
 
 *Summary:* The measure, just gathering data
@@ -114,6 +122,8 @@ Example:
 
 - "99th percentile latency of requests received in the past 5m < 300ms" Indicator 1
 - "Errors total requests/total requests < 1%" Indicator 2
+- *Availability SLI:* Total successfull requests / Total requests
+- *Latency SLI* % requests completed within a target time (e.g. 95% of requests under 100ms)
 - 95% perecentile latency of homepage requests over past 5 minutes < 300ms
 
 From the above indicators we build our SLO
