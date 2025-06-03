@@ -39,11 +39,7 @@ def hoffman_coding(msytr: str):
     """
     Builds a hoffman coding trie from the received string
     """
-
-    mystr = "ABADACADABRA!"
-
     counter = Counter(mystr)
-
 
     tries = [TrieNode(c, v) for c, v in counter.items()]
     heapq.heapify(tries) # builds min-heap from tries list
