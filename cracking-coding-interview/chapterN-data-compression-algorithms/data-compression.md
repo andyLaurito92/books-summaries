@@ -131,6 +131,98 @@ done better.
 Application of the above: JPEG
 
 
+## Huffman encoding
+
+This time, we use variable-length codes!, this is, use different number of bits to encode different chars
+
+*Problem* We introduce ambiguity!
+
+Ex: Morse code!
+
+*Why does introducing a variable-length code introduces ambiguity?*
+
+Because we have codewords that are prefix of other codewords!
+
+Then, *idea*. Avoide the above :)
+
+How? 
+
+Ex1: fixed length code
+Ex2: Add a *special stop character* to each codeword
+Ex3: *General prefix-free code*
+
+We are gonna study here the third option. How do we represent the above? By using tries!
+
+## Trie representation
+
+Use a binary trie that:
+
+- Chars in leaves
+- Codeword is path from root to leaf
 
 
+There are several things that we need to consider by using this trie.
 
+1. (*Writing*) We need to be able to grab that trie structure, and transform it into bits. This will be a message
+that we will need to send with the file so that we can reconstruct the trie in memory. 
+The size of the trie in bits will be much smaller that the size of the message we are encoding, so we should
+be good :)
+2. (*Reading*) We need to be able to read the trie structure sent to us in bits format
+3. (*Creating a prefix-free tree*) For this, we use can use Shannon-Fano coding (suboptimal) or Hoffman coding (optimal)
+
+### Shannon-Fano coding
+
+This is not an optimal solution! Meaning, it does not always achieve the lowest possible expected codeword length
+
+- Partition symbol S into 2 substes: Sa and Si of (roughly) equal freq
+- Codewords for symbols in Sa start with 0; for symbols in Si start w/1
+- Recur in Sa and Si
+
+
+### Hoffman coding
+
+
+- Count frequency for each character in input (in Python, we use `from colletions import Counter`. *Goal* For those characters that have the highest frequency, we want to use the less amount of bits possible!. The less frequency, the more bits
+- Start w/one node for each character with with equal to frequency
+- Select two tries with min weight and merge into single trie with
+cumulative weight
+
+
+```
+
+from collections import Counter
+import heapq
+
+mystr = "ABADACADABRA!"
+
+counter = Counter(mystr)
+
+class TrieNode:
+	def __init__(self, char: str, freq: int):
+		self.char = char
+		self.left = None
+		self.right = None
+		self.frequency = freq
+		
+	def merge(other: 'TrieNode') -> 'TrieNode':
+		new = TrieNode(None, self.frequency + other.frequency)
+		new.left = self
+		new.right = other
+		return new
+		
+	def __lt__(other: 'TrieNode') -> bool:
+		return self.frequency < other.frequency
+	
+	def __str__(self) -> str:
+		return self.char
+
+
+tries = [TrieNode(c, v) for c, v in counter.items()]
+heapify(tries) # builds min-heap from tries list
+
+while len(tries) != 1:
+	tr1 = heappop(tries)
+	tr2 = heappop(tries)
+	new = tr1.merge(tr2)
+	heappush(tries, new)
+```
