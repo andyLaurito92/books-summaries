@@ -11,3 +11,16 @@
 - C is a low-level langauge: C provides access to machine-level concepts (bytes anda ddresses, for example) that other
 programming language try to hide. C also provides operations that correspond closely to a computer's built-in instructions,
 so that programs can be fast.
+- Efficiency: It's super fast :) Was meant to replace assembler
+- Portability: Thanks to be associated w/Unix
+- Integration w/UNIX
+
+Not so good things of C
+
+- C programs can be error-prone: flexibility comes w/a price
+
+## Some useful tools to use w/your C programs
+
+- lint: Linter for c
+- bound-checkers: Checking bounds when accessing memory
+- leak-finders: Finding memory leaks
