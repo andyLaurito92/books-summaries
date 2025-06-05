@@ -181,48 +181,46 @@ This is not an optimal solution! Meaning, it does not always achieve the lowest 
 
 ### Hoffman coding
 
-
 - Count frequency for each character in input (in Python, we use `from colletions import Counter`. *Goal* For those characters that have the highest frequency, we want to use the less amount of bits possible!. The less frequency, the more bits
 - Start w/one node for each character with with equal to frequency
 - Select two tries with min weight and merge into single trie with
 cumulative weight
 
+For the code, see file `compression.py`
 
-```
+*Running time*: N + R log R where:
 
-from collections import Counter
-import heapq
+N is the input size
+R is the alphabet size
 
-mystr = "ABADACADABRA!"
+#### Disadvantages
 
-counter = Counter(mystr)
+- You need to pass 2 times for the message:
+	- Pass1: char frequencies
+	- Pass2: Encode file by traversing trie or lookup table
 
-class TrieNode:
-	def __init__(self, char: str, freq: int):
-		self.char = char
-		self.left = None
-		self.right = None
-		self.frequency = freq
-		
-	def merge(other: 'TrieNode') -> 'TrieNode':
-		new = TrieNode(None, self.frequency + other.frequency)
-		new.left = self
-		new.right = other
-		return new
-		
-	def __lt__(other: 'TrieNode') -> bool:
-		return self.frequency < other.frequency
+
+Can we do better? Yeap :)
+
+#### Question
+
+Suppose that you have a n-byte input stream consisting of nnn 7-bit ASCII characters.  Approximately what compression ratio does Huffman compression achieve if each ASCII character appears with equal frequency?
+
+### LZW Compression (Lempel-Ziw)
+
+So far we have:
+
+- Static model: Fixed encoding for all characters in message. Is fast and easy, but not very efficient. It doesn't take
+into consideration the input
+
+- Dynamic model: Hoffman encoding. Counts frequencies and creates a trie prefix-free structure that allows us to know how
+to encode our original message. It involves reading at least 2 times the message to encode it + we need to send/store, not just
+the message, but the trie structure in order to decode it
+
+- Adaptive model: Progressively learn and update model as you read text!
+	- More accurate modeling produces better compression
+	- Decoding must start from beginning
+	- Ex: LZW
 	
-	def __str__(self) -> str:
-		return self.char
 
-
-tries = [TrieNode(c, v) for c, v in counter.items()]
-heapify(tries) # builds min-heap from tries list
-
-while len(tries) != 1:
-	tr1 = heappop(tries)
-	tr2 = heappop(tries)
-	new = tr1.merge(tr2)
-	heappush(tries, new)
-```
+Define key-value map that maps each character to a value, value represented in 2^8
