@@ -72,7 +72,16 @@ This generates object code, a bit file for the specific platform, BUT not execut
 
 #### Linker
 
+- Combine all object files into a same executable
+- Resolve symbols: The linker finds all symbol definitions (function names/variables) and refernces and
+matches them so the executable knows where each function or variable lives
+- Link libraries, such as .so or .dylib
+- Assign final addresses into memory
+- Produces executable or library
+
 `cc hello_world.o -o hello_world`
+
+Usually there are 2 system linkers: `ld` on Unix-like systems, or the LLVM linker `lld`
 
 
 *Note* clang and cc are intercheangable. cc is a symlink to clang in OSX.
