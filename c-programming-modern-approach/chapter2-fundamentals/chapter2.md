@@ -43,11 +43,18 @@ Let's go into one of them.
 
 #### Preprocessing
 
-- Handles #include, #define, #if and macro expansions.
+- Handles #include, #define, #if and macro expansions. These are call directives and are commands for the preprocessor.
 - Remove comments
 - Produces preprocessed source (.i file)
 
 `cc -E hello_world.c -o hello_world.i`
+
+Example of directive: `#include <stdio.h>`
+
+*Note:* In C you can either do `#include <stdio.h>` or `#include "stdio.h"`. What's the difference?
+
+- `#include <sht>` Looks for something only in the system include libraries
+- `#include "sht.h"` Looks first in the current directory and then, if not found, in the system include libraries
 
 #### Compiler frontend
 
