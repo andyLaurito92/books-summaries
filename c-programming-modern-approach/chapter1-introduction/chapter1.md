@@ -24,3 +24,16 @@ Not so good things of C
 - lint: Linter for c
 - bound-checkers: Checking bounds when accessing memory
 - leak-finders: Finding memory leaks
+
+### Concrete examples on the above tools
+
+#### Linters
+
+1. [clang-tidy](https://clang.llvm.org/extra/clang-tidy/)
+2. [cppcheck](https://cppcheck.sourceforge.io/)
+3. Use gcc/clang w/extra flags, such as `-Wall -Wextra -Wpedantic -Wshadow -Wundef -Wconversion -Werror`
+
+#### Memory leak detectors
+
+1. Valgrind
+
