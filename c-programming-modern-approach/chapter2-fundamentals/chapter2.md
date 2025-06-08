@@ -14,7 +14,7 @@ In order to run the hello_word.c example, just run
 
 And then execute it using ./helloworld
 
-### Getting deeper into the Matrix (compilation/build process)
+### Getting deeper into the Matrix (compilation/build process) - This is out of scope from the book
 
 On this section, I'll get depeer on how compilers internally work. For developers, to compile means to go from source code to 
 object code/binary/.jar/whatever format can be executed by some platform (jvm, my OS, whatever). 
@@ -98,3 +98,20 @@ and uses a frontend LLVM's modular compiler backend architecture.
 
 On the other hand, gcc is older (1980s), is owned by the free software foundations, and uses a
 traditional monolithic compiler design.
+
+
+## Functions
+
+The book treat function as a collection of statemens :) 
+
+- main is a mandatory function that is called automatically when the program is executed
+- main returns the status code of the program. This value is returned to the operating system (different from Java!)
+
+*Note* main is not really mandatory but "recommended" by the ISO standard. What it really triggers the call to the main function
+is the *C runtime libraty (CRT)*: These aren't anything else than libraries that are linked into your program in the linker process. 
+Usually, these routines are shipped as part of the compiler and reside in the `crt0.o`, `crt1.o` or `crtbegin.o` object file
+
+This startup code usually:
+- Set up the environment (e.g. stack, heap, command-line arguments)
+- Calls `main(argc, argv, envp)`
+- Takes the return value of `main` and passes it to the O.S.
