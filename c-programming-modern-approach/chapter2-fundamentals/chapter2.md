@@ -115,3 +115,19 @@ This startup code usually:
 - Set up the environment (e.g. stack, heap, command-line arguments)
 - Calls `main(argc, argv, envp)`
 - Takes the return value of `main` and passes it to the O.S.
+
+*Note* _statements_ end w/; while _directives_ don't (ex: `#include`)
+
+## Macros
+
+When you use either `#define` or `#include`, you are defining *MACROS* of the preprocessor. 
+
+*What does this mean?* Same as what it means in Lisp! The preprocessor reads the macro, and it replaces it w/the code that 
+it represents. In this case, `#define` just means _"Replaces this for that"_
+
+*Important* C has constants, which are defined as `const char* messsage = "Thanks user!"`. The're a lot of differences between
+defining a macro and a constant in this case:
+
+- A `#define` is never seen by the compiler given that it's a macro interpreted by the preprocessor
+- It doesn't have neither type nor space in memory, as `const char*` does
+- Usually preferred `const char*` than `#define` for maintainability
