@@ -40,4 +40,3 @@ int main(void) {
   using_scanf();
   return 0;
 }
-

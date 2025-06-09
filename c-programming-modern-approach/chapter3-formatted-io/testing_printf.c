@@ -11,4 +11,3 @@ int main(void) {
 
   printf("%10.1f", afloat); // prints         9.0
 }
-
