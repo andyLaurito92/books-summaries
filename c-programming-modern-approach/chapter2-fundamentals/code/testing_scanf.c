@@ -9,4 +9,10 @@ int main(void) {
   scanf("%d%d%f%f", &x, &y, &m, &h);
 
   printf("%d %d %1.2f %1.2f receieved", x, y, m, h);
+
+  // Be aware of not referentiating the value of the variable!
+  scanf("%d", x);
+
+  // It can produces a segmentation fault!
+  printf("%d received", x);
 }
