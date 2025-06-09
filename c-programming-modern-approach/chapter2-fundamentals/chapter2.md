@@ -131,3 +131,13 @@ defining a macro and a constant in this case:
 - A `#define` is never seen by the compiler given that it's a macro interpreted by the preprocessor
 - It doesn't have neither type nor space in memory, as `const char*` does
 - Usually preferred `const char*` than `#define` for maintainability
+
+## printf
+
+### Conversion specificacions 
+
+- Begin with % character
+- Placeholder representing the value to fill. The information that follows the % character 
+specifies how the value is converted from its interna from (binary) to printed form (characters)
+*Example:* printf("%d", &i); is telling printf that it needs to convert an int value from binary to a string
+of decimal digits
