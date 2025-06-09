@@ -143,3 +143,8 @@ specifies how the value is converted from its interna from (binary) to printed f
 of decimal digits
 - %m.pf -> print m digits before . and p digits after . . If fewer digits than m are provided, then the value is
 right justified.
+
+## Order on function definition
+
+You need to declare functions before they're being used. This is bc how C works. If you don't follow this, then 
+you will get an error in the compiler frontend phase, concretely, in the semantic analysis phase.

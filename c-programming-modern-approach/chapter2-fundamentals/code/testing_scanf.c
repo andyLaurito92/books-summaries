@@ -1,6 +1,8 @@
 #include <stdio.h>
 
-int main(void) {
+
+// function has to be defined before used
+void using_scanf(void) {
   int x, y;
   float m, h;
 
@@ -16,3 +18,20 @@ int main(void) {
   // It can produces a segmentation fault!
   printf("%d received", x);
 }
+
+void reading_from_stdin(void) {
+  // TODO
+}
+
+/*
+ * Instead of using scanf, is better to read characters
+ * from stdin and then convert them to what you expect.
+ * In this way, we can handle errors on receiveing
+ * unexpected types
+ */
+
+int main(void) {
+  using_scanf();
+  return 0;
+}
+
