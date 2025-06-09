@@ -141,3 +141,5 @@ defining a macro and a constant in this case:
 specifies how the value is converted from its interna from (binary) to printed form (characters)
 *Example:* printf("%d", &i); is telling printf that it needs to convert an int value from binary to a string
 of decimal digits
+- %m.pf -> print m digits before . and p digits after . . If fewer digits than m are provided, then the value is
+right justified.

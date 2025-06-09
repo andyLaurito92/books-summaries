@@ -8,5 +8,7 @@ int main(void) {
   printf("%d and %.3f\n", afloat, integer);
 
   // The value is not well interpreted but eitherway we get a warning error while compiling
+
+  printf("%10.1f", afloat); // prints         9.0
 }
 
