@@ -13,10 +13,16 @@ void using_scanf(void) {
   printf("%d %d %1.2f %1.2f receieved", x, y, m, h);
 
   // Be aware of not referentiating the value of the variable!
-  scanf("%d", x);
+  //scanf("%d", x);
 
   // It can produces a segmentation fault!
-  printf("%d received", x);
+  //printf("%d received", x); - segmentation fault
+
+  // We can read by using format strings that contain things that
+  // are not convertion specification. Characters (for ex /) will
+  // be used to match in the input. Ex of valid input: 3/ 2
+  scanf("%d/ %d", &x, &y);
+  printf("%d %d", x, y);
 }
 
 void reading_from_stdin(void) {
