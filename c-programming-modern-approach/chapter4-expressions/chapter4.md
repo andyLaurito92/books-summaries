@@ -8,3 +8,8 @@ Because of the above, behaviour of the programs may vary according to the platfo
 ## L-values
 
 An object stored in memory, example: A variable
+
+## A bit of history
+
+++ & -- operators come from the B language :). Apparently in the B language, the compiler could generate a more compact translation for
+++i than i = i + 1k
