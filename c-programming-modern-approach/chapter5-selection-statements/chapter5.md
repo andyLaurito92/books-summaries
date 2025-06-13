@@ -25,3 +25,16 @@ if (is_empty) {
 ```
 
 We can use an enum or type definition instead. We will cover more of this later in the book.
+
+## Boolean values in C99
+
+C99 defines the _Bool type. This type is an unsigned integer.
+
+C99 also introduces <stdbool.h> library which includes several functions to work w/booleans. Adding this header
+will allow us to do define variables as this:
+
+```
+#include <stdbool.h>
+
+bool is_empty = true;
+```
