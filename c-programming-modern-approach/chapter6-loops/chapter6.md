@@ -39,3 +39,10 @@ for (int i = 0; i < 10; i++) {
 
 You can use a , in either the first or third expression of a for statement to either initialize more than 1 variable or
 perform more than 1 action over a variable:
+
+```
+int n = strlen(mystr);
+for (int i = 0, j = n - 1; i < j; i ++, j--) {
+	// do sht here
+}
+```
