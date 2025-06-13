@@ -61,3 +61,8 @@ Usual recommendations:
 - Use `-Wall -Wextra`
 - Use `-Werror` in a CI/CD pipeline
 - Use `-Weverything` for specific cases
+
+
+## Other References besides this book
+
+- https://github.com/dunamismax/C-From-the-Ground-Up---A-Project-Based-Approach : Interesting repo that walks you through different projects in C for building stuff and augmenting knowledge
