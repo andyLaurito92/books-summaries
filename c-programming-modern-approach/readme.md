@@ -18,6 +18,11 @@ Without saying that many of the known programming languages nowadays, such as Ja
 - [erlang/otp](https://github.com/erlang/otp)
 - [LLVM](https://github.com/llvm/llvm-project) - C++ compiler (one of the many implementations of C++)
 
+You also have your favorite tools written in C :)
+
+- [curl](https://github.com/curl/curl/tree/master/lib): Link to libcurl, the library which contains all the logic for implementing the 
+different application protocols that curl knows how to handle
+
 From the above, it also makes sense to say that C will usually be part of the core of a programming language. Let's say you want to build your 
 own language: You will need a core that communicates to the O.S. and implements all the IO functions we 99% of the times use :) C will probably
 be what you want to use in such a case!
