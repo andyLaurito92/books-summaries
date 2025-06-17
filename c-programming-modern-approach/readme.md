@@ -67,7 +67,32 @@ Usual recommendations:
 - Use `-Werror` in a CI/CD pipeline
 - Use `-Weverything` for specific cases
 
+## Package mangaers
+
+C doesn't have a built in package manager such as Python (pip) or Typescript (npm), but there are several options to consider:
+
+- [Conan](https://conan.io/): Usees Python under the hood
+- [vcpkg](https://github.com/microsoft/vcpkg): Microsoft package manager
+
 
 ## Other References besides this book
 
 - https://github.com/dunamismax/C-From-the-Ground-Up---A-Project-Based-Approach : Interesting repo that walks you through different projects in C for building stuff and augmenting knowledge
+
+
+## Who doesn't uses C :P
+
+Seems like [golang](https://github.com/golang/go) doesn't use C that much. The first golang compiler was indeed written in C, but later versions
+were rewritten entirely in go. 
+
+You might be asking yourself: But but ... What about calling syscalls? Well.. Go directly calls the syscalls via ASSEMBLY! Yes yes, it directly does things like:
+
+``` >assembly
+MOVQ $41, AX     // syscall number for socket
+SYSCALL
+```
+
+You can actually check in the repo above that 5% of the codebase is assembly code!
+
+If you are wondering how this actually works, you need to revisit this [video](https://www.youtube.com/watch?v=PjeE8Bc96HY) which explains T-diagrams for compilers
+

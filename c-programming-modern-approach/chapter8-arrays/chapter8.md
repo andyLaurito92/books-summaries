@@ -46,8 +46,7 @@ cc -fno-stack-protector -O0 out_bounds_arr.c
 ```
 
 `-O` stands up for optimization. You are telling the compiler to
-not optimize your code, also telling: "Keep it as close as the code as 
-possible". Other options are:
+not optimize your code, also telling: "Keep it as close as the code as possible". Other options are:
 
 - -O1: basic optimization -> faster builds
 - -O2: good optimization -> production
@@ -58,3 +57,31 @@ possible". Other options are:
 ### Address Space Layout Randomization (ASLR)
 
 Security feature that randomizes memory locations at runtime, to make buffer overflows and memory exploits harder.
+
+In other words:
+- Global, heap and stack variables will be at different addresses on each run
+
+
+## Initializing arrays
+
+We can do an inline initialization like this:
+
+```
+int a[10] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10}
+```
+
+or 
+
+```
+int a[10] = {1, 2, 3}
+```
+
+And the rest of values will be initialized in 0 by default.
+
+We can also initialize an array without defining its size:
+
+```
+int a[] = {1, 2, 3, 4}
+```
+
+And the compiler will know that the size of the array is 4. 
