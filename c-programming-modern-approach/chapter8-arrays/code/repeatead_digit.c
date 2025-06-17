@@ -31,4 +31,15 @@ int main(void) {
       printf("Digit %d already seen\n", a[i]);
     }
   }
+
+  // What if the number is already an integer?
+  int x = 13153123;
+  printf("Repeated digits in %d\n", x);
+  int seen2[10] = {0};
+  while (x > 0) {
+    int digit = x % 10;
+    seen2[digit] == 1? printf("Digit %d seen\n", digit) : seen2[digit]++;
+    x = (int) x / 10;
+    printf("x is: %d\n", x);
+  }
 }
