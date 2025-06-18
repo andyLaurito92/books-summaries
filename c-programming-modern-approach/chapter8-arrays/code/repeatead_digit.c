@@ -34,12 +34,27 @@ int main(void) {
 
   // What if the number is already an integer?
   int x = 13153123;
-  printf("Repeated digits in %d\n", x);
+  printf("Repeated digits in %d\n. Using count digits", x);
   int seen2[10] = {0};
   while (x > 0) {
     int digit = x % 10;
     seen2[digit] == 1? printf("Digit %d seen\n", digit) : seen2[digit]++;
     x = (int) x / 10;
-    printf("x is: %d\n", x);
+  }
+
+  // Instead of using an array, we can directly use bit operations
+  x = 1425135124;
+  printf("Repeated digits in %d\n: Uisng bitwise operations", x);
+  int mask = 0;
+  while (x > 0) {
+    int digit = x % 10;
+    x = (int) x / 10;
+    int bit = 1 << digit; // Equivalent to 1*2^digit. This sets the bit of digit to 1
+
+    if (mask & bit) { // Only happens if in the bit that represents the digit in the mask we already have a 1
+      printf("Repeated digit %d\n", digit);
+    } else {
+      mask |= bit; // update mask with seen digit
+    }
   }
 }
