@@ -5,6 +5,10 @@ Useful to remember and know how to do them. Usually used for optimization. In C,
 - 0110 + 0010 = 1000 (6 + 2 = 8)
 - 0011 + 0010 = 0101 (3 + 2 = 5)
 - 0110 - 0011 = 0011 (6 - 3 = 3) Remember that when u borrow 1 from the left operand, u substract 2 - 1 (as in decimal, u substract 10 - X)
+- 1000 - 0110 = 0010 (8 - 6 = 2)
+- 0011 * 0101 =  (3 * 5 = 15)
+
+### Substracting
 
 Note that A - B = A + (~B + 1), 2s complement. This is what most CPUs do under the hood
 In the example above, it would be:
@@ -17,6 +21,21 @@ So if the CPU has 64 word size, as x86-64, ARM64 (Apple M1/M2), usually you will
 B = 00000000_00000000_00000000_00000011 => ~B = 11111111_11111111_11111111_11111100 + 1  = 11111111_11111111_11111111_11111101
 and now you do B + A, where A =00000000_00000000_00000000_00000110 and that gives overflow that ends up givint you 00000000_00000000_00000000_00000011
 which is the correct result
+
+### Multiplying
+
+Let's take as example multiplying 0011 * 0101
+
+Binary multiplication is just repeated addition and shifting. Given a multiplier (0101 -> 5) and a multiplicand (0011 -> 3), what we do is to shift a result based on the bits of the multiplier. 
+
+Algorithm, start from right to left:
+result = 0
+pos 0 of multiplier -> 1, shift 0011 << 0 = 0011 (no change), result += 0011 (3)
+pos 1 of multiplier -> 0, no shift
+pos 2 of multiplier -> 1, shift 0011 << 2 = 12, result += 1100 (12)
+pos 3 of multiplier -> 0, no shift
+
+res = 12 + 3 = 15 :)
 
 ## Notes:
 
@@ -56,3 +75,8 @@ a << b it's equivalent to a * 2^b
 - 1 << 0 -> 1
 - 1 << 1 -> 2
 - 1 << 2 -> 4
+
+
+### Shift ( >> )
+
+Same as above, but instead of shifting bits to the left, we shift bits to the right, meaning: We are dividing our initial value

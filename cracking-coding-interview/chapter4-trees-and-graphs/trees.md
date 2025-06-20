@@ -190,4 +190,4 @@ is a prefix of any valid words. A trie can do this very quickly.
 Note that a hash table ALSO TAKES O(K) for accessing the value of a string s where len(s) = K. Why? Because you 
 need to read the whole string for getting it's hash! And this takes O(K) --> Do u really need to read the whole string?
 
-TODO -> IMPLEMENT A TRY
+See `tries.py`
