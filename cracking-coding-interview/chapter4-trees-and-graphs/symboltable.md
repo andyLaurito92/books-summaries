@@ -55,3 +55,13 @@ for defining custom equality on user classes:
 	- If field is primitive type, use ==
 	- If field is object, use equals (in Java)
 	- if field is an array, apply to each entry (in Java -> Arrays.equals)
+
+
+## Implementations of symbol table
+
+The following implementations can be found in file `symboltable.py`
+
+1. Use a linked list
+	1.1. O(N) complexity for adding, removing, searching elements. Not ideal but works
+2. Use a sorted array
+3. Use a binary search tree
