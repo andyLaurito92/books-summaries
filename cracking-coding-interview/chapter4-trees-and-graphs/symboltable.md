@@ -64,4 +64,4 @@ The following implementations can be found in file `symboltable.py`
 1. Use a linked list
 	1.1. O(N) complexity for adding, removing, searching elements. Not ideal but works
 2. Use a sorted array
-3. Use a binary search tree
+3. Use a binary search tree (already allows us to perform ordered operations)

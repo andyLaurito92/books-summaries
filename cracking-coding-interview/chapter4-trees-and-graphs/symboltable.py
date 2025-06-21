@@ -185,7 +185,12 @@ class BSTNode:
         self.key = key
         self.value = value
 
+
 class BSTDict:
+    """
+    Naive BST. Can be unbalanced (depends on the insertion
+    of the elements)
+    """
     def __init__(self):
         self.node = None
         self.size = 0
@@ -216,16 +221,50 @@ class BSTDict:
                 else:
                     curr = curr.right
 
-    # def delete(self, key):
-    #     if self.node is None:
-    #         return
-    #     elif self.node.key == key:
+    def _delete_node(self, node, key):
+        """
+        Implements delete in a BST. Given node x the
+        node to be deleted, the best candidate to replace
+        x is either max_rec(x.left) or min_rec(x.right)
+        """
+        if node is None:
+            return node
+        elif node.key == key:
+            if node.left is None and node.right is None:
+                return None
+            elif None in {node.left, node.right}:
+                # one of the children is None
+                if node.left is None:
+                    return node.right
+                else:
+                    return node.left
+            else:
+                # both children are not None
+                replacement = self._find_min_node(node.rigth)
+                node.right = self.deleteMinNode(node.right)
+                replacement.left = node.left
+        elif key < node.key:
+            node.left = self._delete_node(node.left, key)
+        else:
+            node.right = self._delete_node(node.right, key)
 
-    #         self.
+    def delete(self, key):
+        self.node = self._delete_node(self.node, key)
 
-    #     curr = self.node
-    #     while curr is not None:
-    #         curr.
+    def deleteMin(self):
+        self.node = self.deleteMinNode(self.node)
+
+    def deleteMinNode(self, node):
+        """
+        Deletes min key in the bst. If from_node given,
+        then deletes min starting in from_node
+        """
+        if node is None:
+            return None
+        elif node.left is None:
+            return node.rigth
+        else:
+            node.left = self.deleteMinNode(node.left)
 
     def get(self, key):
         curr = self.node
@@ -255,6 +294,12 @@ class BSTDict:
         for key in mykeys:
             yield key
 
+    def min(self):
+        """
+        Return the minimum key of the dict
+        """
+        return self._find_min_node().value if self.size != 0 else None
+
     def items(self):
         res = []
         if self.node is None:
@@ -266,6 +311,23 @@ class BSTDict:
     def __str__(self):
         return '{' + ','.join(f'{key}:{value}' for key, value in self.items()) + '}'
 
+    def _find_min_node(self, from_node=None):
+        """
+        Find the minimum node. If from_node provided,
+        finds the minimum in the given subtree where
+        from_node acts as root
+        """
+        root = self.node
+        if from_node:
+            root = from_node
+
+        def min_key(node):
+            if node.left is None:
+                return node
+            else:
+                return min_key(node.left)
+        return min_key(root)
+
     def _inorder(self, curr, visitfunc):
         if curr.left:
             self._inorder(curr.left, visitfunc)
@@ -273,14 +335,19 @@ class BSTDict:
         if curr.right:
             self._inorder(curr.right, visitfunc)
 
-implementations = [LinkedListDict(), BSTDict(), SortedListDict()]
+
+implementations = [LinkedListDict(),
+                   BSTDict(),
+                   SortedListDict()]
 
 for mydict in implementations: 
+    print("******************")
     print(f"Testing {type(mydict).__name__}")
+    print("******************")
 
     print()
     print("===============")
-    print("Testing isEmpty")
+    print("isEmpty")
     print("===============")
     print("isEmpty: ", mydict.isEmpty())
     print(mydict)
@@ -297,7 +364,7 @@ for mydict in implementations:
 
     print()
     print("===============")
-    print("Testing contains")
+    print("contains")
     print("===============")
     print("contains hey ", mydict.contains("hey"))
     print(mydict)
@@ -314,8 +381,17 @@ for mydict in implementations:
 
     print()
     print("===============")
-    print("Testing isEmpty")
+    print("isEmpty")
     print("===============")
     print("isEmpty: ", mydict.isEmpty())
     print(mydict)
     print()
+
+    print()
+    print("===============")
+    print("deletion")
+    print("===============")
+    mydict.delete("hola")
+    print(mydict)
+    print()
+
