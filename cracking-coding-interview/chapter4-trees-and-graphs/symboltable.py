@@ -340,6 +340,7 @@ implementations = [LinkedListDict(),
                    BSTDict(),
                    SortedListDict()]
 
+# TODO: write proper tests
 for mydict in implementations: 
     print("******************")
     print(f"Testing {type(mydict).__name__}")
@@ -392,6 +393,6 @@ for mydict in implementations:
     print("deletion")
     print("===============")
     mydict.delete("hola")
-    print(mydict)
+    print("Value doesn't exist")
+    mydict.delete("chau")
     print()
-
