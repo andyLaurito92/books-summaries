@@ -65,3 +65,33 @@ The following implementations can be found in file `symboltable.py`
 	1.1. O(N) complexity for adding, removing, searching elements. Not ideal but works
 2. Use a sorted array
 3. Use a binary search tree (already allows us to perform ordered operations)
+
+
+## CPython and trees
+
+CPython doesn't include any tree structure in its core. The main reason is its philosophy of "keep it simple". 
+Usually a hashmap structure, as how dict structure is built from, will generally include all the use cases
+you need for your usual app. 
+
+If you need some sort of "sorted dictionary", there are some libraries you can include:
+
+- [Python sorted containers](https://github.com/grantjenks/python-sortedcontainers)
+
+### dict preserves insertion order
+
+Since CPython 3.7+, dict `preserves insertion order`. This means that if you write the following program:
+
+```
+x = {1: "hey", 3:"ho", 2:"haha", -1: "asfjlka"}
+for key, val in x.items():
+	print(key, val)
+```
+
+Result will be:
+
+```
+1 hey
+3 ho
+2 haha
+-1 asfjlka
+```

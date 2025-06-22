@@ -226,6 +226,8 @@ class BSTDict:
         Implements delete in a BST. Given node x the
         node to be deleted, the best candidate to replace
         x is either max_rec(x.left) or min_rec(x.right)
+
+        This method implements eager Hibbard deletion in BSTs
         """
         if node is None:
             return node
