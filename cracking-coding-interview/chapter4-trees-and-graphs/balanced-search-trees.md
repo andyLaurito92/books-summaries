@@ -68,5 +68,14 @@ Here is a picture of a mapping from our 2-3 bst to a left-leaning red-black BST:
 From the image above, we can see that a red-black tree is a bst such that:
 
 1. No node has two red links connected to it
-2. Every path from root to null link has the same number of black links *This is the property of perfect balance trees*
+2. Every path from root to null link has the same number of black links *This is the property of perfect balance trees* (see in the image above that this property holds true)
 3. Red links lean left
+
+### Important
+
+There's a 1 to 1 correspondance from left-leaning red-black trees to 2-3 trees. This means, that if you draw the red links as horizontal links, and
+then join those links into a same node, you'll get the 2-3 tree that this black tree is representing. Take a look at the following image:
+
+![correspondance between trees](mapping-2-3-tree-to-red-black-tree.png)
+
+The above statement is useful because 2-3 trees, even though they are complicated to program, they're quite simple to understand.
