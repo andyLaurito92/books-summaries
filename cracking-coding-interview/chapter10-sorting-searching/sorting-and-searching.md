@@ -45,3 +45,9 @@ Difference with selection sort:
 Runtime: O(N log N)
 Space: O(N) -> we need a copy of the array to make mergesort to work
 
+
+
+## Python sorted container
+
+This [library](https://grantjenks.com/docs/sortedcontainers/) has some interesting implementations done in pure 
+Python for set, list and dictionary. Worth taking a look at. The github repo can be found [here](https://github.com/grantjenks/python-sortedcontainers)
