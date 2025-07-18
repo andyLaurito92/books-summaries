@@ -51,5 +51,22 @@ c * O(log N) for get, put, delete where c depends on the implementation
 Because the complexity of implementing 2-3 trees is high (having to implement 2 types of nodes and checking
 in which case you are for updating accordingly) and this complexity can actually create an overhead 
 that might be even worst that normal bst, we usually don't implement 2-3 trees but instead directly
-we use red-black trees
+we use red-black trees, b+ trees or avls. 
 
+## Red-Black trees
+
+The version presented in Algorithms by sedgewick is Left-leaning red-black BSTs
+
+General idea:
+1. Represent 2-3 tree as a BST
+2. Use "internal" left-leaning as "glue" for 3 nodes
+
+Here is a picture of a mapping from our 2-3 bst to a left-leaning red-black BST:
+
+![2-3 tree node to red-black tree](./images/2-3-tree-vs-red-black-tree.png)
+
+From the image above, we can see that a red-black tree is a bst such that:
+
+1. No node has two red links connected to it
+2. Every path from root to null link has the same number of black links *This is the property of perfect balance trees*
+3. Red links lean left
