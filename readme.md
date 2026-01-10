@@ -1,3 +1,5 @@
+**Note** Need to review how I want to structure this repo given that i've started taking notes w/Obsidian (for now) and will eventually move back to emacs
+
 Interesting topics to review later:
 
 Quantum computing:
