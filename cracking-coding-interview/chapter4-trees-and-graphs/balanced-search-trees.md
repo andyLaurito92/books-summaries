@@ -79,3 +79,46 @@ then join those links into a same node, you'll get the 2-3 tree that this black 
 ![correspondance between trees](mapping-2-3-tree-to-red-black-tree.png)
 
 The above statement is useful because 2-3 trees, even though they are complicated to program, they're quite simple to understand.
+
+
+### Operations
+
+### Search
+
+It's exactly the same as BST, we just ignore the color!, it's faster because we keep the tree balanced :)
+
+### Insertion
+
+Here is where we need to mantain the balanced property :) 
+
+#### Nodes with color bit
+
+Our class node now has a bit that represents the link from the parent with a color. 1 means red, 0 means black. We represent the link in the child
+because we have a unique link from a child to a parent (easier than representing it in the parent, where you have 2 links)
+
+
+#### Rotations
+
+We need to introduce rotations: The idea is that during the insertion, we get red links that are in the wrong leaning tree. This is 
+where we need to re-orient/rotate to the left!
+
+Now that we have presented the above operations, we can start thinking on the different cases when inserting into a red-black tree:
+
+#### Inserting w/exactly 1 node
+
+2 options:
+
+1. The new node goes into the left link, therefore we just add it in the left and mark the link as red
+2. The new node goes into the right link. We insert it in as a normal bst operation, and mark the link as red. Because we have insterted 
+a red link on the right, we need to do a rotation to keep the leaft-leaning red-black tree property
+
+#### Insertion into a 2-node at the bottom
+
+- Do standard BST insert, color new link red
+- If new red link is a right link, rotate left
+
+
+#### Insertion into a tree w/exactly 2 nodes
+
+	
+
