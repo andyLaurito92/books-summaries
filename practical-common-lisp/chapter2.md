@@ -26,4 +26,11 @@
 
 ## Using sly in my emacs
 
-See more at https://github.com/joaotavora/sly?tab=readme-ov-file
+- See more at https://github.com/joaotavora/sly?tab=readme-ov-file
+- Seems to be an upgraded version of SLIME
+
+## Notes on LISP
+
+- Every expression evaluates to sht; (format "hello") prints "hello" to stdout
+and evaluates to NIL
+

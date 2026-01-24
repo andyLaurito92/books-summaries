@@ -17,3 +17,11 @@
 
 ;; To use it, you can do
 (dex:get "https://google.com")
+
+(format t "hello word") ;; Prints to standard output and returns NIL
+
+(print "hello")
+
+(defun hey (name)
+  (concatenate 'string "Hello " name))
+
