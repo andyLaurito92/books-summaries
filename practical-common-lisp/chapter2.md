@@ -11,8 +11,11 @@
 
 
 ## Implementations
+- CMUCL = Carnegie Mellon University Common Lisp
+	- unmantained
+	- Link to it's docu which contains some interesting stuff to read :) https://www.chiark.greenend.org.uk/doc/cmucl-docs/cmu-user.htoc.html
 - SBCL = Steel Bank Common Lisp
-	- open source. Derived from CMUCL
+	- open source. Forked from CMUCL
 - Allegro Common Lisp
 - OpenMCL
 - LispWorks - seems like private
