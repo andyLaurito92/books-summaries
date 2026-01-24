@@ -33,4 +33,4 @@
 
 - Every expression evaluates to sht; (format "hello") prints "hello" to stdout
 and evaluates to NIL
-
+- When something fails, instead of throwing an exception as in Java or python, you are sent to the debugger. So the language is already telling you since the beginning to debug. Love that :)
