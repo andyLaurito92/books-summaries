@@ -34,3 +34,15 @@
 - Every expression evaluates to sht; (format "hello") prints "hello" to stdout
 and evaluates to NIL
 - When something fails, instead of throwing an exception as in Java or python, you are sent to the debugger. So the language is already telling you since the beginning to debug. Love that :)
+- You can compile files using function `compile-file`
+
+## More into compiling LISP in SBCL
+
+- It compiles *directly* into machine code! :O Wut?!? Yes! It translates code directly into Assembly/Machine Code for the specific processor u r running into
+- Over 90% of the code is written in cl; Only memory allocation and low-level OS calls are written in C
+- *Speed* Way faster than Python or Ruby
+- *You can re-compile a single function while rest of the program is still running*
+	- IN C YOU CAN'T DO THIS
+	
+- Why can u do the above?
+	- `In Common Lisp, the runtime is the compiler, and the compiler is the runtime.`
