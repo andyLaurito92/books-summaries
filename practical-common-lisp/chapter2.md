@@ -43,6 +43,15 @@ and evaluates to NIL
 - *Speed* Way faster than Python or Ruby
 - *You can re-compile a single function while rest of the program is still running*
 	- IN C YOU CAN'T DO THIS
-	
 - Why can u do the above?
 	- `In Common Lisp, the runtime is the compiler, and the compiler is the runtime.`
+	- CL uses indirection -> When u call a function in Lisp, the system looks up the
+	function's name in a symbol table to find the matchine code address. In the end, you are
+	updating the dictionary of the method definition
+	
+
+The last point my sound like Python. *ITS NOT THE SAME* -> Why? Bc cl *compiles* the function and updates the machine code
+*in the fly*, i.e., it re-starts the stack frame where the code is being executed if needed so it runs your new code. U can
+do this while debugging.
+Python or other programming languages don't do this. You need to either wait until the program in memory finishes or, like in
+compiled languages, need to re-compile and execute again.
