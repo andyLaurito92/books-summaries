@@ -23,3 +23,7 @@
 
 - NO :)
 - Separate daialect
+
+## Using sly in my emacs
+
+See more at https://github.com/joaotavora/sly?tab=readme-ov-file
