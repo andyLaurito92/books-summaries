@@ -5,3 +5,5 @@ Difference between functions, macros and special operators:
 
 
 *Note* The last expression in the body is what a function returns
+
+TODO: How does the format function works?
