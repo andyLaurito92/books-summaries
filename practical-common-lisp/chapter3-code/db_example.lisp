@@ -42,3 +42,16 @@
     (prompt-read "Author")
     (parse-integer-or-get-default-numpages)
     ))
+
+(defun add-books ()
+  (loop (add-record (prompt-for-book))
+    (if (not (y-or-n-p "Another? [y/n]: "))
+      (return))
+    ))
+
+(defun save-db (filename)
+  (with-open-file (out filename
+		    :direction :output
+		    :if-exists :supersede)
+    (with-standard-io-syntax
+      (print *bookcase* out))))
