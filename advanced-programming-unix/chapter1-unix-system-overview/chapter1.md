@@ -32,7 +32,7 @@ Libraries of common functions are built on top of the system calls interface
 ### UNIX
 
 Unix is an operating system created in AT&T Bell labs in 1970. Even O.S. with no connections
-to Uix take a lot of cues from UNIX regarding basic operations. It is the originator of 
+to Unix take a lot of cues from UNIX regarding basic operations. It is the originator of 
 the concept of files and directories, for example.
 
 Linux was originally made in 1991 to be an open source reimplementation of Unix, back when 

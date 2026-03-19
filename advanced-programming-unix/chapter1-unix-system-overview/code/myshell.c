@@ -17,7 +17,8 @@ int main(void) {
     if (buf[strlen(buf) - 1] == '\n')
       buf[strlen(buf) - 1] = 0;
 
-    if ((pid = fork()) < 0) {
+    pid = fork()
+    if (pid < 0) {
       // Returns non-negative integer to the parent
       // This value is the PID of the child
       err_sys("fork error");
